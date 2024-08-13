@@ -105,7 +105,7 @@ import React, { useEffect, useState } from "react";
 import { Space, Table } from "antd";
 import type { TableProps } from "antd";
 import { Button, Flex } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, CodeOutlined } from "@ant-design/icons";
 import axios from "axios";
 import TopNavigation from "../../components/TopNavigation";
 const DeleteButton: React.FC = () => (
@@ -119,6 +119,18 @@ const EditButton: React.FC = () => (
   <Flex wrap gap="small">
     <Button type="primary" icon={<EditOutlined />}>
       ویرایش
+    </Button>
+  </Flex>
+);
+
+const ConnectButton: React.FC = () => (
+  <Flex wrap gap="small">
+    <Button
+      style={{ backgroundColor: "green" }}
+      type="primary"
+      icon={<CodeOutlined />}
+    >
+      اتصال
     </Button>
   </Flex>
 );
@@ -157,6 +169,7 @@ const columns: TableProps<DataType>["columns"] = [
       <Space>
         <DeleteButton></DeleteButton>
         <EditButton></EditButton>
+        <ConnectButton></ConnectButton>
       </Space>
     ),
   },
