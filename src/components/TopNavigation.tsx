@@ -3,6 +3,7 @@ import { CodepenCircleFilled, HomeOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import { useNavigate } from "react-router-dom";
+import { ROUTES_ENUM } from "../shared/enums/routes.enum";
 
 type MenuItem = Required<MenuProps>["items"][number];
 enum NavKeys {
@@ -17,16 +18,16 @@ enum NavKeys {
 const items: MenuItem[] = [
   {
     label: "صفحه اصلی",
-    key: NavKeys.HOME_PAGE,
+    key: ROUTES_ENUM.HOME,
     icon: <HomeOutlined />,
   },
   {
     label: "سوییچ ها",
-    key: NavKeys.SWITCHES,
+    key: ROUTES_ENUM.__SWITCHES__,
     icon: <CodepenCircleFilled />,
     children: [
-      { label: "لیست سوییچ ها", key: NavKeys.SWITCHES_LIST },
-      { label: "ایجاد سوییچ جدید", key: NavKeys.SWITCHES_CREATE },
+      { label: "لیست سوییچ ها", key: ROUTES_ENUM.SWITCHES_LIST },
+      { label: "ایجاد سوییچ جدید", key: ROUTES_ENUM.SWITCHES_CREATE },
     ],
   },
   {
@@ -45,12 +46,16 @@ const TopNavigation: React.FC = () => {
     setCurrent(e.key);
 
     switch (e.key) {
-      case NavKeys.HOME_PAGE:
-        navigator("/");
+      case ROUTES_ENUM.HOME:
+        navigator(ROUTES_ENUM.HOME);
         break;
 
-      case NavKeys.SWITCHES_LIST:
-        navigator("/switches-list");
+      case ROUTES_ENUM.SWITCHES_LIST:
+        navigator(ROUTES_ENUM.SWITCHES_LIST);
+        break;
+
+      case ROUTES_ENUM.SWITCHES_CREATE:
+        navigator(ROUTES_ENUM.SWITCHES_CREATE);
         break;
     }
   };
