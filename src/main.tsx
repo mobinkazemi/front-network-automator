@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import SwitchesList from "./pages/Switches/SwitchesListPage";
+import SwitchesList from "./pages/Switches/SwitchesListPage/SwitchesListPage";
 
 const router = createBrowserRouter([
   {
