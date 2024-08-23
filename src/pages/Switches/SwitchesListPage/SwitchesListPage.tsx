@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Space, Table } from "antd";
-import axios from "axios";
 import TopNavigation from "../../../components/TopNavigation";
 import { DeleteButton } from "./parts/DeleteButton";
 import { EditButton } from "./parts/EditButton";
@@ -80,7 +79,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     // Fetch the list of switches
-    axios.get("http://localhost:8000/switches/list").then(({ data }) => {
+    apiClient.get("/switches/list").then(({ data }) => {
       setSwitchesListData(
         data.data.map((sw: any) => ({ ...sw, connectionStatus: null }))
       );
@@ -91,22 +90,19 @@ const App: React.FC = () => {
     // Fetch connection statuses once the list of switches is loaded
     if (switchesListData.length && !loadingStatuses) {
       setLoadingStatuses(true);
-      axios
-        .get("http://localhost:8000/switches/checkConnectionStatus")
-        .then(({ data }) => {
-          const statusData = data.data as IStatus[];
+      apiClient.get("/switches/checkConnectionStatus").then(({ data }) => {
+        const statusData = data.data as IStatus[];
 
-          // Update connection statuses
-          setSwitchesListData((prevSwitches) =>
-            prevSwitches.map((sw) => ({
-              ...sw,
-              connectionStatus:
-                statusData.find((status) => status.id === sw.id)?.result ??
-                null,
-            }))
-          );
-          setLoadingStatuses(false);
-        });
+        // Update connection statuses
+        setSwitchesListData((prevSwitches) =>
+          prevSwitches.map((sw) => ({
+            ...sw,
+            connectionStatus:
+              statusData.find((status) => status.id === sw.id)?.result ?? null,
+          }))
+        );
+        setLoadingStatuses(false);
+      });
     }
   }, [switchesListData, loadingStatuses]);
 
@@ -129,6 +125,7 @@ import {
   SyncOutlined,
 } from "@ant-design/icons";
 import { Flex, Tag } from "antd";
+import apiClient from "../../../configs/axios.config";
 <Flex gap="4px 0" wrap>
   <Tag icon={<CheckCircleOutlined />} color="success">
     success

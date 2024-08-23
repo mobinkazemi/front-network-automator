@@ -1,9 +1,7 @@
 import React from "react";
-import { Button, DatePicker, Form, Input, InputNumber } from "antd";
+import { Button, Form, Input, InputNumber, message } from "antd";
 import TopNavigation from "../../../components/TopNavigation";
-import axios from "axios";
-
-const { RangePicker } = DatePicker;
+import { createSwitch } from "./functions/createSwitch.function";
 
 const formItemLayout = {
   labelCol: {
@@ -17,10 +15,13 @@ const formItemLayout = {
 };
 
 const App: React.FC = () => {
+  const [form] = Form.useForm();
+
   return (
     <>
       <TopNavigation></TopNavigation>
       <Form
+        form={form}
         size="large"
         // {...formItemLayout}
         labelCol={{ span: 8 }}
@@ -29,28 +30,17 @@ const App: React.FC = () => {
         style={{
           maxWidth: 600,
           marginTop: 50,
-          //   border: "2px solid lightgray",
-          //   borderRadius: "10px",
-          //   paddingLeft: "60px",
-          //   paddingRight: "60px",
-          //   paddingTop: "30px",
-          //   paddingBottom: "30px",
         }}
         onFinish={async (values) => {
-          const result = await axios.post(
-            "http://localhost:8080/switches/create",
-            {
-              ip: values.ip,
-              model: values.model,
-              name: values.name,
-              password: values.password,
-              portCount: values.portCount,
-              series: values.series,
-              username: values.username,
-            }
-          );
+          const response = await createSwitch(values);
 
-          console.log(result);
+          if (response.result) {
+            message.success(response.message);
+            form.resetFields();
+          } else {
+            message.error(response.message);
+            form.resetFields();
+          }
         }}
       >
         <Form.Item
