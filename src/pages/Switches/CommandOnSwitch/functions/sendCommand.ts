@@ -19,11 +19,8 @@ export const sendSwitchCommand = async (
       switchId: data.id,
     });
 
-    console.log(111111, result);
     return { ...(result.data as ICommandRes), result: true };
   } catch (error) {
-    console.log(222222, result);
-
     return { message: (error as any)?.response?.data?.detail, result: false };
   }
 };

@@ -61,12 +61,15 @@ const TopNavigation: React.FC = () => {
   };
 
   return (
-    <Menu
-      onClick={onClick}
-      selectedKeys={[current]}
-      mode="horizontal"
-      items={items}
-    />
+    <>
+      <Menu
+        onClick={onClick}
+        selectedKeys={[current]}
+        mode="horizontal"
+        items={items}
+        style={{ marginBottom: "20px", borderBottom: "2px solid lightgray" }}
+      />
+    </>
   );
 };
 
