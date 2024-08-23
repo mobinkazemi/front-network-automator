@@ -5,7 +5,7 @@ import HomePage from "./pages/HomePage";
 import SwitchesList from "./pages/Switches/SwitchesListPage/SwitchesListPage";
 import { ROUTES_ENUM } from "./shared/enums/routes.enum";
 import CreateSwitchPage from "./pages/Switches/CreateSwitch/CreateSwitchPage";
-
+import "./style.css";
 const router = createBrowserRouter([
   {
     path: ROUTES_ENUM.HOME,
