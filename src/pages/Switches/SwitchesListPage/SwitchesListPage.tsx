@@ -4,13 +4,20 @@ import TopNavigation from "../../../components/TopNavigation";
 import { DeleteButton } from "./parts/DeleteButton";
 import { EditButton } from "./parts/EditButton";
 import { ConnectButton } from "./parts/ConnectButton";
-
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  SyncOutlined,
+} from "@ant-design/icons";
+import { Tag } from "antd";
+import apiClient from "../../../configs/axios.config";
 interface DataType {
   id: React.Key;
   name: string;
   ip: string;
   model: string;
   series: string;
+  os: string;
   connectionStatus: boolean | null;
 }
 
@@ -61,7 +68,10 @@ const columns = [
         <Space>
           <DeleteButton />
           <EditButton />
-          <ConnectButton disable={!record.connectionStatus}></ConnectButton>
+          <ConnectButton
+            switch={{ ...record, id: record.id as number }}
+            disable={!record.connectionStatus}
+          ></ConnectButton>
         </Space>
       );
     },
@@ -115,34 +125,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-import {
-  CheckCircleOutlined,
-  ClockCircleOutlined,
-  CloseCircleOutlined,
-  ExclamationCircleOutlined,
-  MinusCircleOutlined,
-  SyncOutlined,
-} from "@ant-design/icons";
-import { Flex, Tag } from "antd";
-import apiClient from "../../../configs/axios.config";
-<Flex gap="4px 0" wrap>
-  <Tag icon={<CheckCircleOutlined />} color="success">
-    success
-  </Tag>
-  <Tag icon={<SyncOutlined spin />} color="processing">
-    processing
-  </Tag>
-  <Tag icon={<CloseCircleOutlined />} color="error">
-    error
-  </Tag>
-  <Tag icon={<ExclamationCircleOutlined />} color="warning">
-    warning
-  </Tag>
-  <Tag icon={<ClockCircleOutlined />} color="default">
-    waiting
-  </Tag>
-  <Tag icon={<MinusCircleOutlined />} color="default">
-    stop
-  </Tag>
-</Flex>;

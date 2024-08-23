@@ -3,17 +3,6 @@ import { Button, Form, Input, InputNumber, message } from "antd";
 import TopNavigation from "../../../components/TopNavigation";
 import { createSwitch } from "./functions/createSwitch.function";
 
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 6 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 14 },
-  },
-};
-
 const App: React.FC = () => {
   const [form] = Form.useForm();
 

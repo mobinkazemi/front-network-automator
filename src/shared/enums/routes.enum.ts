@@ -10,4 +10,5 @@ export enum ROUTES_ENUM {
   SWITCHES_LIST = "/switches/list",
   SWITCHES_CREATE = "/switches/create",
   SWITCHES_UPDATE = "/switches/update",
+  SWITCHES_TERMINAL = "/switches/terminal/:switchId",
 }

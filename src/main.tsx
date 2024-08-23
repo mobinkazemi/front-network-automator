@@ -5,7 +5,8 @@ import HomePage from "./pages/HomePage";
 import SwitchesList from "./pages/Switches/SwitchesListPage/SwitchesListPage";
 import { ROUTES_ENUM } from "./shared/enums/routes.enum";
 import CreateSwitchPage from "./pages/Switches/CreateSwitch/CreateSwitchPage";
-import "./style.css";
+import "./index.css";
+import CommandOnSwitchPage from "./pages/Switches/CommandOnSwitch/CommandOnSwitchPage";
 const router = createBrowserRouter([
   {
     path: ROUTES_ENUM.HOME,
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: ROUTES_ENUM.SWITCHES_CREATE,
     element: <CreateSwitchPage></CreateSwitchPage>,
+  },
+  {
+    path: ROUTES_ENUM.SWITCHES_TERMINAL,
+    element: <CommandOnSwitchPage />,
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")!).render(
