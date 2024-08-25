@@ -28,7 +28,6 @@ interface IStatus {
 
 const App: React.FC = () => {
   const [switchesListData, setSwitchesListData] = useState<DataType[]>([]);
-  const [loadingStatuses, setLoadingStatuses] = useState<boolean>(false);
   const [deletedSwitch, setDeletedSwitch] = useState<number[]>([]);
 
   const columns = [
@@ -92,33 +91,24 @@ const App: React.FC = () => {
     },
   ];
   useEffect(() => {
-    // Fetch the list of switches
     apiClient.get("/switches/list").then(({ data }) => {
       setSwitchesListData(
         data.data.map((sw: any) => ({ ...sw, connectionStatus: null }))
       );
     });
+
+    apiClient.get("/switches/checkConnectionStatus").then(({ data }) => {
+      const statusData = data.data as IStatus[];
+
+      setSwitchesListData((prevSwitches) =>
+        prevSwitches.map((sw) => ({
+          ...sw,
+          connectionStatus:
+            statusData.find((status) => status.id === sw.id)?.result ?? null,
+        }))
+      );
+    });
   }, []);
-
-  useEffect(() => {
-    // Fetch connection statuses once the list of switches is loaded
-    if (switchesListData.length && !loadingStatuses) {
-      setLoadingStatuses(true);
-      apiClient.get("/switches/checkConnectionStatus").then(({ data }) => {
-        const statusData = data.data as IStatus[];
-
-        // Update connection statuses
-        setSwitchesListData((prevSwitches) =>
-          prevSwitches.map((sw) => ({
-            ...sw,
-            connectionStatus:
-              statusData.find((status) => status.id === sw.id)?.result ?? null,
-          }))
-        );
-        setLoadingStatuses(false);
-      });
-    }
-  }, [switchesListData, loadingStatuses]);
 
   return (
     <>
