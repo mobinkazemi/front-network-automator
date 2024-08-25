@@ -21,63 +21,6 @@ interface DataType {
   connectionStatus: boolean | null;
 }
 
-const columns = [
-  {
-    title: "آی‌دی",
-    dataIndex: "id",
-  },
-  {
-    title: "نام",
-    dataIndex: "name",
-  },
-  {
-    title: "آدرس آی‌پی",
-    dataIndex: "ip",
-  },
-  {
-    title: "مدل",
-    dataIndex: "model",
-  },
-  {
-    title: "سری",
-    dataIndex: "series",
-  },
-  {
-    title: "وضعیت اتصال",
-    dataIndex: "connectionStatus",
-    render: (status: boolean | null) =>
-      status === null ? (
-        <Tag icon={<SyncOutlined spin />} color="processing">
-          درحال بررسی
-        </Tag>
-      ) : status ? (
-        <Tag icon={<CheckCircleOutlined />} color="success">
-          آماده اتصال
-        </Tag>
-      ) : (
-        <Tag icon={<CloseCircleOutlined />} color="error">
-          اتصال ممکن نیست
-        </Tag>
-      ),
-  },
-  {
-    title: "اقدامات",
-    key: "action",
-    render: (_: any, record: DataType) => {
-      return (
-        <Space>
-          <DeleteButton />
-          <EditButton />
-          <ConnectButton
-            switch={{ ...record, id: record.id as number }}
-            disable={!record.connectionStatus}
-          ></ConnectButton>
-        </Space>
-      );
-    },
-  },
-];
-
 interface IStatus {
   id: number;
   result: boolean;
@@ -86,7 +29,68 @@ interface IStatus {
 const App: React.FC = () => {
   const [switchesListData, setSwitchesListData] = useState<DataType[]>([]);
   const [loadingStatuses, setLoadingStatuses] = useState<boolean>(false);
+  const [deletedSwitch, setDeletedSwitch] = useState<number[]>([]);
 
+  const columns = [
+    {
+      title: "آی‌دی",
+      dataIndex: "id",
+    },
+    {
+      title: "نام",
+      dataIndex: "name",
+    },
+    {
+      title: "آدرس آی‌پی",
+      dataIndex: "ip",
+    },
+    {
+      title: "مدل",
+      dataIndex: "model",
+    },
+    {
+      title: "سری",
+      dataIndex: "series",
+    },
+    {
+      title: "وضعیت اتصال",
+      dataIndex: "connectionStatus",
+      render: (status: boolean | null) =>
+        status === null ? (
+          <Tag icon={<SyncOutlined spin />} color="processing">
+            درحال بررسی
+          </Tag>
+        ) : status ? (
+          <Tag icon={<CheckCircleOutlined />} color="success">
+            آماده اتصال
+          </Tag>
+        ) : (
+          <Tag icon={<CloseCircleOutlined />} color="error">
+            اتصال ممکن نیست
+          </Tag>
+        ),
+    },
+    {
+      title: "اقدامات",
+      key: "action",
+      render: (_: any, record: DataType) => {
+        return (
+          <Space>
+            <DeleteButton
+              switchId={record.id as number}
+              setDeletedSwitch={setDeletedSwitch}
+              deletedSwitch={deletedSwitch}
+            />
+            <EditButton />
+            <ConnectButton
+              switch={{ ...record, id: record.id as number }}
+              disable={!record.connectionStatus}
+            ></ConnectButton>
+          </Space>
+        );
+      },
+    },
+  ];
   useEffect(() => {
     // Fetch the list of switches
     apiClient.get("/switches/list").then(({ data }) => {
@@ -119,7 +123,13 @@ const App: React.FC = () => {
   return (
     <>
       <TopNavigation />
-      <Table columns={columns} dataSource={switchesListData} rowKey="id" />
+      <Table
+        columns={columns}
+        dataSource={switchesListData.filter(
+          (item) => deletedSwitch.indexOf(item.id as number) === -1
+        )}
+        rowKey="id"
+      />
     </>
   );
 };
