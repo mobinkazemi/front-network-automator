@@ -1,4 +1,4 @@
-import { Button, Flex } from "antd";
+import { Button, Flex, Modal } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import apiClient from "../../../../configs/axios.config";
 
@@ -20,18 +20,34 @@ export const DeleteButton: React.FC<IProps> = ({
   switchId,
   setDeletedSwitch,
   deletedSwitch,
-}: IProps): React.ReactElement => (
-  <Flex wrap gap="small">
-    <Button
-      onClick={async () => {
+}: IProps): React.ReactElement => {
+  const showDeleteConfirm = () => {
+    Modal.confirm({
+      title: "آیا از حذف این سوییچ اطمینان دارید؟",
+      content: "امکان بازگشت این سوییچ وجود ندارد",
+      okText: "بله، حذف شود",
+      okType: "danger",
+      cancelText: "خیر، منصرف شدم",
+      onOk: async () => {
         setDeletedSwitch([...deletedSwitch, switchId]);
         await apiClient.delete("/switches/delete/" + switchId);
-      }}
-      type="primary"
-      danger
-      icon={<DeleteOutlined />}
-    >
-      حذف
-    </Button>
-  </Flex>
-);
+      },
+      onCancel() {
+        console.log("User cancelled the deletion");
+      },
+    });
+  };
+
+  return (
+    <Flex wrap gap="small">
+      <Button
+        onClick={showDeleteConfirm}
+        type="primary"
+        danger
+        icon={<DeleteOutlined />}
+      >
+        حذف
+      </Button>
+    </Flex>
+  );
+};
