@@ -9,6 +9,6 @@ export enum ROUTES_ENUM {
   __SWITCHES__ = "/switches",
   SWITCHES_LIST = "/switches/list",
   SWITCHES_CREATE = "/switches/create",
-  SWITCHES_UPDATE = "/switches/update",
+  SWITCHES_UPDATE = "/switches/update/:switchId",
   SWITCHES_TERMINAL = "/switches/terminal/:switchId",
 }

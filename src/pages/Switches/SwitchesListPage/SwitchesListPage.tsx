@@ -80,7 +80,7 @@ const App: React.FC = () => {
               setDeletedSwitch={setDeletedSwitch}
               deletedSwitch={deletedSwitch}
             />
-            <EditButton />
+            <EditButton switchId={record.id as number} />
             <ConnectButton
               switch={{ ...record, id: record.id as number }}
               disable={!record.connectionStatus}

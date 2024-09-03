@@ -33,8 +33,6 @@ const CommandOnSwitchPage: React.FC = () => {
   }, [switchId]);
 
   if (switchInfo && commandResult) {
-    console.log("AAAAAAA");
-
     const thisResult: {
       data: { stdout: string; stderr: string };
       result: boolean;
@@ -155,8 +153,6 @@ const CommandOnSwitchPage: React.FC = () => {
       </>
     );
   } else if (switchInfo) {
-    console.log("BBBBBBB");
-
     return (
       <>
         <TopNavigation></TopNavigation>
@@ -204,8 +200,6 @@ const CommandOnSwitchPage: React.FC = () => {
       </>
     );
   } else {
-    console.log("CCCCCCC");
-
     return (
       <>
         <TopNavigation></TopNavigation>
