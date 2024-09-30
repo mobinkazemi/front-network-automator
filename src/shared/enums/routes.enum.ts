@@ -5,6 +5,14 @@ export enum ROUTES_ENUM {
   //
   //
   // ####################################
+  //            AUTH
+  LOGIN = "/login",
+  REGISTER = "/register",
+
+  //
+  //
+  //
+  // ####################################
   //            SWITCHES
   __SWITCHES__ = "/switches",
   SWITCHES_LIST = "/switches/list",

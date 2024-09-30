@@ -1,18 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/Home/HomePage";
 import SwitchesList from "./pages/Switches/SwitchesListPage/SwitchesListPage";
 import { ROUTES_ENUM } from "./shared/enums/routes.enum";
 import CreateSwitchPage from "./pages/Switches/CreateSwitch/CreateSwitchPage";
 import "./index.css";
 import CommandOnSwitchPage from "./pages/Switches/CommandOnSwitch/CommandOnSwitchPage";
 import UpdateSwitchPage from "./pages/Switches/UpdateSwitch/UpdateSwitchPage";
+import LoginPage from "./pages/Auth/Login/LoginPage";
 
 const router = createBrowserRouter([
   {
     path: ROUTES_ENUM.HOME,
     element: <HomePage></HomePage>,
+  },
+  {
+    path: ROUTES_ENUM.LOGIN,
+    element: <LoginPage></LoginPage>,
   },
   {
     path: ROUTES_ENUM.SWITCHES_LIST,
