@@ -1,7 +1,9 @@
 import React from "react";
 import type { FormProps } from "antd";
-import { Button, Checkbox, Flex, Form, Input } from "antd";
+import { Button, Checkbox, Flex, Form, Input, message } from "antd";
 import TopNavigation from "../../../components/TopNavigation";
+import { loginUser } from "./functions/login-user.function";
+import { TOKEN_KEY_ENUM } from "../../../shared/enums/token.enum";
 
 type FieldType = {
   username?: string;
@@ -9,8 +11,15 @@ type FieldType = {
   remember?: string;
 };
 
-const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-  console.log("Success:", values);
+const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
+  const response = await loginUser(values);
+
+  if (response.result) {
+    localStorage.setItem(TOKEN_KEY_ENUM.ACCESS, response.token as string);
+    message.success(response.message);
+  } else {
+    message.error(response.message);
+  }
 };
 
 const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
@@ -20,12 +29,12 @@ const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
 const LoginPage: React.FC = () => (
   <>
     <TopNavigation></TopNavigation>
-    <Flex justify="center" align="center" vertical>
+    <Flex justify="center">
       <Form
         name="basic"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
-        style={{ maxWidth: 600 }}
+        labelCol={{}}
+        wrapperCol={{}}
+        style={{ maxWidth: 500, width: "100%" }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}

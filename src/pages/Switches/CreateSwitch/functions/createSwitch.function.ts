@@ -16,9 +16,10 @@ export const createSwitch = async (values: any): Promise<IResponse> => {
       series: values.series,
       username: values.username,
     } as any);
-
+    console.log({ res });
     return { result: true, message: res?.data?.message };
   } catch (error) {
+    console.log({ error });
     return { result: false, message: (error as any)?.response?.data?.detail };
   }
 };
