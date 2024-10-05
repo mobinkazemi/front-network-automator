@@ -9,6 +9,7 @@ import "./index.css";
 import CommandOnSwitchPage from "./pages/Switches/CommandOnSwitch/CommandOnSwitchPage";
 import UpdateSwitchPage from "./pages/Switches/UpdateSwitch/UpdateSwitchPage";
 import LoginPage from "./pages/Auth/Login/LoginPage";
+import RegisterPage from "./pages/Auth/Register/RegisterPage";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: ROUTES_ENUM.LOGIN,
     element: <LoginPage></LoginPage>,
+  },
+  {
+    path: ROUTES_ENUM.REGISTER,
+    element: <RegisterPage />,
   },
   {
     path: ROUTES_ENUM.SWITCHES_LIST,
