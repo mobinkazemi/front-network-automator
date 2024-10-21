@@ -6,12 +6,7 @@ import "./HomePage.css";
 
 const loggedIn = !!localStorage.getItem(TOKEN_KEY_ENUM.ACCESS);
 const HomePage = () => {
-  return (
-    <>
-      <TopNavigation></TopNavigation>
-      {loggedIn ? LoggedInContent() : contentOfNotLoggedIn()}
-    </>
-  );
+  return <>{loggedIn ? LoggedInContent() : contentOfNotLoggedIn()}</>;
 };
 
 export default HomePage;
