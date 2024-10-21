@@ -11,6 +11,8 @@ import {
 } from "@ant-design/icons";
 import { Tag } from "antd";
 import apiClient from "../../../configs/axios.config";
+import { HardeningButton } from "./parts/HardeningButton";
+import { ROUTES_ENUM } from "../../../shared/enums/routes.enum";
 interface DataType {
   id: React.Key;
   name: string;
@@ -85,29 +87,35 @@ const App: React.FC = () => {
               switch={{ ...record, id: record.id as number }}
               disable={!record.connectionStatus}
             ></ConnectButton>
+            <HardeningButton
+              switch={{ ...record, id: record.id as number }}
+              disable={!record.connectionStatus}
+            ></HardeningButton>
           </Space>
         );
       },
     },
   ];
   useEffect(() => {
-    apiClient.get("/switches/list").then(({ data }) => {
+    apiClient.get(ROUTES_ENUM.SWITCHES_LIST).then(({ data }) => {
       setSwitchesListData(
         data.data.map((sw: any) => ({ ...sw, connectionStatus: null }))
       );
     });
 
-    apiClient.get("/switches/checkConnectionStatus").then(({ data }) => {
-      const statusData = data.data as IStatus[];
+    apiClient
+      .get(ROUTES_ENUM.SWITCHES_CHECK_CONNECTION_STATUS)
+      .then(({ data }) => {
+        const statusData = data.data as IStatus[];
 
-      setSwitchesListData((prevSwitches) =>
-        prevSwitches.map((sw) => ({
-          ...sw,
-          connectionStatus:
-            statusData.find((status) => status.id === sw.id)?.result ?? null,
-        }))
-      );
-    });
+        setSwitchesListData((prevSwitches) =>
+          prevSwitches.map((sw) => ({
+            ...sw,
+            connectionStatus:
+              statusData.find((status) => status.id === sw.id)?.result ?? null,
+          }))
+        );
+      });
   }, []);
 
   return (

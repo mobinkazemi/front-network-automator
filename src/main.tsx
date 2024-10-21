@@ -10,7 +10,7 @@ import CommandOnSwitchPage from "./pages/Switches/CommandOnSwitch/CommandOnSwitc
 import UpdateSwitchPage from "./pages/Switches/UpdateSwitch/UpdateSwitchPage";
 import LoginPage from "./pages/Auth/Login/LoginPage";
 import RegisterPage from "./pages/Auth/Register/RegisterPage";
-
+import SwitchesHardeningPage from "./pages/Switches/Hardening/HardeningPage";
 const router = createBrowserRouter([
   {
     path: ROUTES_ENUM.HOME,
@@ -39,6 +39,10 @@ const router = createBrowserRouter([
   {
     path: ROUTES_ENUM.SWITCHES_UPDATE,
     element: <UpdateSwitchPage />,
+  },
+  {
+    path: ROUTES_ENUM.SWITCHES_HARDENING,
+    element: <SwitchesHardeningPage />,
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")!).render(

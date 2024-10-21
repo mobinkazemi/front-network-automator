@@ -19,4 +19,6 @@ export enum ROUTES_ENUM {
   SWITCHES_CREATE = "/switches/create",
   SWITCHES_UPDATE = "/switches/update/:switchId",
   SWITCHES_TERMINAL = "/switches/terminal/:switchId",
+  SWITCHES_HARDENING = "/switches/checkHardening/:switchId",
+  SWITCHES_CHECK_CONNECTION_STATUS = "/switches/checkConnectionStatus",
 }
