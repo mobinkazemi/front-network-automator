@@ -20,11 +20,6 @@ interface DataType {
   status: boolean | null;
 }
 
-interface IStatus {
-  id: number;
-  result: boolean;
-}
-
 const HardeningPage: React.FC = () => {
   const [switchesListData, setSwitchesListData] = useState<DataType[]>([]);
   const { switchId } = useParams();

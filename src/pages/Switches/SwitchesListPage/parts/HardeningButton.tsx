@@ -33,7 +33,7 @@ export const HardeningButton: React.FC<IProps> = (data: IProps) => {
           icon={<SafetyOutlined />}
           onClick={() => {
             navigator(
-              ROUTES_ENUM.SWITCHES_HARDENING.replace(
+              ROUTES_ENUM.SWITCHES_PREPAGES_HARDENING.replace(
                 ":switchId",
                 String(data.switch.id)
               )
