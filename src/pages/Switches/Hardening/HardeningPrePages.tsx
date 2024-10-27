@@ -39,7 +39,14 @@ const HardeningPrePage = () => {
             width: "20%",
             height: "50px",
           }}
-          onClick={() => navigator(ROUTES_ENUM.SWITCHES_CHARTS_HARDENING)}
+          onClick={() =>
+            navigator(
+              ROUTES_ENUM.SWITCHES_CHARTS_HARDENING.replace(
+                ":switchId",
+                String(switchId)
+              )
+            )
+          }
         >
           آنالیز نموداری
         </Button>
@@ -53,7 +60,14 @@ const HardeningPrePage = () => {
             width: "20%",
             height: "50px",
           }}
-          onClick={() => navigator(ROUTES_ENUM.SWITCHES_CHARTS_HARDENING)}
+          onClick={() =>
+            navigator(
+              ROUTES_ENUM.SWITCHES_REPORT_HARDENING.replace(
+                ":switchId",
+                String(switchId)
+              )
+            )
+          }
         >
           گزارش گیری{" "}
         </Button>

@@ -1,77 +1,121 @@
-import { PureComponent } from "react";
-import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
-interface IProps {
-  cx: number;
-  cy: number;
-  midAngle: number;
-  innerRadius: number;
-  outerRadius: number;
-  percent: number;
-  index: number;
+import { Pie } from "@ant-design/plots";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import apiClient from "../../../configs/axios.config";
+import { BACKEND_ROUTES } from "../../../shared/enums/backend.routes.enum";
+import { Tiny } from "@ant-design/charts";
+import { Flex } from "antd";
+
+interface IHardeningResults {
+  id: number;
+  title: string;
+  status: boolean;
 }
-const data = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
-];
+interface IAPIResponse {
+  data: IHardeningResults[];
+  message: string;
+}
+const DemoPie = () => {
+  const { switchId } = useParams();
+  const [hardeningResults, setHardeningResults] = useState<IHardeningResults[]>(
+    []
+  );
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+  useEffect(() => {
+    apiClient
+      .get<IAPIResponse>(
+        BACKEND_ROUTES.SWITCHES_HARDENING.replace(":switchId", String(switchId))
+      )
+      .then((response) => {
+        setHardeningResults(response.data.data);
+      });
+  }, []);
 
-const RADIAN = Math.PI / 180;
-const renderCustomizedLabel = ({
-  cx,
-  cy,
-  midAngle,
-  innerRadius,
-  outerRadius,
-  percent,
-}: // index,
-IProps) => {
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-  const x = cx + radius * Math.cos(-midAngle * RADIAN);
-  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+  if (!hardeningResults) {
+    return <>لطفا تا دریافت نتایج صبر کنید</>;
+  }
 
+  //
+  //
+  //
+  //
+  // FOR PIE CHART
+  let notSecureCount = 0;
+  let secureCount = 0;
+  hardeningResults.forEach((result) => {
+    if (result.status) {
+      secureCount++;
+    } else {
+      notSecureCount++;
+    }
+  });
+
+  const pieConfig = {
+    data: [
+      {
+        type: "امن",
+        value: secureCount,
+      },
+      {
+        type: "غیر امن",
+        value: notSecureCount,
+      },
+    ],
+    angleField: "value",
+    colorField: "type",
+    label: {
+      text: (d: any) => `${d.type}: ${d.value}`,
+      position: "spider",
+      style: {
+        fontSize: 15,
+        fontWeight: "bold",
+      },
+    },
+  };
+
+  //
+  //
+  //
+  //
+  // FOR PROGRESS BAR
+  const progress = (secureCount / (secureCount + notSecureCount)).toFixed(3);
+  const progressBarConfig = {
+    width: 880,
+    height: 60,
+    autoFit: false,
+    percent: progress,
+    color: ["#f23131", "#52c41a"],
+    annotations: [
+      {
+        type: "text",
+        style: {
+          text: `${(progress as any) * 100}%`,
+          x: "50%",
+          y: "50%",
+          textAlign: "left",
+          fontSize: 30,
+          fontStyle: "bold",
+        },
+      },
+    ],
+  };
+
+  //
+  //
+  //
+  //
+  // SHOW RESULTS
   return (
-    <text
-      x={x}
-      y={y}
-      fill="white"
-      textAnchor={x > cx ? "start" : "end"}
-      dominantBaseline="central"
-    >
-      {`${(percent * 100).toFixed(0)}%`}
-    </text>
+    <>
+      <Flex align="center" justify="center" vertical>
+        <div style={{ marginBottom: "5rem" }}></div>
+        <Tiny.Progress {...progressBarConfig} />
+        <span>میزان امنیت سوییچ </span>
+        <div style={{ marginBottom: "5rem" }}></div>
+      </Flex>
+      <Pie {...pieConfig} />;
+    </>
   );
 };
 
-export default class Example extends PureComponent {
-  static demoUrl =
-    "https://codesandbox.io/s/pie-chart-with-customized-label-dlhhj";
-
-  render() {
-    return (
-      <ResponsiveContainer width="100%" height="100%">
-        <PieChart width={400} height={400}>
-          <Pie
-            data={data}
-            cx="50%"
-            cy="50%"
-            labelLine={false}
-            label={renderCustomizedLabel}
-            outerRadius={80}
-            fill="#8884d8"
-            dataKey="value"
-          >
-            {data.map((_, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
-          </Pie>
-        </PieChart>
-      </ResponsiveContainer>
-    );
-  }
-}
+export default DemoPie;
