@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import apiClient from "../../../configs/axios.config";
 import { BACKEND_ROUTES } from "../../../shared/enums/backend.routes.enum";
 import { Tiny } from "@ant-design/charts";
-import { Flex } from "antd";
+import { Flex, message } from "antd";
 
 interface IHardeningResults {
   id: number;
@@ -18,7 +18,7 @@ interface IAPIResponse {
 const DemoPie = () => {
   const { switchId } = useParams();
   const [hardeningResults, setHardeningResults] = useState<IHardeningResults[]>(
-    []
+    [{ id: 1, title: "", status: false }]
   );
 
   useEffect(() => {
@@ -28,6 +28,9 @@ const DemoPie = () => {
       )
       .then((response) => {
         setHardeningResults(response.data.data);
+      })
+      .catch((error) => {
+        message.error(error.response.data.detail);
       });
   }, []);
 

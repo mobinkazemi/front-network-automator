@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table } from "antd";
+import { message, Table } from "antd";
 import TopNavigation from "../../../components/TopNavigation";
 import {
   CheckCircleOutlined,
@@ -61,6 +61,9 @@ const HardeningPage: React.FC = () => {
         setSwitchesListData(
           data.data.map((sw: any) => ({ ...sw, status: sw.status }))
         );
+      })
+      .catch((err) => {
+        message.error((err as any).response.data.detail);
       });
   }, []);
 
