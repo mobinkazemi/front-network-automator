@@ -5,29 +5,38 @@ import apiClient from "../../../configs/axios.config";
 import { BACKEND_ROUTES } from "../../../shared/enums/backend.routes.enum";
 import { Tiny } from "@ant-design/charts";
 import { Flex, message } from "antd";
+import { IBaseBackendResponse } from "../../../shared/interfaces/base-backend-response.interface";
+import { AxiosResponse } from "axios";
 
-interface IHardeningResults {
-  id: number;
-  title: string;
-  status: boolean;
+interface IResponseDataType {
+  id: React.Key;
+  checkedAt: Date | string;
+  result: boolean;
+  version?: number;
+  hardening: {
+    description: string;
+    audit: string;
+    title: string;
+    recommendations: string;
+  };
 }
-interface IAPIResponse {
-  data: IHardeningResults[];
-  message: string;
-}
+interface IAPIResponse extends IBaseBackendResponse<IResponseDataType[]> {}
 const DemoPie = () => {
   const { switchId } = useParams();
-  const [hardeningResults, setHardeningResults] = useState<IHardeningResults[]>(
-    [{ id: 1, title: "", status: false }]
+  const [hardeningResults, setHardeningResults] = useState<IResponseDataType[]>(
+    []
   );
 
   useEffect(() => {
     apiClient
       .get<IAPIResponse>(
-        BACKEND_ROUTES.SWITCHES_HARDENING.replace(":switchId", String(switchId))
+        BACKEND_ROUTES.SWITCHES_HARDENING_RESULTS.replace(
+          ":id",
+          String(switchId)
+        )
       )
-      .then((response) => {
-        setHardeningResults(response.data.data);
+      .then((data: AxiosResponse<IAPIResponse>) => {
+        setHardeningResults(data.data.data!);
       })
       .catch((error) => {
         message.error(error.response.data.detail);
@@ -46,7 +55,7 @@ const DemoPie = () => {
   let notSecureCount = 0;
   let secureCount = 0;
   hardeningResults.forEach((result) => {
-    if (result.status) {
+    if (result.result) {
       secureCount++;
     } else {
       notSecureCount++;
