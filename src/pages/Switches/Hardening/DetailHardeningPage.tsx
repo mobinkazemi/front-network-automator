@@ -10,18 +10,28 @@ import { Tag } from "antd";
 import apiClient from "../../../configs/axios.config";
 import { useParams } from "react-router-dom";
 import { BACKEND_ROUTES } from "../../../shared/enums/backend.routes.enum";
-interface DataType {
+import { AxiosResponse } from "axios";
+import { IBaseBackendResponse } from "../../../shared/interfaces/base-backend-response.interface";
+import moment from "jalali-moment";
+import { jalaliDateToText } from "../../../shared/functions/jalali-date-to-text-converted";
+interface IResponseDataType {
   id: React.Key;
-  name: string;
-  ip: string;
-  model: string;
-  series: string;
-  os: string;
-  status: boolean | null;
+  checkedAt: Date | string;
+  result: boolean;
+  version?: number;
+  hardening: {
+    description: string;
+    audit: string;
+    title: string;
+    recommendations: string;
+  };
 }
 
+interface IResponse extends IBaseBackendResponse<IResponseDataType[]> {}
 const HardeningPage: React.FC = () => {
-  const [switchesListData, setSwitchesListData] = useState<DataType[]>([]);
+  const [switchesListData, setSwitchesListData] = useState<IResponseDataType[]>(
+    []
+  );
   const { switchId } = useParams();
 
   const columns = [
@@ -30,14 +40,22 @@ const HardeningPage: React.FC = () => {
       dataIndex: "title",
     },
     {
+      title: "تاریخ آخرین بررسی",
+      dataIndex: "checkedAt",
+    },
+    {
+      title: "نسخه",
+      dataIndex: "version",
+    },
+    {
       title: "وضعیت",
-      dataIndex: "status",
+      dataIndex: "result",
       render: (status: boolean | null) =>
         status === null ? (
           <Tag icon={<SyncOutlined spin />} color="processing">
             درحال بررسی
           </Tag>
-        ) : status ? (
+        ) : status === true ? (
           <Tag icon={<CheckCircleOutlined />} color="success">
             امن
           </Tag>
@@ -51,19 +69,33 @@ const HardeningPage: React.FC = () => {
   useEffect(() => {
     apiClient
       .get(
-        BACKEND_ROUTES.SWITCHES_HARDENING.replace(
-          ":switchId",
+        BACKEND_ROUTES.SWITCHES_HARDENING_RESULTS.replace(
+          ":id",
           switchId as string
         )
       )
-      .then(({ data }) => {
-        console.log("here", data.data[2].status);
-        setSwitchesListData(
-          data.data.map((sw: any) => ({ ...sw, status: sw.status }))
-        );
+      .then((data: AxiosResponse<IResponse>) => {
+        const stateData = data.data.data!.map((item) => {
+          return {
+            title: item.hardening.title,
+            description: item.hardening.description,
+            audit: item.hardening.audit,
+            recommendations: item.hardening.recommendations,
+            result: item.result,
+            version: item.version,
+            id: item.id,
+            // checkedAt: moment(item.checkedAt).format("jYYYY/jM/jD"),
+            checkedAt: jalaliDateToText(
+              moment(item.checkedAt).format("jYYYY/jM/jD HH:mm")
+            ),
+            hardening: item.hardening,
+          };
+        });
+
+        setSwitchesListData(stateData);
       })
       .catch((err) => {
-        message.error((err as any).response.data.detail);
+        message.error(err);
       });
   }, []);
 
@@ -73,7 +105,7 @@ const HardeningPage: React.FC = () => {
       <Table
         columns={columns}
         dataSource={switchesListData.sort(
-          (a, b) => (a.status === true ? 1 : 0) - (b.status === true ? 1 : 0)
+          (a, b) => (a.result === true ? 1 : 0) - (b.result === true ? 1 : 0)
         )}
         rowKey="id"
       />
