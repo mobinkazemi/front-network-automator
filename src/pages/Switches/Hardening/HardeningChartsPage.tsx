@@ -7,6 +7,7 @@ import { Tiny } from "@ant-design/charts";
 import { Flex, message } from "antd";
 import { IBaseBackendResponse } from "../../../shared/interfaces/base-backend-response.interface";
 import { AxiosResponse } from "axios";
+import TopNavigation from "../../../components/TopNavigation";
 
 interface IResponseDataType {
   id: React.Key;
@@ -77,7 +78,6 @@ const DemoPie = () => {
     colorField: "type",
     label: {
       text: (d: any) => `${d.type}: ${d.value}`,
-      position: "spider",
       style: {
         fontSize: 15,
         fontWeight: "bold",
@@ -90,7 +90,8 @@ const DemoPie = () => {
   //
   //
   // FOR PROGRESS BAR
-  const progress = (secureCount / (secureCount + notSecureCount)).toFixed(3);
+  const progress = (secureCount / (secureCount + notSecureCount)).toFixed(2);
+
   const progressBarConfig = {
     width: 880,
     height: 60,
@@ -119,6 +120,7 @@ const DemoPie = () => {
   // SHOW RESULTS
   return (
     <>
+      <TopNavigation></TopNavigation>
       <Flex align="center" justify="center" vertical>
         <div style={{ marginBottom: "5rem" }}></div>
         <Tiny.Progress {...progressBarConfig} />
