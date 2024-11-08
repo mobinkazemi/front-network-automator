@@ -8,6 +8,11 @@ import { Flex, message } from "antd";
 import { IBaseBackendResponse } from "../../../shared/interfaces/base-backend-response.interface";
 import { AxiosResponse } from "axios";
 import TopNavigation from "../../../components/TopNavigation";
+import { Line } from "@ant-design/plots";
+import React from "react";
+import "../background.css";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 
 interface IResponseDataType {
   id: React.Key;
@@ -21,12 +26,24 @@ interface IResponseDataType {
     recommendations: string;
   };
 }
+interface IResponseVersionDataType {
+  version: number;
+  true: number;
+  false: number;
+  percentage: number;
+}
 interface IAPIResponse extends IBaseBackendResponse<IResponseDataType[]> {}
+interface IAPIResponseVersion
+  extends IBaseBackendResponse<IResponseVersionDataType[]> {}
+
 const DemoPie = () => {
   const { switchId } = useParams();
   const [hardeningResults, setHardeningResults] = useState<IResponseDataType[]>(
     []
   );
+  const [hardeningVersionResults, setHardeningVersionResults] = useState<
+    IResponseVersionDataType[]
+  >([]);
 
   useEffect(() => {
     apiClient
@@ -42,10 +59,37 @@ const DemoPie = () => {
       .catch((error) => {
         message.error(error.response.data.detail);
       });
+
+    apiClient
+      .get<IAPIResponseVersion>(
+        BACKEND_ROUTES.SWITCHES_HARDENING_VERSIONS.replace(
+          ":id",
+          String(switchId)
+        )
+      )
+      .then((data: AxiosResponse<IAPIResponseVersion>) => {
+        console.log(data.data.data);
+        setHardeningVersionResults(data.data.data!);
+      })
+      .catch((error) => {
+        message.error(error.response.data.detail);
+      });
   }, []);
 
-  if (!hardeningResults) {
-    return <>لطفا تا دریافت نتایج صبر کنید</>;
+  if (hardeningResults.length === 0 || hardeningVersionResults.length === 0) {
+    return (
+      <>
+        <Flex align="center" justify="center" gap="middle" vertical>
+          <Spin
+            style={{ paddingTop: 200 }}
+            indicator={<LoadingOutlined style={{ fontSize: 150 }} spin />}
+          />
+          <span style={{ fontSize: 20, paddingTop: 50 }}>
+            در حال دریافت اطلاعات
+          </span>
+        </Flex>
+      </>
+    );
   }
 
   //
@@ -117,9 +161,37 @@ const DemoPie = () => {
   //
   //
   //
+  // FOR LINE CHART
+  const lineConfig = {
+    data: hardeningVersionResults.map((item) => {
+      return {
+        version: item.version.toString(),
+        percentage: item.percentage * 100,
+      };
+    }),
+    xField: "version",
+    yField: "percentage",
+    point: {
+      shapeField: "square",
+      sizeField: 4,
+    },
+    interaction: {
+      tooltip: {
+        marker: false,
+      },
+    },
+    style: {
+      lineWidth: 2,
+    },
+  };
+
+  //
+  //
+  //
+  //
   // SHOW RESULTS
   return (
-    <>
+    <div className="SwitchPage">
       <TopNavigation></TopNavigation>
       <Flex align="center" justify="center" vertical>
         <div style={{ marginBottom: "5rem" }}></div>
@@ -128,7 +200,8 @@ const DemoPie = () => {
         <div style={{ marginBottom: "5rem" }}></div>
       </Flex>
       <Pie {...pieConfig} />;
-    </>
+      <Line {...lineConfig} />
+    </div>
   );
 };
 
