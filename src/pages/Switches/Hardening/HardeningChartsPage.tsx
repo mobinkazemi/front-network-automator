@@ -137,9 +137,9 @@ const DemoPie = () => {
   const progress = (secureCount / (secureCount + notSecureCount)).toFixed(2);
 
   const progressBarConfig = {
-    width: 880,
-    height: 60,
-    autoFit: false,
+    // width: 880,
+    height: 100,
+    autoFit: true,
     percent: progress,
     color: ["#f23131", "#52c41a"],
     annotations: [
@@ -192,16 +192,83 @@ const DemoPie = () => {
   // SHOW RESULTS
   return (
     <div className="SwitchPage">
-      <TopNavigation></TopNavigation>
+      <TopNavigation />
       <Flex align="center" justify="center" vertical>
-        <div style={{ marginBottom: "5rem" }}></div>
-        <Tiny.Progress {...progressBarConfig} />
-        <span>میزان امنیت سوییچ </span>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column", // Ensures the title is above the chart
+            alignItems: "flex-end", // Aligns title and chart content to the right
+            width: "60%",
+            borderRadius: "10px",
+            border: "2px solid lightgray",
+            backgroundColor: "white",
+            padding: "1rem",
+            marginTop: "5rem",
+            // boxShadow: "0 2px 20px rgba(0, 0, 0, 0.1)",
+            boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+          }}
+        >
+          <span
+            style={{
+              fontSize: "25px",
+              fontWeight: "bolder",
+              alignSelf: "flex-end", // Aligns text to the right or start of the container
+              marginBottom: "30px",
+            }}
+          >
+            میزان امنیت سوییچ
+          </span>
+
+          <Tiny.Progress {...progressBarConfig} />
+        </div>
+
         <div style={{ marginBottom: "5rem" }}></div>
       </Flex>
-      <Pie {...pieConfig} />;
-      <Line {...lineConfig} />
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "60%",
+          borderRadius: "5px",
+          border: "2px solid gray",
+          backgroundColor: "white",
+          padding: "1rem",
+          margin: "2rem auto", // Center horizontally and add space above/below
+        }}
+      >
+        <Pie {...pieConfig} />
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "60%",
+          borderRadius: "5px",
+          border: "2px solid gray",
+          backgroundColor: "white",
+          padding: "1rem",
+          margin: "2rem auto", // Center horizontally and add space above/below
+        }}
+      >
+        <Line {...lineConfig} />
+      </div>
     </div>
+
+    // <div className="SwitchPage">
+    //   <TopNavigation></TopNavigation>
+    //   <Flex align="center" justify="center" vertical>
+    //     <Tiny.Progress {...progressBarConfig} />
+    //     <span>میزان امنیت سوییچ </span>
+    //     <div style={{ marginBottom: "5rem" }}></div>
+    //   </Flex>
+    //   <Pie {...pieConfig} />;
+    //   <Line {...lineConfig} />
+    // </div>
   );
 };
 
