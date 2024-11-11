@@ -13,6 +13,7 @@ import React from "react";
 import "../background.css";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
+import { Liquid } from "@ant-design/plots";
 
 interface IResponseDataType {
   id: React.Key;
@@ -36,7 +37,7 @@ interface IAPIResponse extends IBaseBackendResponse<IResponseDataType[]> {}
 interface IAPIResponseVersion
   extends IBaseBackendResponse<IResponseVersionDataType[]> {}
 
-const DemoPie = () => {
+const Charts = () => {
   const { switchId } = useParams();
   const [hardeningResults, setHardeningResults] = useState<IResponseDataType[]>(
     []
@@ -136,28 +137,13 @@ const DemoPie = () => {
   // FOR PROGRESS BAR
   const progress = (secureCount / (secureCount + notSecureCount)).toFixed(2);
 
-  const progressBarConfig = {
-    // width: 880,
-    height: 100,
-    autoFit: true,
-    percent: progress,
-    color: ["#f23131", "#52c41a"],
-    annotations: [
-      {
-        type: "text",
-        style: {
-          text: `${(progress as any) * 100}%`,
-          x: "50%",
-          y: "50%",
-          textAlign: "left",
-          fontSize: 30,
-          fontStyle: "bold",
-        },
-      },
-    ],
+  const liquidConfig = {
+    percent: Number(progress),
+    style: {
+      backgroundFill: "pink",
+    },
   };
 
-  //
   //
   //
   //
@@ -172,8 +158,8 @@ const DemoPie = () => {
     xField: "version",
     yField: "percentage",
     point: {
-      shapeField: "square",
-      sizeField: 4,
+      shapeField: "circle",
+      sizeField: 10,
     },
     interaction: {
       tooltip: {
@@ -181,7 +167,13 @@ const DemoPie = () => {
       },
     },
     style: {
-      lineWidth: 2,
+      lineWidth: 5,
+      stroke: "#FFC0CA",
+    },
+
+    axis: {
+      x: { title: "نسخه" },
+      y: { title: "درصد امنیت" },
     },
   };
 
@@ -197,79 +189,89 @@ const DemoPie = () => {
         <div
           style={{
             display: "flex",
-            flexDirection: "column", // Ensures the title is above the chart
-            alignItems: "flex-end", // Aligns title and chart content to the right
-            width: "60%",
+            flexDirection: "column", // Stack title on top, charts below
+            width: "85%",
+            height: "30%",
             borderRadius: "10px",
             border: "2px solid lightgray",
             backgroundColor: "white",
             padding: "1rem",
             marginTop: "5rem",
-            // boxShadow: "0 2px 20px rgba(0, 0, 0, 0.1)",
             boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+            position: "relative", // Allows absolute positioning of the title
           }}
         >
           <span
             style={{
               fontSize: "25px",
               fontWeight: "bolder",
-              alignSelf: "flex-end", // Aligns text to the right or start of the container
-              marginBottom: "30px",
+              position: "absolute", // Position title absolutely within the container
+              top: "10px",
+              right: "10px", // Top-right corner
+              color: "#454545",
             }}
           >
             میزان امنیت سوییچ
           </span>
 
-          <Tiny.Progress {...progressBarConfig} />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              marginTop: "2rem", // Spacing between title and charts
+            }}
+          >
+            <Pie {...pieConfig} />
+            <Liquid {...liquidConfig} />
+          </div>
         </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column", // Stack title on top, charts below
+            width: "85%",
+            height: "30%",
+            borderRadius: "10px",
+            border: "2px solid lightgray",
+            backgroundColor: "white",
+            padding: "1rem",
+            marginTop: "5rem",
+            boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+            position: "relative", // Allows absolute positioning of the title
+          }}
+        >
+          <span
+            style={{
+              fontSize: "25px",
+              fontWeight: "bolder",
+              position: "absolute", // Position title absolutely within the container
+              top: "10px",
+              right: "10px", // Top-right corner
+              color: "#454545",
+            }}
+          >
+            تغییرات نسخه های امنیت سوییچ
+          </span>
 
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              marginTop: "2rem", // Spacing between title and charts
+            }}
+          >
+            {" "}
+            <Line {...lineConfig} />
+          </div>
+        </div>
         <div style={{ marginBottom: "5rem" }}></div>
       </Flex>
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "60%",
-          borderRadius: "5px",
-          border: "2px solid gray",
-          backgroundColor: "white",
-          padding: "1rem",
-          margin: "2rem auto", // Center horizontally and add space above/below
-        }}
-      >
-        <Pie {...pieConfig} />
-      </div>
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "60%",
-          borderRadius: "5px",
-          border: "2px solid gray",
-          backgroundColor: "white",
-          padding: "1rem",
-          margin: "2rem auto", // Center horizontally and add space above/below
-        }}
-      >
-        <Line {...lineConfig} />
-      </div>
     </div>
-
-    // <div className="SwitchPage">
-    //   <TopNavigation></TopNavigation>
-    //   <Flex align="center" justify="center" vertical>
-    //     <Tiny.Progress {...progressBarConfig} />
-    //     <span>میزان امنیت سوییچ </span>
-    //     <div style={{ marginBottom: "5rem" }}></div>
-    //   </Flex>
-    //   <Pie {...pieConfig} />;
-    //   <Line {...lineConfig} />
-    // </div>
   );
 };
 
-export default DemoPie;
+export default Charts;
