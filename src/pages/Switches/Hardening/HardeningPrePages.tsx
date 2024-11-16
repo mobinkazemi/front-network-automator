@@ -54,7 +54,7 @@ const HardeningPrePage = () => {
   const navigator = useNavigate();
   const [reportData, setReportData] = useState<IResponseData[]>([]);
   const [loading, setLoading] = useState(false);
-  const handleDownload = () => {
+  const handleCSVDownload = () => {
     const csvContent = convertToCSV(reportData);
     downloadCSV(csvContent);
   };
@@ -86,9 +86,9 @@ const HardeningPrePage = () => {
       );
 
       message.success("تست ها با موفقیت اجرا شد");
-      setLoading(false);
     } catch (error) {
       message.error("اجرای تست ها با خطا مواجه شد");
+    } finally {
       setLoading(false);
     }
   };
@@ -149,7 +149,7 @@ const HardeningPrePage = () => {
           }}
           onClick={
             reportData.length
-              ? handleDownload
+              ? handleCSVDownload
               : () => message.error("امکان گزارش گیری وجود ندارد", 3)
           }
         >
