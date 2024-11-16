@@ -20,7 +20,6 @@ export const EditButton: React.FC<IProps> = ({ switchId }: IProps) => {
         }
         icon={<EditOutlined />}
       >
-        ویرایش
       </Button>
     </Flex>
   );

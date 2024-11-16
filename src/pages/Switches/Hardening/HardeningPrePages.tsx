@@ -1,7 +1,7 @@
 import { Button, Flex, message } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { ROUTES_ENUM } from "../../../shared/enums/routes.enum";
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import apiClient from "../../../configs/axios.config";
 import { BACKEND_ROUTES } from "../../../shared/enums/backend.routes.enum";
 import { AxiosResponse } from "axios";
@@ -53,7 +53,7 @@ const downloadCSV = (csvContent: any) => {
 const HardeningPrePage = () => {
   const { switchId } = useParams();
   const navigator = useNavigate();
-  const [reportData, setReportData] = React.useState<IResponseData[]>([]);
+  const [reportData, setReportData] = useState<IResponseData[]>([]);
 
   const handleDownload = () => {
     const csvContent = convertToCSV(reportData);
@@ -81,6 +81,20 @@ const HardeningPrePage = () => {
         console.error(err);
       });
   }, []);
+
+  const checkAgainHardening = () => {
+    apiClient
+      .get(
+        BACKEND_ROUTES.SWITCHES_HARDENING.replace(
+          ":switchId",
+          switchId as string
+        )
+      )
+      .then((data: AxiosResponse<any>) =>
+        message.success("تست ها با موفقیت اجرا شد")
+      )
+      .catch((e: any) => message.error("اجرای تست ها با خطا مواجه شد"));
+  };
   return (
     <>
       <Flex vertical align="center" style={{ width: "100%" }}>
@@ -143,6 +157,20 @@ const HardeningPrePage = () => {
           }
         >
           گزارش گیری{" "}
+        </Button>
+        <Button
+          type="primary"
+          style={{
+            fontSize: "1.1rem",
+            fontWeight: "bold",
+            letterSpacing: "1px",
+            marginTop: "20px",
+            width: "20%",
+            height: "50px",
+          }}
+          onClick={checkAgainHardening}
+        >
+          تست مجدد
         </Button>
       </Flex>
     </>

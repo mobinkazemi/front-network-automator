@@ -46,7 +46,6 @@ export const DeleteButton: React.FC<IProps> = ({
         danger
         icon={<DeleteOutlined />}
       >
-        حذف
       </Button>
     </Flex>
   );

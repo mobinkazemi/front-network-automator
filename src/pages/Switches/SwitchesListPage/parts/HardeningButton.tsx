@@ -20,7 +20,7 @@ export const HardeningButton: React.FC<IProps> = (data: IProps) => {
           type="primary"
           icon={<SafetyOutlined />}
         >
-          هاردنینگ
+          
         </Button>
       </Flex>
     );
@@ -40,7 +40,7 @@ export const HardeningButton: React.FC<IProps> = (data: IProps) => {
             );
           }}
         >
-          هاردنینگ
+          
         </Button>
       </Flex>
     );

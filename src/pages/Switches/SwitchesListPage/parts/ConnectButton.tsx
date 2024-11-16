@@ -20,7 +20,7 @@ export const ConnectButton: React.FC<IProps> = (data: IProps) => {
           type="primary"
           icon={<CodeOutlined />}
         >
-          اتصال
+          
         </Button>
       </Flex>
     );
@@ -40,7 +40,7 @@ export const ConnectButton: React.FC<IProps> = (data: IProps) => {
             );
           }}
         >
-          اتصال
+          
         </Button>
       </Flex>
     );

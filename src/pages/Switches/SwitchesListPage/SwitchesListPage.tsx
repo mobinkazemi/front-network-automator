@@ -13,6 +13,7 @@ import { Tag } from "antd";
 import apiClient from "../../../configs/axios.config";
 import { HardeningButton } from "./parts/HardeningButton";
 import { ROUTES_ENUM } from "../../../shared/enums/routes.enum";
+import { GetAssetsButton } from "./parts/GetAssetsButton";
 interface DataType {
   id: React.Key;
   name: string;
@@ -91,6 +92,7 @@ const App: React.FC = () => {
               switch={{ ...record, id: record.id as number }}
               disable={!record.connectionStatus}
             ></HardeningButton>
+            <GetAssetsButton switchId={record.id as number}></GetAssetsButton>
           </Space>
         );
       },

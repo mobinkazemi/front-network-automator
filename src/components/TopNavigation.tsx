@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CodepenCircleFilled, HomeOutlined } from "@ant-design/icons";
+import Icon, { CodepenCircleFilled, HomeOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +19,7 @@ const items: MenuItem[] = [
   {
     label: "صفحه اصلی",
     key: ROUTES_ENUM.HOME,
-    icon: <HomeOutlined />,
+    icon: <Icon  component={() => (<img  style={{width: '60px'}} src="/douranLogo.png" />)} />,
   },
   {
     label: "سوییچ ها",
