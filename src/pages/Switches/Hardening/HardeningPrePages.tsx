@@ -21,7 +21,6 @@ interface IResponseData {
 }
 interface IReportAPIResponse extends IBaseBackendResponse<IResponseData[]> {}
 
-// Function to convert data to CSV format
 const convertToCSV = (data: IResponseData[]) => {
   const headers = ["title", "checkedAt", "result"];
   const rows = data.map((item: any) => [
@@ -54,17 +53,11 @@ const HardeningPrePage = () => {
   const { switchId } = useParams();
   const navigator = useNavigate();
   const [reportData, setReportData] = useState<IResponseData[]>([]);
-
+  const [loading, setLoading] = useState(false);
   const handleDownload = () => {
     const csvContent = convertToCSV(reportData);
     downloadCSV(csvContent);
   };
-
-  const url = BACKEND_ROUTES.SWITCHES_HARDENING_RESULTS.replace(
-    ":id",
-    switchId as string
-  );
-  console.log({ url, switchId });
 
   useEffect(() => {
     apiClient
@@ -82,18 +75,22 @@ const HardeningPrePage = () => {
       });
   }, []);
 
-  const checkAgainHardening = () => {
-    apiClient
-      .get(
+  const checkAgainHardening = async () => {
+    setLoading(true);
+    try {
+      const response = await apiClient.get(
         BACKEND_ROUTES.SWITCHES_HARDENING.replace(
           ":switchId",
           switchId as string
         )
-      )
-      .then((data: AxiosResponse<any>) =>
-        message.success("تست ها با موفقیت اجرا شد")
-      )
-      .catch((e: any) => message.error("اجرای تست ها با خطا مواجه شد"));
+      );
+
+      message.success("تست ها با موفقیت اجرا شد");
+      setLoading(false);
+    } catch (error) {
+      message.error("اجرای تست ها با خطا مواجه شد");
+      setLoading(false);
+    }
   };
   return (
     <>
@@ -169,6 +166,7 @@ const HardeningPrePage = () => {
             height: "50px",
           }}
           onClick={checkAgainHardening}
+          loading={loading}
         >
           تست مجدد
         </Button>
