@@ -1,4 +1,4 @@
-import { Button, Flex } from "antd";
+import { Button, Flex, Tooltip } from "antd";
 import { SafetyOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_ENUM } from "../../../../shared/enums/routes.enum";
@@ -19,29 +19,27 @@ export const HardeningButton: React.FC<IProps> = (data: IProps) => {
           style={{ backgroundColor: "lightgray" }}
           type="primary"
           icon={<SafetyOutlined />}
-        >
-          
-        </Button>
+        ></Button>
       </Flex>
     );
   } else
     return (
       <Flex wrap gap="small">
-        <Button
-          style={{ backgroundColor: "orange" }}
-          type="primary"
-          icon={<SafetyOutlined />}
-          onClick={() => {
-            navigator(
-              ROUTES_ENUM.SWITCHES_PREPAGES_HARDENING.replace(
-                ":switchId",
-                String(data.switch.id)
-              )
-            );
-          }}
-        >
-          
-        </Button>
+        <Tooltip title="عملیات هاردنینگ">
+          <Button
+            style={{ backgroundColor: "orange" }}
+            type="primary"
+            icon={<SafetyOutlined />}
+            onClick={() => {
+              navigator(
+                ROUTES_ENUM.SWITCHES_PREPAGES_HARDENING.replace(
+                  ":switchId",
+                  String(data.switch.id)
+                )
+              );
+            }}
+          ></Button>
+        </Tooltip>
       </Flex>
     );
 };

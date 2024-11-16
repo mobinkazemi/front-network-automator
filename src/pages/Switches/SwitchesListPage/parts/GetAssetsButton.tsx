@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Flex, message } from "antd";
+import { Button, Flex, message, Tooltip } from "antd";
 import { SyncOutlined } from "@ant-design/icons";
 import apiClient from "../../../../configs/axios.config";
 import { IBaseBackendResponse } from "../../../../shared/interfaces/base-backend-response.interface";
@@ -46,12 +46,15 @@ export const GetAssetsButton: React.FC<IProps> = ({ switchId }: IProps) => {
 
   return (
     <Flex wrap gap="small">
-      <Button
-        type="primary"
-        onClick={fn}
-        icon={<SyncOutlined />}
-        loading={loading}
-      ></Button>
+      ‌
+      <Tooltip title="استخراج و ثبت اطلاعات سوییچ">
+        <Button
+          type="primary"
+          onClick={fn}
+          icon={<SyncOutlined />}
+          loading={loading}
+        ></Button>
+      </Tooltip>
     </Flex>
   );
 };

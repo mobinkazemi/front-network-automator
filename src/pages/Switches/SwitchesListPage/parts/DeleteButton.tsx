@@ -1,4 +1,4 @@
-import { Button, Flex, Modal } from "antd";
+import { Button, Flex, Modal, Tooltip } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import apiClient from "../../../../configs/axios.config";
 
@@ -40,13 +40,14 @@ export const DeleteButton: React.FC<IProps> = ({
 
   return (
     <Flex wrap gap="small">
-      <Button
-        onClick={showDeleteConfirm}
-        type="primary"
-        danger
-        icon={<DeleteOutlined />}
-      >
-      </Button>
+      <Tooltip title="حذف سوییچ">
+        <Button
+          onClick={showDeleteConfirm}
+          type="primary"
+          danger
+          icon={<DeleteOutlined />}
+        ></Button>
+      </Tooltip>
     </Flex>
   );
 };

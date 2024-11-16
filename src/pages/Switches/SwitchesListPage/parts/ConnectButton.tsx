@@ -1,4 +1,4 @@
-import { Button, Flex } from "antd";
+import { Button, Flex, Tooltip } from "antd";
 import { CodeOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_ENUM } from "../../../../shared/enums/routes.enum";
@@ -19,29 +19,27 @@ export const ConnectButton: React.FC<IProps> = (data: IProps) => {
           style={{ backgroundColor: "lightgray" }}
           type="primary"
           icon={<CodeOutlined />}
-        >
-          
-        </Button>
+        ></Button>
       </Flex>
     );
   } else
     return (
       <Flex wrap gap="small">
-        <Button
-          style={{ backgroundColor: "green" }}
-          type="primary"
-          icon={<CodeOutlined />}
-          onClick={() => {
-            navigator(
-              ROUTES_ENUM.SWITCHES_TERMINAL.replace(
-                ":switchId",
-                String(data.switch.id)
-              )
-            );
-          }}
-        >
-          
-        </Button>
+        <Tooltip title="اجرای دستورات">
+          <Button
+            style={{ backgroundColor: "green" }}
+            type="primary"
+            icon={<CodeOutlined />}
+            onClick={() => {
+              navigator(
+                ROUTES_ENUM.SWITCHES_TERMINAL.replace(
+                  ":switchId",
+                  String(data.switch.id)
+                )
+              );
+            }}
+          ></Button>
+        </Tooltip>
       </Flex>
     );
 };
