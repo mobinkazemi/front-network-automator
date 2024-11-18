@@ -78,7 +78,7 @@ const HardeningPrePage = () => {
   const checkAgainHardening = async () => {
     setLoading(true);
     try {
-      const response = await apiClient.get(
+      await apiClient.get(
         BACKEND_ROUTES.SWITCHES_HARDENING.replace(
           ":switchId",
           switchId as string
@@ -104,6 +104,7 @@ const HardeningPrePage = () => {
             marginTop: "250px",
             width: "20%",
             height: "50px",
+            backgroundColor: "#FE7E03",
           }}
           onClick={() =>
             navigator(
@@ -125,6 +126,7 @@ const HardeningPrePage = () => {
             marginTop: "20px",
             width: "20%",
             height: "50px",
+            backgroundColor: "#FE7E03",
           }}
           onClick={() =>
             navigator(
@@ -146,6 +148,7 @@ const HardeningPrePage = () => {
             marginTop: "20px",
             width: "20%",
             height: "50px",
+            backgroundColor: "#FE7E03",
           }}
           onClick={
             reportData.length
@@ -164,6 +167,7 @@ const HardeningPrePage = () => {
             marginTop: "20px",
             width: "20%",
             height: "50px",
+            backgroundColor: "#FE7E03",
           }}
           onClick={checkAgainHardening}
           loading={loading}
