@@ -1,6 +1,6 @@
 import React from "react";
 import type { FormProps } from "antd";
-import { Button, Checkbox, Flex, Form, Input, message } from "antd";
+import { Button, Card, Checkbox, Flex, Form, Input, message } from "antd";
 import TopNavigation from "../../../components/TopNavigation";
 import { loginUser } from "./functions/login-user.function";
 import { TOKEN_KEY_ENUM } from "../../../shared/enums/token.enum";
@@ -39,48 +39,75 @@ const LoginPage: React.FC = () => {
 
   return (
     <>
-      <TopNavigation></TopNavigation>
-      <Flex justify="center">
-        <Form
-          name="basic"
-          labelCol={{}}
-          wrapperCol={{}}
-          style={{ maxWidth: 500, width: "100%" }}
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
+      <TopNavigation />
+      <Flex justify="center" align="center" style={{ marginTop: "10rem" }}>
+        <Card
+          title={
+            <Flex align="center" justify="center">
+              <img
+                src="/douranLogo.png" // Update this with your logo path
+                alt="Logo"
+                style={{
+                  width: "50px",
+                  height: "50px",
+                  marginRight: "10px",
+                }}
+              />
+              <span style={{ fontSize: "30px", fontWeight: "bold" }}>ورود</span>
+            </Flex>
+          }
+          bordered={false}
+          style={{
+            width: 400,
+            height: 300,
+            borderRadius: "10px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          }}
         >
-          <Form.Item<FieldType>
-            label="Username"
-            name="username"
-            rules={[{ required: true, message: "Please input your username!" }]}
+          <Form
+            name="basic"
+            labelCol={{}}
+            wrapperCol={{}}
+            style={{ maxWidth: 500, width: "100%" }}
+            initialValues={{ remember: true }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
           >
-            <Input />
-          </Form.Item>
+            <Form.Item<FieldType>
+              label="نام کاربری"
+              name="username"
+              wrapperCol={{ offset: 0, span: 24 }}
+              rules={[
+                { required: true, message: "نام کاربری خود را وارد نمایید" },
+              ]}
+            >
+              <Input />
+            </Form.Item>
 
-          <Form.Item<FieldType>
-            label="Password"
-            name="password"
-            rules={[{ required: true, message: "Please input your password!" }]}
-          >
-            <Input.Password />
-          </Form.Item>
-
-          <Form.Item<FieldType>
-            name="remember"
-            valuePropName="checked"
-            wrapperCol={{ offset: 8, span: 16 }}
-          >
-            <Checkbox>Remember me</Checkbox>
-          </Form.Item>
-
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
+            <Form.Item<FieldType>
+              label="گذرواژه"
+              wrapperCol={{ offset: 1, span: 23 }}
+              name="password"
+              rules={[
+                { required: true, message: "رمز عبور خود را وارد نمایید" },
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
+            <div style={{ marginBottom: "3rem" }}></div>
+            <Form.Item style={{ textAlign: "center" }}>
+              <Button
+                size="large"
+                type="primary"
+                htmlType="submit"
+                style={{ width: "30%", backgroundColor: "#FE7E03" }}
+              >
+                ورود
+              </Button>
+            </Form.Item>
+          </Form>
+        </Card>
       </Flex>
     </>
   );
