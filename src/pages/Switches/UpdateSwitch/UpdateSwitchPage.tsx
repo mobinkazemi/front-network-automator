@@ -5,18 +5,20 @@ import { useParams } from "react-router-dom";
 import apiClient from "../../../configs/axios.config";
 import { ISwitch } from "../interface";
 import { updateSwitch } from "./functions/updateSwitch.function";
-import { BACKEND_ROUTES } from "../../../shared/backendRoutes";
+import { BACKEND_ROUTES, setId } from "../../../shared/backendRoutes";
 
-const { method, setId } = BACKEND_ROUTES.switch.info;
+const { method, url } = BACKEND_ROUTES.switch.info;
 const UpdateSwitchPage: React.FC = () => {
   const { switchId } = useParams();
   const [initialData, setInitialData] = useState<Partial<ISwitch>>();
   const [form] = Form.useForm();
 
   useEffect(() => {
-    apiClient[method](setId!(switchId as string)).then((response) => {
-      setInitialData(response.data.data);
-    });
+    apiClient[method](setId({ id: switchId as string, url })).then(
+      (response) => {
+        setInitialData(response.data.data);
+      }
+    );
   }, [switchId]);
 
   useEffect(() => {

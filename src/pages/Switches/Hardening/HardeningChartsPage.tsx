@@ -12,7 +12,7 @@ import "../background.css";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { Liquid } from "@ant-design/plots";
-import { BACKEND_ROUTES } from "../../../shared/backendRoutes";
+import { BACKEND_ROUTES, setId } from "../../../shared/backendRoutes";
 
 interface IResponseDataType {
   id: React.Key;
@@ -37,8 +37,8 @@ interface IAPIResponseVersion
   extends IBaseBackendResponse<IResponseVersionDataType[]> {}
 
 const {
-  detailList: { method: detailMethod, setId: setIdOfDetailUrl },
-  version: { method: versionMethod, setId: setIdOfVersionUrl },
+  detailList: { method: detailMethod, url: detailUrl },
+  version: { method: versionMethod, url: versionUrl },
 } = BACKEND_ROUTES.hardeningResult.switches;
 const Charts = () => {
   const { switchId } = useParams();
@@ -50,7 +50,9 @@ const Charts = () => {
   >([]);
 
   useEffect(() => {
-    apiClient[detailMethod]<IAPIResponse>(setIdOfDetailUrl!(switchId as string))
+    apiClient[detailMethod]<IAPIResponse>(
+      setId({ id: switchId as string, url: detailUrl })
+    )
       .then((data: AxiosResponse<IAPIResponse>) => {
         setHardeningResults(data.data.data!);
       })
@@ -59,7 +61,7 @@ const Charts = () => {
       });
 
     apiClient[versionMethod]<IAPIResponseVersion>(
-      setIdOfVersionUrl!(switchId as string)
+      setId({ id: switchId as string, url: versionUrl })
     )
       .then((data: AxiosResponse<IAPIResponseVersion>) => {
         console.log(data.data.data);

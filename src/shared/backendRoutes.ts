@@ -1,7 +1,9 @@
 type methods = "post" | "patch" | "get" | "delete";
 
+export const setId = ({ id, url }: { id: string | number; url: string }) => {
+  return url.replace(":id", String(id));
+};
 interface IRoute {
-  setId?: (id: string | number) => string;
   method: methods;
   url: string;
 }
@@ -52,16 +54,10 @@ export const BACKEND_ROUTES: IBackendRoutes = {
     info: {
       method: "get",
       url: "/switches/info/:id",
-      setId: function setId(id: string | number) {
-        return this.url.replace(":id", String(id));
-      },
     },
     delete: {
       method: "delete",
       url: "/switches/delete/:id",
-      setId: function setId(id: string | number) {
-        return this.url.replace(":id", String(id));
-      },
     },
     list: { method: "get", url: "/switches/list" },
     update: {
@@ -72,9 +68,6 @@ export const BACKEND_ROUTES: IBackendRoutes = {
     checkHardening: {
       method: "get",
       url: "/switches/checkHardening/:id",
-      setId: function setId(id: string | number) {
-        return this.url.replace(":id", String(id));
-      },
     },
     checkConnectionStatus: {
       method: "get",
@@ -83,9 +76,6 @@ export const BACKEND_ROUTES: IBackendRoutes = {
     createAsset: {
       method: "post",
       url: "/switches/createAsset/:id",
-      setId: function setId(id: string | number) {
-        return this.url.replace(":id", String(id));
-      },
     },
   },
   cis: {},
@@ -96,16 +86,10 @@ export const BACKEND_ROUTES: IBackendRoutes = {
       detailList: {
         url: "/hardeningResults/switches/:id",
         method: "get",
-        setId: function setId(id: string | number) {
-          return this.url.replace(":id", String(id));
-        },
       },
       version: {
         url: "/hardeningResults/switches/versions/:id",
         method: "get",
-        setId: function setId(id: string | number) {
-          return this.url.replace(":id", String(id));
-        },
       },
     },
   },

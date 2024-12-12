@@ -4,7 +4,7 @@ import { SyncOutlined } from "@ant-design/icons";
 import apiClient from "../../../../configs/axios.config";
 import { IBaseBackendResponse } from "../../../../shared/interfaces/base-backend-response.interface";
 import { AxiosResponse } from "axios";
-import { BACKEND_ROUTES } from "../../../../shared/backendRoutes";
+import { BACKEND_ROUTES, setId } from "../../../../shared/backendRoutes";
 
 interface IProps {
   switchId: number;
@@ -21,21 +21,21 @@ interface IData {
 }
 
 interface IAPIResponse extends IBaseBackendResponse<IData> {}
-const { method, setId } = BACKEND_ROUTES.switch.createAsset;
+const { method, url } = BACKEND_ROUTES.switch.createAsset;
 export const GetAssetsButton: React.FC<IProps> = ({ switchId }: IProps) => {
   const [loading, setLoading] = useState(false);
 
   const fn = () => {
     setLoading(true);
-    apiClient[method]<IAPIResponse>(setId!(switchId))
-      .then((data: AxiosResponse<IAPIResponse>) => {
+    apiClient[method]<IAPIResponse>(setId({ id: switchId, url }))
+      .then((_: AxiosResponse<IAPIResponse>) => {
         message.success("اطلاعات سوییچ به روز رسانی شد", 1000);
         setTimeout(() => {
           setLoading(false);
           window.location.reload();
         }, 1200);
       })
-      .catch((error) => {
+      .catch((_) => {
         message.error("اطلاعات سوییچ به روز رسانی نشد");
         setLoading(false);
       });

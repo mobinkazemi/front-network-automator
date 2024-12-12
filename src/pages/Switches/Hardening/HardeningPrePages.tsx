@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import apiClient from "../../../configs/axios.config";
 import { AxiosResponse } from "axios";
 import { IBaseBackendResponse } from "../../../shared/interfaces/base-backend-response.interface";
-import { BACKEND_ROUTES } from "../../../shared/backendRoutes";
+import { BACKEND_ROUTES, setId } from "../../../shared/backendRoutes";
 
 interface IResponseData {
   result: boolean;
@@ -20,9 +20,11 @@ interface IResponseData {
   };
 }
 interface IReportAPIResponse extends IBaseBackendResponse<IResponseData[]> {}
-const { method: detailMethod, setId: setIdOfDetailUrl } =
+
+const { method: detailMethod, url: detailUrl } =
   BACKEND_ROUTES.hardeningResult.switches.detailList;
-const { method: checkHardeningMethod, setId: setIdOfCheckHardening } =
+
+const { method: checkHardeningMethod, url: checkHardeningUrl } =
   BACKEND_ROUTES.switch.checkHardening;
 const convertToCSV = (data: IResponseData[]) => {
   const headers = ["title", "checkedAt", "result"];
@@ -63,7 +65,7 @@ const HardeningPrePage = () => {
   };
 
   useEffect(() => {
-    apiClient[detailMethod](setIdOfDetailUrl!(switchId as string))
+    apiClient[detailMethod](setId({ id: switchId as string, url: detailUrl }))
       .then((data: AxiosResponse<IReportAPIResponse>) => {
         setReportData(data.data.data!);
       })
@@ -76,7 +78,7 @@ const HardeningPrePage = () => {
     setLoading(true);
     try {
       await apiClient[checkHardeningMethod](
-        setIdOfCheckHardening!(switchId as string)
+        setId({ id: switchId as string, url: checkHardeningUrl })
       );
 
       message.success("تست ها با موفقیت اجرا شد");
