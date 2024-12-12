@@ -26,6 +26,10 @@ interface IBackendRoutes {
   };
   cis: {
     create: IRoute;
+    delete: IRoute;
+    list: IRoute;
+    info: IRoute;
+    update: IRoute;
   };
   category: {};
   hardening: {};
@@ -84,6 +88,22 @@ export const BACKEND_ROUTES: IBackendRoutes = {
     create: {
       method: "post",
       url: "/cis/create",
+    },
+    delete: {
+      method: "delete",
+      url: "/cis/delete/:id",
+    },
+    list: {
+      method: "get",
+      url: "/cis/list",
+    },
+    info: {
+      method: "get",
+      url: "/cis/info/:id",
+    },
+    update: {
+      method: "patch",
+      url: "/cis/update",
     },
   },
   category: {},

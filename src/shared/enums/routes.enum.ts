@@ -17,8 +17,8 @@ export enum ROUTES_ENUM {
   __CIS__ = "/cis",
   CIS_LIST = "/cis/list",
   CIS_CREATE = "/cis/create",
-  CIS_UPDATE = "/cis/update",
-  CIS_INFO = "/cis/info",
+  CIS_UPDATE = "/cis/update/:id",
+  CIS_INFO = "/cis/info/:id",
   CIS_DELETE = "/cis/delete",
 
   __CATEGORY__ = "/category",
