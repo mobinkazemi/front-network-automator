@@ -24,7 +24,9 @@ interface IBackendRoutes {
     checkHardening: IRoute;
     checkConnectionStatus: IRoute;
   };
-  cis: {};
+  cis: {
+    create: IRoute;
+  };
   category: {};
   hardening: {};
   hardeningResult: {
@@ -78,7 +80,12 @@ export const BACKEND_ROUTES: IBackendRoutes = {
       url: "/switches/createAsset/:id",
     },
   },
-  cis: {},
+  cis: {
+    create: {
+      method: "post",
+      url: "/cis/create",
+    },
+  },
   category: {},
   hardening: {},
   hardeningResult: {

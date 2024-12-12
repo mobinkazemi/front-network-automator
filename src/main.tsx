@@ -13,6 +13,7 @@ import RegisterPage from "./pages/Auth/Register/RegisterPage";
 import SwitchesHardeningPage from "./pages/Switches/Hardening/DetailHardeningPage";
 import HardeningChartsPage from "./pages/Switches/Hardening/HardeningChartsPage";
 import HardeningPrePage from "./pages/Switches/Hardening/HardeningPrePages";
+import CISCreationPage from "./pages/CIS/CIS/Create/Create";
 const router = createBrowserRouter([
   {
     path: ROUTES_ENUM.HOME,
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
   {
     path: ROUTES_ENUM.SWITCHES_PREPAGES_HARDENING,
     element: <HardeningPrePage />,
+  },
+  {
+    path: ROUTES_ENUM.CIS_CREATE,
+    element: <CISCreationPage />,
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")!).render(
