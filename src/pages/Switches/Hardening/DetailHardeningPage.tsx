@@ -9,11 +9,11 @@ import {
 import { Tag } from "antd";
 import apiClient from "../../../configs/axios.config";
 import { useParams } from "react-router-dom";
-import { BACKEND_ROUTES } from "../../../shared/enums/backend.routes.enum";
 import { AxiosResponse } from "axios";
 import { IBaseBackendResponse } from "../../../shared/interfaces/base-backend-response.interface";
 import moment from "jalali-moment";
 import { jalaliDateToText } from "../../../shared/functions/jalali-date-to-text-converted";
+import { BACKEND_ROUTES } from "../../../shared/backendRoutes";
 interface IResponseDataType {
   id: React.Key;
   checkedAt: Date | string;
@@ -27,6 +27,7 @@ interface IResponseDataType {
   };
 }
 
+const { method, url } = BACKEND_ROUTES.hardeningResult.switches.detailList;
 interface IResponse extends IBaseBackendResponse<IResponseDataType[]> {}
 const HardeningPage: React.FC = () => {
   const [switchesListData, setSwitchesListData] = useState<IResponseDataType[]>(
@@ -67,13 +68,7 @@ const HardeningPage: React.FC = () => {
     },
   ];
   useEffect(() => {
-    apiClient
-      .get(
-        BACKEND_ROUTES.SWITCHES_HARDENING_RESULTS.replace(
-          ":id",
-          switchId as string
-        )
-      )
+    apiClient[method](url.replace(":id", switchId as string))
       .then((data: AxiosResponse<IResponse>) => {
         const stateData = data.data.data!.map((item) => {
           return {

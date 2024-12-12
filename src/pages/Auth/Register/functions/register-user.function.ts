@@ -1,13 +1,15 @@
 import apiClient from "../../../../configs/axios.config";
+import { BACKEND_ROUTES } from "../../../../shared/backendRoutes";
 
 interface IResponse {
   result: boolean;
   message: string;
 }
+const { method, url } = BACKEND_ROUTES.auth.register;
 export const registerUser = async (values: any): Promise<IResponse> => {
   let res;
   try {
-    res = await apiClient.post("/auth/register", values);
+    res = await apiClient[method](url, values);
     return {
       result: true,
       message: res?.data?.message,

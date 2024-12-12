@@ -1,12 +1,15 @@
 import { Button, Flex, Modal, Tooltip } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import apiClient from "../../../../configs/axios.config";
+import { BACKEND_ROUTES } from "../../../../shared/backendRoutes";
 
 interface IProps {
   switchId: number;
   setDeletedSwitch: Function;
   deletedSwitch: number[];
 }
+const { url, method, setId } = BACKEND_ROUTES.switch.delete;
+
 /**
  * DeleteButton component
  *
@@ -30,7 +33,7 @@ export const DeleteButton: React.FC<IProps> = ({
       cancelText: "خیر، منصرف شدم",
       onOk: async () => {
         setDeletedSwitch([...deletedSwitch, switchId]);
-        await apiClient.delete("/switches/delete/" + switchId);
+        await apiClient[method](setId!(switchId));
       },
       onCancel() {
         console.log("User cancelled the deletion");

@@ -1,5 +1,7 @@
 import apiClient from "../../../../configs/axios.config";
+import { BACKEND_ROUTES } from "../../../../shared/backendRoutes";
 
+const { url, method } = BACKEND_ROUTES.switch.execCommand;
 interface ICommand {
   command: string;
   id: number;
@@ -14,8 +16,8 @@ export const sendSwitchCommand = async (
 ): Promise<ICommandRes> => {
   let result;
   try {
-    result = await apiClient.post("/switches/execCommand", {
-      data: data.command,
+    result = await apiClient[method](url, {
+      data: data.command as any,
       switchId: data.id,
     });
 

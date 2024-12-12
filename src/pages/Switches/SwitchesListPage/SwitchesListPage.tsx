@@ -12,8 +12,8 @@ import {
 import { Tag } from "antd";
 import apiClient from "../../../configs/axios.config";
 import { HardeningButton } from "./parts/HardeningButton";
-import { ROUTES_ENUM } from "../../../shared/enums/routes.enum";
 import { GetAssetsButton } from "./parts/GetAssetsButton";
+import { BACKEND_ROUTES } from "../../../shared/backendRoutes";
 interface DataType {
   id: React.Key;
   name: string;
@@ -29,6 +29,9 @@ interface IStatus {
   result: boolean;
 }
 
+const { url: listUrl, method: listMethod } = BACKEND_ROUTES.switch.list;
+const { url: checkConnectionUrl, method: checkConnectionMethod } =
+  BACKEND_ROUTES.switch.checkConnectionStatus;
 const App: React.FC = () => {
   const [switchesListData, setSwitchesListData] = useState<DataType[]>([]);
   const [deletedSwitch, setDeletedSwitch] = useState<number[]>([]);
@@ -99,25 +102,23 @@ const App: React.FC = () => {
     },
   ];
   useEffect(() => {
-    apiClient.get(ROUTES_ENUM.SWITCHES_LIST).then(({ data }) => {
+    apiClient[listMethod](listUrl).then(({ data }) => {
       setSwitchesListData(
         data.data.map((sw: any) => ({ ...sw, connectionStatus: null }))
       );
     });
 
-    apiClient
-      .get(ROUTES_ENUM.SWITCHES_CHECK_CONNECTION_STATUS)
-      .then(({ data }) => {
-        const statusData = data.data as IStatus[];
+    apiClient[checkConnectionMethod](checkConnectionUrl).then(({ data }) => {
+      const statusData = data.data as IStatus[];
 
-        setSwitchesListData((prevSwitches) =>
-          prevSwitches.map((sw) => ({
-            ...sw,
-            connectionStatus:
-              statusData.find((status) => status.id === sw.id)?.result ?? null,
-          }))
-        );
-      });
+      setSwitchesListData((prevSwitches) =>
+        prevSwitches.map((sw) => ({
+          ...sw,
+          connectionStatus:
+            statusData.find((status) => status.id === sw.id)?.result ?? null,
+        }))
+      );
+    });
   }, []);
 
   return (

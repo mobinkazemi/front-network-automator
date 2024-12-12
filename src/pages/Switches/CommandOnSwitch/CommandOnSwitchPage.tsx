@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import apiClient from "../../../configs/axios.config";
 import { ISwitch } from "../../../shared/interfaces/switch.interface";
 import { sendSwitchCommand } from "./functions/sendCommand";
+import { BACKEND_ROUTES } from "../../../shared/backendRoutes";
 
 const { TextArea } = Input;
 const { Paragraph } = Typography;
@@ -13,6 +14,7 @@ const messager = (msg: string) => {
   message.error(msg);
   return null;
 };
+const { method, url } = BACKEND_ROUTES.switch.info;
 const CommandOnSwitchPage: React.FC = () => {
   const { switchId } = useParams();
   const [switchInfo, setSwitchInfo] = useState<ISwitch>();
@@ -21,7 +23,9 @@ const CommandOnSwitchPage: React.FC = () => {
   useEffect(() => {
     const fetchSwitchInfo = async () => {
       try {
-        const response = await apiClient.get(`/switches/info/${switchId}`);
+        const response = await apiClient[method](
+          url.replace(":id", switchId as string)
+        );
         setSwitchInfo(response.data.data);
       } catch (err) {
         console.error(err);

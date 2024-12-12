@@ -1,5 +1,5 @@
-import apiClient from "../../../../configs/axios.config";
-import { BACKEND_ROUTES } from "../../../../shared/backendRoutes";
+import apiClient from "../../../../../configs/axios.config";
+import { BACKEND_ROUTES } from "../../../../../shared/backendRoutes";
 
 interface IResponse {
   result: boolean;

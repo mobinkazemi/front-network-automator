@@ -2,8 +2,6 @@ import { Pie } from "@ant-design/plots";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import apiClient from "../../../configs/axios.config";
-import { BACKEND_ROUTES } from "../../../shared/enums/backend.routes.enum";
-import { Tiny } from "@ant-design/charts";
 import { Flex, message } from "antd";
 import { IBaseBackendResponse } from "../../../shared/interfaces/base-backend-response.interface";
 import { AxiosResponse } from "axios";
@@ -14,6 +12,7 @@ import "../background.css";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { Liquid } from "@ant-design/plots";
+import { BACKEND_ROUTES } from "../../../shared/backendRoutes";
 
 interface IResponseDataType {
   id: React.Key;
@@ -37,6 +36,10 @@ interface IAPIResponse extends IBaseBackendResponse<IResponseDataType[]> {}
 interface IAPIResponseVersion
   extends IBaseBackendResponse<IResponseVersionDataType[]> {}
 
+const {
+  detailList: { method: detailMethod, url: detailUrl },
+  version: { method: versionMethod, url: versionUrl },
+} = BACKEND_ROUTES.hardeningResult.switches;
 const Charts = () => {
   const { switchId } = useParams();
   const [hardeningResults, setHardeningResults] = useState<IResponseDataType[]>(
@@ -47,13 +50,9 @@ const Charts = () => {
   >([]);
 
   useEffect(() => {
-    apiClient
-      .get<IAPIResponse>(
-        BACKEND_ROUTES.SWITCHES_HARDENING_RESULTS.replace(
-          ":id",
-          String(switchId)
-        )
-      )
+    apiClient[detailMethod]<IAPIResponse>(
+      detailUrl.replace(":id", String(switchId))
+    )
       .then((data: AxiosResponse<IAPIResponse>) => {
         setHardeningResults(data.data.data!);
       })
@@ -61,13 +60,9 @@ const Charts = () => {
         message.error(error.response.data.detail);
       });
 
-    apiClient
-      .get<IAPIResponseVersion>(
-        BACKEND_ROUTES.SWITCHES_HARDENING_VERSIONS.replace(
-          ":id",
-          String(switchId)
-        )
-      )
+    apiClient[versionMethod]<IAPIResponseVersion>(
+      versionUrl.replace(":id", String(switchId))
+    )
       .then((data: AxiosResponse<IAPIResponseVersion>) => {
         console.log(data.data.data);
         setHardeningVersionResults(data.data.data!);

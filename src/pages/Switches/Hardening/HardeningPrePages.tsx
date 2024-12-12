@@ -3,9 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ROUTES_ENUM } from "../../../shared/enums/routes.enum";
 import { useEffect, useState } from "react";
 import apiClient from "../../../configs/axios.config";
-import { BACKEND_ROUTES } from "../../../shared/enums/backend.routes.enum";
 import { AxiosResponse } from "axios";
 import { IBaseBackendResponse } from "../../../shared/interfaces/base-backend-response.interface";
+import { BACKEND_ROUTES } from "../../../shared/backendRoutes";
 
 interface IResponseData {
   result: boolean;
@@ -20,7 +20,10 @@ interface IResponseData {
   };
 }
 interface IReportAPIResponse extends IBaseBackendResponse<IResponseData[]> {}
-
+const { method: detailMethod, url: detailUrl } =
+  BACKEND_ROUTES.hardeningResult.switches.detailList;
+const { method: checkHardeningMethod, url: checkHardeningUrl } =
+  BACKEND_ROUTES.switch.checkHardening;
 const convertToCSV = (data: IResponseData[]) => {
   const headers = ["title", "checkedAt", "result"];
   const rows = data.map((item: any) => [
@@ -60,13 +63,7 @@ const HardeningPrePage = () => {
   };
 
   useEffect(() => {
-    apiClient
-      .get(
-        BACKEND_ROUTES.SWITCHES_HARDENING_RESULTS.replace(
-          ":id",
-          switchId as string
-        )
-      )
+    apiClient[detailMethod](detailUrl.replace(":id", switchId as string))
       .then((data: AxiosResponse<IReportAPIResponse>) => {
         setReportData(data.data.data!);
       })
@@ -78,11 +75,8 @@ const HardeningPrePage = () => {
   const checkAgainHardening = async () => {
     setLoading(true);
     try {
-      await apiClient.get(
-        BACKEND_ROUTES.SWITCHES_HARDENING.replace(
-          ":switchId",
-          switchId as string
-        )
+      await apiClient[checkHardeningMethod](
+        checkHardeningUrl.replace(":id", switchId as string)
       );
 
       message.success("تست ها با موفقیت اجرا شد");
