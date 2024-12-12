@@ -14,7 +14,7 @@ const messager = (msg: string) => {
   message.error(msg);
   return null;
 };
-const { method, url } = BACKEND_ROUTES.switch.info;
+const { method, setId } = BACKEND_ROUTES.switch.info;
 const CommandOnSwitchPage: React.FC = () => {
   const { switchId } = useParams();
   const [switchInfo, setSwitchInfo] = useState<ISwitch>();
@@ -23,9 +23,7 @@ const CommandOnSwitchPage: React.FC = () => {
   useEffect(() => {
     const fetchSwitchInfo = async () => {
       try {
-        const response = await apiClient[method](
-          url.replace(":id", switchId as string)
-        );
+        const response = await apiClient[method](setId!(String(switchId)));
         setSwitchInfo(response.data.data);
       } catch (err) {
         console.error(err);

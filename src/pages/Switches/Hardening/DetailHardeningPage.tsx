@@ -27,7 +27,8 @@ interface IResponseDataType {
   };
 }
 
-const { method, url } = BACKEND_ROUTES.hardeningResult.switches.detailList;
+const { method, url, setId } =
+  BACKEND_ROUTES.hardeningResult.switches.detailList;
 interface IResponse extends IBaseBackendResponse<IResponseDataType[]> {}
 const HardeningPage: React.FC = () => {
   const [switchesListData, setSwitchesListData] = useState<IResponseDataType[]>(
@@ -68,7 +69,7 @@ const HardeningPage: React.FC = () => {
     },
   ];
   useEffect(() => {
-    apiClient[method](url.replace(":id", switchId as string))
+    apiClient[method](setId!(switchId as string))
       .then((data: AxiosResponse<IResponse>) => {
         const stateData = data.data.data!.map((item) => {
           return {

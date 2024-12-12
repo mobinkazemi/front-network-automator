@@ -37,8 +37,8 @@ interface IAPIResponseVersion
   extends IBaseBackendResponse<IResponseVersionDataType[]> {}
 
 const {
-  detailList: { method: detailMethod, url: detailUrl },
-  version: { method: versionMethod, url: versionUrl },
+  detailList: { method: detailMethod, setId: setIdOfDetailUrl },
+  version: { method: versionMethod, setId: setIdOfVersionUrl },
 } = BACKEND_ROUTES.hardeningResult.switches;
 const Charts = () => {
   const { switchId } = useParams();
@@ -50,9 +50,7 @@ const Charts = () => {
   >([]);
 
   useEffect(() => {
-    apiClient[detailMethod]<IAPIResponse>(
-      detailUrl.replace(":id", String(switchId))
-    )
+    apiClient[detailMethod]<IAPIResponse>(setIdOfDetailUrl!(switchId as string))
       .then((data: AxiosResponse<IAPIResponse>) => {
         setHardeningResults(data.data.data!);
       })
@@ -61,7 +59,7 @@ const Charts = () => {
       });
 
     apiClient[versionMethod]<IAPIResponseVersion>(
-      versionUrl.replace(":id", String(switchId))
+      setIdOfVersionUrl!(switchId as string)
     )
       .then((data: AxiosResponse<IAPIResponseVersion>) => {
         console.log(data.data.data);

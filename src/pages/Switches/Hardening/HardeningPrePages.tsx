@@ -20,9 +20,9 @@ interface IResponseData {
   };
 }
 interface IReportAPIResponse extends IBaseBackendResponse<IResponseData[]> {}
-const { method: detailMethod, url: detailUrl } =
+const { method: detailMethod, setId: setIdOfDetailUrl } =
   BACKEND_ROUTES.hardeningResult.switches.detailList;
-const { method: checkHardeningMethod, url: checkHardeningUrl } =
+const { method: checkHardeningMethod, setId: setIdOfCheckHardening } =
   BACKEND_ROUTES.switch.checkHardening;
 const convertToCSV = (data: IResponseData[]) => {
   const headers = ["title", "checkedAt", "result"];
@@ -63,7 +63,7 @@ const HardeningPrePage = () => {
   };
 
   useEffect(() => {
-    apiClient[detailMethod](detailUrl.replace(":id", switchId as string))
+    apiClient[detailMethod](setIdOfDetailUrl!(switchId as string))
       .then((data: AxiosResponse<IReportAPIResponse>) => {
         setReportData(data.data.data!);
       })
@@ -76,7 +76,7 @@ const HardeningPrePage = () => {
     setLoading(true);
     try {
       await apiClient[checkHardeningMethod](
-        checkHardeningUrl.replace(":id", switchId as string)
+        setIdOfCheckHardening!(switchId as string)
       );
 
       message.success("تست ها با موفقیت اجرا شد");
