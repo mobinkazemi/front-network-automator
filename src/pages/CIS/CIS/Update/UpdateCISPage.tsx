@@ -22,7 +22,6 @@ const UpdateCISPage: React.FC = () => {
   useEffect(() => {
     apiClient[method](setId({ id: id as string, url })).then(
       (response: AxiosResponse<IBaseBackendResponse<ICIS>>) => {
-        console.log(response.data.data);
         setInitialData(response.data.data);
       }
     );
