@@ -24,7 +24,7 @@ export enum ROUTES_ENUM {
   __CATEGORY__ = "/category",
   CATEGORY_LIST = "/category/list",
   CATEGORY_CREATE = "/category/create",
-  CATEGORY_UPDATE = "/category/update",
+  CATEGORY_UPDATE = "/category/update/:id",
   CATEGORY_INFO = "/category/info",
   CATEGORY_DELETE = "/category/delete",
 
