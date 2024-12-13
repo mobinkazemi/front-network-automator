@@ -7,6 +7,8 @@ import apiClient from "../../../../configs/axios.config";
 import TopNavigation from "../../../../components/TopNavigation";
 import { IBaseBackendResponse } from "../../../../shared/interfaces/base-backend-response.interface";
 import { AxiosResponse } from "axios";
+import { jalaliDateToText } from "../../../../shared/functions/jalali-date-to-text-converted";
+import moment from "jalali-moment";
 
 interface DataType {
   id: React.Key;
@@ -78,7 +80,9 @@ const categoryListPage: React.FC = () => {
             id: el.id,
             name: el.name,
             cis: el.cis.name,
-            createdAt: el.createdAt,
+            createdAt: jalaliDateToText(
+              moment(el.createdAt).format("jYYYY/jM/jD HH:mm")
+            ),
           };
         });
 
