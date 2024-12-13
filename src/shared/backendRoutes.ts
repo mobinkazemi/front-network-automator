@@ -31,7 +31,9 @@ interface IBackendRoutes {
     info: IRoute;
     update: IRoute;
   };
-  category: {};
+  category: {
+    create: IRoute;
+  };
   hardening: {};
   hardeningResult: {
     switches: {
@@ -106,7 +108,12 @@ export const BACKEND_ROUTES: IBackendRoutes = {
       url: "/cis/update",
     },
   },
-  category: {},
+  category: {
+    create: {
+      method: "post",
+      url: "/category/create",
+    },
+  },
   hardening: {},
   hardeningResult: {
     switches: {
