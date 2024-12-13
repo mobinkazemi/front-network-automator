@@ -1,10 +1,95 @@
-import React from "react";
-import { Button, Card, Form, Input, message, Flex } from "antd";
+import React, { useEffect } from "react";
+import {
+  Button,
+  Card,
+  Form,
+  Input,
+  message,
+  Flex,
+  Select,
+  Cascader,
+} from "antd";
 import TopNavigation from "../../../../components/TopNavigation";
 import { createCategory } from "./functions/create.function";
+import apiClient from "../../../../configs/axios.config";
+import { BACKEND_ROUTES } from "../../../../shared/backendRoutes";
+import { IBaseBackendResponse } from "../../../../shared/interfaces/base-backend-response.interface";
+import { AxiosResponse } from "axios";
+import type { CascaderProps } from "antd";
+
+interface ICIS {
+  id: number;
+  name: string;
+  version: string;
+}
+interface ICategorizedList {
+  id: number;
+  name: string;
+  categories: {
+    id: number;
+    name: string;
+    parentId: number | undefined;
+  }[];
+}
+interface ICISOption {
+  label: string;
+  value: number;
+}
+interface IPIDOption {
+  label: string;
+  value: number;
+  children: IPIDOption[];
+}
+
+const { method: cisMethod, url: cisUrl } = BACKEND_ROUTES.cis.list;
+const { method: categoryMethod, url: categoryUrl } =
+  BACKEND_ROUTES.category.categorizedlist;
+
+interface ICISResponse extends IBaseBackendResponse<ICIS[]> {}
+interface ICategorizedListResponse
+  extends IBaseBackendResponse<ICategorizedList[]> {}
 
 const CategoryCreationPage: React.FC = () => {
   const [form] = Form.useForm();
+  const [cisOptions, setCISOptions] = React.useState<ICISOption[]>([]);
+  const [pidOptions, setPIDOptions] = React.useState<IPIDOption[]>([]);
+  const [cisId, setCisId] = React.useState<number>();
+  const [pid, setPid] = React.useState<number>();
+
+  const onChange: CascaderProps<IPIDOption>["onChange"] = (value) => {
+    if (value.length) {
+      setPid(value[value.length - 1]);
+    }
+  };
+  useEffect(() => {
+    apiClient[cisMethod](cisUrl).then((res: AxiosResponse<ICISResponse>) => {
+      const list = res.data.data!;
+      setCISOptions(
+        list.map((item) => ({
+          label: item.name,
+          value: item.id,
+        }))
+      );
+    });
+
+    apiClient[categoryMethod](categoryUrl).then(
+      (res: AxiosResponse<ICategorizedListResponse>) => {
+        const list = res.data.data!;
+        const setMe = list.map((item) => {
+          return {
+            label: item.name,
+            value: item.id,
+            children:
+              item.categories?.map((el) => {
+                return { label: el.name, value: el.id };
+              }) || [],
+          };
+        });
+
+        setPIDOptions(setMe as unknown as IPIDOption[]);
+      }
+    );
+  }, []);
 
   return (
     <>
@@ -40,7 +125,11 @@ const CategoryCreationPage: React.FC = () => {
             size="large"
             style={{ maxWidth: 500, width: "100%" }}
             onFinish={async (values) => {
-              const response = await createCategory(values);
+              const response = await createCategory({
+                ...values,
+                cisId: cisId,
+                parentId: pid,
+              });
 
               if (response.result) {
                 message.success(response.message);
@@ -54,7 +143,7 @@ const CategoryCreationPage: React.FC = () => {
             <Form.Item
               label="نام"
               name="name"
-              wrapperCol={{ offset: 2, span: 22 }}
+              wrapperCol={{ offset: 4, span: 20 }}
               rules={[
                 { required: true, message: "نام دسته بندی را وارد کنید" },
               ]}
@@ -65,29 +154,34 @@ const CategoryCreationPage: React.FC = () => {
             <Form.Item
               label="سی آی اس"
               name="cisId"
-              wrapperCol={{ offset: 1, span: 23 }}
-              rules={[
-                {
-                  required: true,
-                  message: "سی آی اس را انتخاب کنید",
-                },
-              ]}
+              wrapperCol={{ offset: 3, span: 21 }}
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: "سی آی اس را انتخاب کنید",
+              //   },
+              // ]}
             >
-              <Input size="large" />
+              <Select
+                onChange={(value: number) => {
+                  setCisId(value);
+                }}
+                options={cisOptions}
+              />{" "}
             </Form.Item>
 
             <Form.Item
               label="دسته بندی والد"
               name="pid"
-              wrapperCol={{ offset: 1, span: 23 }}
-              rules={[
-                {
-                  required: false,
-                  message: "دسته بندی والد را انتخاب کنید",
-                },
-              ]}
+              wrapperCol={{ offset: 2, span: 22 }}
+              // rules={[
+              //   {
+              //     required: false,
+              //     message: "دسته بندی والد را انتخاب کنید",
+              //   },
+              // ]}
             >
-              <Input size="large" />
+              <Cascader onChange={onChange} options={pidOptions} />{" "}
             </Form.Item>
 
             <div style={{ marginBottom: "2rem" }}></div>

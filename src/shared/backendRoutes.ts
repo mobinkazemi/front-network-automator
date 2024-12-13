@@ -33,6 +33,8 @@ interface IBackendRoutes {
   };
   category: {
     create: IRoute;
+    list: IRoute;
+    categorizedlist: IRoute;
   };
   hardening: {};
   hardeningResult: {
@@ -112,6 +114,14 @@ export const BACKEND_ROUTES: IBackendRoutes = {
     create: {
       method: "post",
       url: "/category/create",
+    },
+    list: {
+      method: "get",
+      url: "/category/list",
+    },
+    categorizedlist: {
+      method: "get",
+      url: "/category/categorizedlist",
     },
   },
   hardening: {},

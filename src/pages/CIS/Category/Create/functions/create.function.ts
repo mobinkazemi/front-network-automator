@@ -13,7 +13,7 @@ export const createCategory = async (values: any): Promise<IResponse> => {
     res = await apiClient[method](url, {
       name: values.name,
       cisId: values.cisId,
-      pid: values.pid,
+      parentId: values.parentId,
     } as any);
     return { result: true, message: res?.data?.message };
   } catch (error) {
