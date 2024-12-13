@@ -28,6 +28,10 @@ interface IEachRow {
     id: number;
     name: string;
   };
+  parent?: {
+    id: number;
+    name: string;
+  };
 }
 
 interface IListResponse extends IBaseBackendResponse<IEachRow[]> {}
@@ -42,6 +46,10 @@ const categoryListPage: React.FC = () => {
     {
       title: "آی‌دی",
       dataIndex: "id",
+    },
+    {
+      title: "دسته بندی بالادستی",
+      dataIndex: "parent",
     },
     {
       title: "نام",
@@ -80,6 +88,7 @@ const categoryListPage: React.FC = () => {
             id: el.id,
             name: el.name,
             cis: el.cis.name,
+            parent: el?.parent?.name || "-",
             createdAt: jalaliDateToText(
               moment(el.createdAt).format("jYYYY/jM/jD HH:mm")
             ),
