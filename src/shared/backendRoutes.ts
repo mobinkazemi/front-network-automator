@@ -35,6 +35,7 @@ interface IBackendRoutes {
     create: IRoute;
     list: IRoute;
     categorizedlist: IRoute;
+    delete: IRoute;
   };
   hardening: {};
   hardeningResult: {
@@ -122,6 +123,10 @@ export const BACKEND_ROUTES: IBackendRoutes = {
     categorizedlist: {
       method: "get",
       url: "/category/categorizedlist",
+    },
+    delete: {
+      method: "delete",
+      url: "/category/delete/:id",
     },
   },
   hardening: {},

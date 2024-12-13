@@ -14,9 +14,10 @@ import SwitchesHardeningPage from "./pages/Switches/Hardening/DetailHardeningPag
 import HardeningChartsPage from "./pages/Switches/Hardening/HardeningChartsPage";
 import HardeningPrePage from "./pages/Switches/Hardening/HardeningPrePages";
 import CISCreationPage from "./pages/CIS/CIS/Create/Create";
-import CISListPage from "./pages/CIS/CIS/List/CISListPage";
 import UpdateCISPage from "./pages/CIS/CIS/Update/UpdateCISPage";
 import CategoryCreationPage from "./pages/CIS/Category/Create/Create";
+import CategoryListPage from "./pages/CIS/Category/List/categoryListPage";
+import CISListPage from "./pages/CIS/CIS/List/CISListPage";
 const router = createBrowserRouter([
   {
     path: ROUTES_ENUM.HOME,
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
   {
     path: ROUTES_ENUM.CATEGORY_CREATE,
     element: <CategoryCreationPage />,
+  },
+  {
+    path: ROUTES_ENUM.CATEGORY_LIST,
+    element: <CategoryListPage />,
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")!).render(

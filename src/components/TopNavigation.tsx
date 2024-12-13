@@ -65,7 +65,7 @@ const items: MenuItem[] = [
         type: "group",
         label: "دسته بندی",
         children: [
-          { label: "لیست", key: ROUTES_ENUM.CATEGORY_LIST, disabled: true },
+          { label: "لیست", key: ROUTES_ENUM.CATEGORY_LIST, disabled: false },
           { label: "ایجاد", key: ROUTES_ENUM.CATEGORY_CREATE, disabled: false },
         ],
       },
@@ -129,6 +129,10 @@ const TopNavigation: React.FC = () => {
       //
       case ROUTES_ENUM.CATEGORY_CREATE:
         navigator(ROUTES_ENUM.CATEGORY_CREATE);
+        break;
+
+      case ROUTES_ENUM.CATEGORY_LIST:
+        navigator(ROUTES_ENUM.CATEGORY_LIST);
         break;
     }
   };
