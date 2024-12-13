@@ -34,7 +34,7 @@ const UpdateCISPage: React.FC = () => {
   return (
     <>
       <TopNavigation />
-      <Flex justify="center" align="center" style={{ marginTop: "3rem" }}>
+      <Flex justify="center" align="center" style={{ marginTop: "9rem" }}>
         <Card
           title={
             <Flex align="center" justify="center">
