@@ -66,7 +66,7 @@ const items: MenuItem[] = [
         label: "دسته بندی",
         children: [
           { label: "لیست", key: ROUTES_ENUM.CATEGORY_LIST, disabled: true },
-          { label: "ایجاد", key: ROUTES_ENUM.CATEGORY_CREATE, disabled: true },
+          { label: "ایجاد", key: ROUTES_ENUM.CATEGORY_CREATE, disabled: false },
         ],
       },
       {
@@ -93,6 +93,12 @@ const TopNavigation: React.FC = () => {
         navigator(ROUTES_ENUM.HOME);
         break;
 
+      //
+      //
+      //
+      //
+      // SWITCHES
+      //
       case ROUTES_ENUM.SWITCHES_LIST:
         navigator(ROUTES_ENUM.SWITCHES_LIST);
         break;
@@ -101,12 +107,28 @@ const TopNavigation: React.FC = () => {
         navigator(ROUTES_ENUM.SWITCHES_CREATE);
         break;
 
+      //
+      //
+      //
+      //
+      // CIS
+      //
       case ROUTES_ENUM.CIS_LIST:
         navigator(ROUTES_ENUM.CIS_LIST);
         break;
 
       case ROUTES_ENUM.CIS_CREATE:
         navigator(ROUTES_ENUM.CIS_CREATE);
+        break;
+
+      //
+      //
+      //
+      //
+      // CATEGORY
+      //
+      case ROUTES_ENUM.CATEGORY_CREATE:
+        navigator(ROUTES_ENUM.CATEGORY_CREATE);
         break;
     }
   };
