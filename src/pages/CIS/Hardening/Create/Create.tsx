@@ -1,11 +1,67 @@
-import React from "react";
-import { Button, Card, Form, Input, message, Flex } from "antd";
+import React, { useEffect } from "react";
+import {
+  Button,
+  Card,
+  Form,
+  Input,
+  message,
+  Flex,
+  Cascader,
+  CascaderProps,
+} from "antd";
 import TopNavigation from "../../../../components/TopNavigation";
 import { createHardening } from "./functions/create.function";
-
+import apiClient from "../../../../configs/axios.config";
+import { AxiosResponse } from "axios";
+import { BACKEND_ROUTES } from "../../../../shared/backendRoutes";
+import { IBaseBackendResponse } from "../../../../shared/interfaces/base-backend-response.interface";
+const { method: categoryMethod, url: categoryUrl } =
+  BACKEND_ROUTES.category.categorizedlist;
+interface ICategorizedList {
+  id: number;
+  name: string;
+  categories: {
+    id: number;
+    name: string;
+    parentId: number | undefined;
+  }[];
+}
+interface IPIDOption {
+  label: string;
+  value: number;
+  children: IPIDOption[];
+}
+interface ICategorizedListResponse
+  extends IBaseBackendResponse<ICategorizedList[]> {}
 const CreateHardeningPage: React.FC = () => {
   const [form] = Form.useForm();
+  const [pidOptions, setPIDOptions] = React.useState<IPIDOption[]>([]);
+  const [categoryId, setCategoryId] = React.useState<number>();
 
+  const onChange: CascaderProps<IPIDOption>["onChange"] = (value) => {
+    if (value.length) {
+      setCategoryId(value[value.length - 1]);
+    }
+  };
+  useEffect(() => {
+    apiClient[categoryMethod](categoryUrl).then(
+      (res: AxiosResponse<ICategorizedListResponse>) => {
+        const list = res.data.data!;
+        const setMe = list.map((item) => {
+          return {
+            label: item.name,
+            value: item.id,
+            children:
+              item.categories?.map((el) => {
+                return { label: el.name, value: el.id };
+              }) || [],
+          };
+        });
+
+        setPIDOptions(setMe as unknown as IPIDOption[]);
+      }
+    );
+  }, []);
   return (
     <>
       <TopNavigation />
@@ -40,8 +96,8 @@ const CreateHardeningPage: React.FC = () => {
             size="large"
             style={{ maxWidth: 500, width: "100%" }}
             onFinish={async (values) => {
-              const response = await createHardening(values);
-
+              const response = await createHardening({ ...values, categoryId });
+              console.log({ response });
               if (response.result) {
                 message.success(response.message);
                 form.resetFields();
@@ -110,7 +166,7 @@ const CreateHardeningPage: React.FC = () => {
               name="categoryId"
               wrapperCol={{ offset: 2, span: 22 }}
             >
-              <Input size="large" />
+              <Cascader onChange={onChange} options={pidOptions} />{" "}
             </Form.Item>
 
             <div style={{ marginBottom: "2rem" }}></div>

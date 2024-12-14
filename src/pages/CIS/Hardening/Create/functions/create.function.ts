@@ -11,8 +11,8 @@ export const createHardening = async (values: any): Promise<IResponse> => {
   let res;
   try {
     res = await apiClient[method](url, {
-      name: values.name,
-      version: values.version,
+      ...values,
+      categoryId: +values.categoryId,
     } as any);
     return { result: true, message: res?.data?.message };
   } catch (error) {
