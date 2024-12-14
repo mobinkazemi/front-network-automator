@@ -39,7 +39,9 @@ interface IBackendRoutes {
     categorizedlist: IRoute;
     delete: IRoute;
   };
-  hardening: {};
+  hardening: {
+    create: IRoute;
+  };
   hardeningResult: {
     switches: {
       detailList: IRoute;
@@ -139,7 +141,12 @@ export const BACKEND_ROUTES: IBackendRoutes = {
       url: "/category/info/:id",
     },
   },
-  hardening: {},
+  hardening: {
+    create: {
+      method: "post",
+      url: "/hardening/create",
+    },
+  },
   hardeningResult: {
     switches: {
       detailList: {

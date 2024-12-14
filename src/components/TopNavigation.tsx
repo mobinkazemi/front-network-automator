@@ -74,7 +74,11 @@ const items: MenuItem[] = [
         label: "هاردنینگ",
         children: [
           { label: "لیست", key: ROUTES_ENUM.HARDENING_LIST, disabled: true },
-          { label: "ایجاد", key: ROUTES_ENUM.HARDENING_CREATE, disabled: true },
+          {
+            label: "ایجاد",
+            key: ROUTES_ENUM.HARDENING_CREATE,
+            disabled: false,
+          },
         ],
       },
     ],
@@ -133,6 +137,16 @@ const TopNavigation: React.FC = () => {
 
       case ROUTES_ENUM.CATEGORY_LIST:
         navigator(ROUTES_ENUM.CATEGORY_LIST);
+        break;
+
+      //
+      //
+      //
+      //
+      // HARDENING
+      //
+      case ROUTES_ENUM.HARDENING_CREATE:
+        navigator(ROUTES_ENUM.HARDENING_CREATE);
         break;
     }
   };
