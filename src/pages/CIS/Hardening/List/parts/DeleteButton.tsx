@@ -8,7 +8,7 @@ interface IProps {
   setDeletionState: Function;
   deletedHardening: number[];
 }
-const { method, url } = BACKEND_ROUTES.category.delete;
+const { method, url } = BACKEND_ROUTES.hardening.delete;
 
 export const DeleteButton: React.FC<IProps> = ({
   hardeningId,

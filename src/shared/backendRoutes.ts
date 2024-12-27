@@ -42,6 +42,7 @@ interface IBackendRoutes {
   hardening: {
     create: IRoute;
     list: IRoute;
+    delete: IRoute;
   };
   hardeningResult: {
     switches: {
@@ -150,6 +151,10 @@ export const BACKEND_ROUTES: IBackendRoutes = {
     list: {
       method: "get",
       url: "/hardening/list",
+    },
+    delete: {
+      method: "delete",
+      url: "/hardening/delete/:id",
     },
   },
   hardeningResult: {
