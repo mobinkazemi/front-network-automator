@@ -31,7 +31,7 @@ export enum ROUTES_ENUM {
   __HARDENING__ = "/hardening",
   HARDENING_LIST = "/hardening/list",
   HARDENING_CREATE = "/hardening/create",
-  HARDENING_UPDATE = "/hardening/update",
+  HARDENING_UPDATE = "/hardening/update/:id",
   HARDENING_INFO = "/hardening/info",
   HARDENING_DELETE = "/hardening/delete",
   //
