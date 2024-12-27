@@ -73,7 +73,7 @@ const items: MenuItem[] = [
         type: "group",
         label: "هاردنینگ",
         children: [
-          { label: "لیست", key: ROUTES_ENUM.HARDENING_LIST, disabled: true },
+          { label: "لیست", key: ROUTES_ENUM.HARDENING_LIST, disabled: false },
           {
             label: "ایجاد",
             key: ROUTES_ENUM.HARDENING_CREATE,
@@ -148,6 +148,8 @@ const TopNavigation: React.FC = () => {
       case ROUTES_ENUM.HARDENING_CREATE:
         navigator(ROUTES_ENUM.HARDENING_CREATE);
         break;
+      case ROUTES_ENUM.HARDENING_LIST:
+        navigator(ROUTES_ENUM.HARDENING_LIST);
     }
   };
 

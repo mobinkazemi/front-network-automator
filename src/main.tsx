@@ -20,6 +20,8 @@ import CategoryListPage from "./pages/CIS/Category/List/categoryListPage";
 import CISListPage from "./pages/CIS/CIS/List/CISListPage";
 import UpdateCategoryPage from "./pages/CIS/Category/Update/UpdateCategory";
 import CreateHardeningPage from "./pages/CIS/Hardening/Create/Create";
+import HardeningListPage from "./pages/CIS/Hardening/List/hardeningListPage";
+
 const router = createBrowserRouter([
   {
     path: ROUTES_ENUM.HOME,
@@ -84,6 +86,10 @@ const router = createBrowserRouter([
   {
     path: ROUTES_ENUM.CATEGORY_UPDATE,
     element: <UpdateCategoryPage />,
+  },
+  {
+    path: ROUTES_ENUM.HARDENING_LIST,
+    element: <HardeningListPage />,
   },
   {
     path: ROUTES_ENUM.HARDENING_CREATE,

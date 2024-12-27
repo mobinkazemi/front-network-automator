@@ -41,6 +41,7 @@ interface IBackendRoutes {
   };
   hardening: {
     create: IRoute;
+    list: IRoute;
   };
   hardeningResult: {
     switches: {
@@ -145,6 +146,10 @@ export const BACKEND_ROUTES: IBackendRoutes = {
     create: {
       method: "post",
       url: "/hardening/create",
+    },
+    list: {
+      method: "get",
+      url: "/hardening/list",
     },
   },
   hardeningResult: {
