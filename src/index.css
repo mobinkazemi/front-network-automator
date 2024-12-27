@@ -6,3 +6,9 @@
 body {
   font-family: "iranSans", Arial, Helvetica, sans-serif;
 }
+
+.ant-menu-item-group-title {
+  direction: rtl;
+  text-align: right;
+  font-weight: bolder;
+}
