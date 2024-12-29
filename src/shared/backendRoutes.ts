@@ -52,6 +52,13 @@ interface IBackendRoutes {
       version: IRoute;
     };
   };
+  operatingSystem: {
+    create: IRoute;
+    delete: IRoute;
+    info: IRoute;
+    list: IRoute;
+    update: IRoute;
+  };
 }
 
 export const BACKEND_ROUTES: IBackendRoutes = {
@@ -177,6 +184,28 @@ export const BACKEND_ROUTES: IBackendRoutes = {
         url: "/hardeningResults/switches/versions/:id",
         method: "get",
       },
+    },
+  },
+  operatingSystem: {
+    create: {
+      method: "post",
+      url: "/operatingSystem/create",
+    },
+    delete: {
+      method: "delete",
+      url: "/operatingSystem/delete/:id",
+    },
+    info: {
+      method: "get",
+      url: "/operatingSystem/info/:id",
+    },
+    list: {
+      method: "get",
+      url: "/operatingSystem/list",
+    },
+    update: {
+      method: "patch",
+      url: "/operatingSystem/update",
     },
   },
 };
