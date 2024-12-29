@@ -50,4 +50,16 @@ export enum ROUTES_ENUM {
   SWITCHES_DETAIL_HARDENING = "/switches/hardening/details/:switchId",
   SWITCHES_CHARTS_HARDENING = "/switches/hardening/charts/:switchId",
   SWITCHES_REPORT_HARDENING = "/switches/hardening/report/:switchId",
+
+  //
+  //
+  //
+  // ####################################
+  //            OPERATING SYSTEM
+  __OS__ = "/os",
+  OS_LIST = "/os/list",
+  OS_CREATE = "/os/create",
+  OS_UPDATE = "/os/update/:id",
+  OS_INFO = "/os/info",
+  OS_DELETE = "/os/delete",
 }

@@ -83,6 +83,17 @@ const items: MenuItem[] = [
       },
     ],
   },
+  {
+    label: "سیستم عامل",
+    key: ROUTES_ENUM.__OS__,
+    icon: <CodepenCircleFilled />,
+    children: [
+      {
+        label: "لیست",
+        key: ROUTES_ENUM.OS_LIST,
+      },
+    ],
+  },
 ];
 
 const TopNavigation: React.FC = () => {
@@ -150,6 +161,16 @@ const TopNavigation: React.FC = () => {
         break;
       case ROUTES_ENUM.HARDENING_LIST:
         navigator(ROUTES_ENUM.HARDENING_LIST);
+        break;
+      //
+      //
+      //
+      //
+      // OPERATING SYSTEM
+      //
+      case ROUTES_ENUM.OS_LIST:
+        navigator(ROUTES_ENUM.OS_LIST);
+        break;
     }
   };
 
