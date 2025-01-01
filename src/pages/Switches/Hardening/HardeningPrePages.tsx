@@ -104,7 +104,7 @@ const HardeningPrePage = () => {
           }}
           onClick={() =>
             navigator(
-              ROUTES_ENUM.SWITCHES_DETAIL_HARDENING.replace(
+              ROUTES_ENUM.SWITCHES_REPORT_HARDENING_SUMMARYDETAIL.replace(
                 ":switchId",
                 String(switchId)
               )

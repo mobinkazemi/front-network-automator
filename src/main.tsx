@@ -23,7 +23,7 @@ import CreateHardeningPage from "./pages/CIS/Hardening/Create/Create";
 import HardeningListPage from "./pages/CIS/Hardening/List/hardeningListPage";
 import UpdateHardeningPage from "./pages/CIS/Hardening/Update/UpdateHardeningPage";
 import OSListPage from "./pages/OperatingSystem/List/List";
-
+import HardeningSummaryDetailPage from "./pages/Switches/Hardening/HardeningSummaryWithDetailsPage";
 const router = createBrowserRouter([
   {
     path: ROUTES_ENUM.HOME,
@@ -74,6 +74,10 @@ const router = createBrowserRouter([
   {
     path: ROUTES_ENUM.SWITCHES_PREPAGES_HARDENING,
     element: <HardeningPrePage />,
+  },
+  {
+    path: ROUTES_ENUM.SWITCHES_REPORT_HARDENING_SUMMARYDETAIL,
+    element: <HardeningSummaryDetailPage />,
   },
   //
   //

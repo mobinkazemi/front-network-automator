@@ -50,6 +50,7 @@ export enum ROUTES_ENUM {
   SWITCHES_DETAIL_HARDENING = "/switches/hardening/details/:switchId",
   SWITCHES_CHARTS_HARDENING = "/switches/hardening/charts/:switchId",
   SWITCHES_REPORT_HARDENING = "/switches/hardening/report/:switchId",
+  SWITCHES_REPORT_HARDENING_SUMMARYDETAIL = "/switches/hardening/report/summaryDetails/:switchId",
 
   //
   //
