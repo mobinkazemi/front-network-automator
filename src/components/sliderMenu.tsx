@@ -3,7 +3,7 @@ import Icon, { CodepenCircleFilled } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import { ROUTES_ENUM } from "../shared/enums/routes.enum";
-
+import "./sliderMenuStyle.css";
 type MenuItem = Required<MenuProps>["items"][number];
 enum NavKeys {
   HOME_PAGE = "HOME PAGE",
@@ -155,7 +155,15 @@ const SliderMenu: React.FC<SliderMenuProps> = ({ onClick }) => {
       defaultSelectedKeys={["231"]}
       openKeys={stateOpenKeys}
       onOpenChange={onOpenChange}
-      style={{ width: 256 }}
+      style={{
+        width: 256,
+        marginTop: "17px",
+        marginRight: "8px",
+        borderRadius: "10px",
+        border: "2px solid #EFF2F5",
+        fontWeight: "bold", // Set default text boldness for all menu items
+        fontSize: "16px", // Set default font size
+      }}
       items={items}
     />
   );

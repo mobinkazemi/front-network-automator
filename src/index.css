@@ -1,14 +1,4 @@
 @font-face {
   font-family: "iranSans";
-  src: url("./assets/fonts/irsans.ttf") format("truetype");
-}
-
-body {
-  font-family: "iranSans", Arial, Helvetica, sans-serif;
-}
-
-.ant-menu-item-group-title {
-  direction: rtl;
-  text-align: right;
-  font-weight: bolder;
+  src: url("/assets/fonts/irsans.ttf") format("truetype");
 }

@@ -86,7 +86,7 @@ const BaseLayout: React.FC = () => {
   return (
     <Layout style={{ minHeight: "100vh", direction: "rtl" }}>
       {/* Top Navigation */}
-      <Header style={{ background: "#001529", color: "white" }}>
+      <Header style={{ background: "#FE7E03", color: "white" }}>
         <TopNavigation />
       </Header>
 
@@ -94,10 +94,10 @@ const BaseLayout: React.FC = () => {
         {/* Right Sidebar */}
         <Sider
           style={{
-            background: "#f0f2f5",
+            background: "#F5F5F5",
             textAlign: "right",
           }}
-          width={200}
+          width={256}
         >
           {/* <Menu
             onClick={onClick}
@@ -113,7 +113,13 @@ const BaseLayout: React.FC = () => {
 
         {/* Content Area */}
         <Content
-          style={{ margin: "16px", padding: "16px", background: "#fff" }}
+          style={{
+            margin: "16px",
+            padding: "16px",
+            background: "#fff",
+            borderRadius: "10px",
+            border: "2px solid #EFF2F5",
+          }}
         >
           <Outlet />
         </Content>
