@@ -6,7 +6,7 @@ const SwitchCreationPage: React.FC = () => {
   const [form] = Form.useForm();
 
   return (
-    <Flex justify="center" align="center" style={{ marginTop: "2rem" }}>
+    <Flex justify="center" align="center" style={{ marginTop: "100px" }}>
       <Card
         title={
           <Flex align="center" justify="center">

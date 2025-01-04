@@ -26,7 +26,7 @@ const UpdateSwitchPage: React.FC = () => {
 
   return (
     <>
-      <Flex justify="center" align="center" style={{ marginTop: "3rem" }}>
+      <Flex justify="center" align="center" style={{ marginTop: "1rem" }}>
         <Card
           title={
             <Flex align="center" justify="center">
