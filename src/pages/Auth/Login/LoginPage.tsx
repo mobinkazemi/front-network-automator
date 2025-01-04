@@ -1,7 +1,6 @@
 import React from "react";
 import type { FormProps } from "antd";
 import { Button, Card, Flex, Form, Input, message } from "antd";
-import TopNavigation from "../../../components/TopNavigation";
 import { loginUser } from "./functions/login-user.function";
 import { TOKEN_KEY_ENUM } from "../../../shared/enums/token.enum";
 import { useNavigate } from "react-router-dom";
@@ -39,7 +38,6 @@ const LoginPage: React.FC = () => {
 
   return (
     <>
-      <TopNavigation />
       <Flex justify="center" align="center" style={{ marginTop: "10rem" }}>
         <Card
           title={

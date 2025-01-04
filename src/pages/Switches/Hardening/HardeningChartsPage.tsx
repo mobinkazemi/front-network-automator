@@ -5,7 +5,6 @@ import apiClient from "../../../configs/axios.config";
 import { Flex, message } from "antd";
 import { IBaseBackendResponse } from "../../../shared/interfaces/base-backend-response.interface";
 import { AxiosResponse } from "axios";
-import TopNavigation from "../../../components/TopNavigation";
 import { Line } from "@ant-design/plots";
 import React from "react";
 import "../background.css";
@@ -179,7 +178,6 @@ const Charts = () => {
   // SHOW RESULTS
   return (
     <div className="SwitchPage">
-      <TopNavigation />
       <Flex align="center" justify="center" vertical>
         <div
           style={{

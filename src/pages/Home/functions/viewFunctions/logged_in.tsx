@@ -1,10 +1,8 @@
 import { Flex } from "antd";
-import TopNavigation from "../../../../components/TopNavigation";
 
 export const LoggedInContent = () => {
   return (
     <>
-      <TopNavigation></TopNavigation>
       <Flex justify="center" align="center" vertical>
         <div
           style={{ marginTop: "5rem", marginBottom: "2rem", direction: "rtl" }}

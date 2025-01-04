@@ -5,7 +5,6 @@ import { BACKEND_ROUTES, setId } from "../../../../shared/backendRoutes";
 import { IBaseBackendResponse } from "../../../../shared/interfaces/base-backend-response.interface";
 import apiClient from "../../../../configs/axios.config";
 import { AxiosResponse } from "axios";
-import TopNavigation from "../../../../components/TopNavigation";
 import { updateHardening } from "./functions/updateHardening.function";
 import { Row, Col } from "antd";
 
@@ -40,7 +39,6 @@ const UpdateHardeningPage: React.FC = () => {
 
   return (
     <>
-      <TopNavigation />
       <Flex justify="center" align="center" style={{ marginTop: "9rem" }}>
         <Card
           title={

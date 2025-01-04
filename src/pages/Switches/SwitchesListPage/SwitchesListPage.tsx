@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Space, Table } from "antd";
-import TopNavigation from "../../../components/TopNavigation";
 import { DeleteButton } from "./parts/DeleteButton";
 import { EditButton } from "./parts/EditButton";
 import { ConnectButton } from "./parts/ConnectButton";
@@ -123,7 +122,6 @@ const App: React.FC = () => {
 
   return (
     <>
-      <TopNavigation />
       <Table
         columns={columns}
         dataSource={switchesListData.filter(

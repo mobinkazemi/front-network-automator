@@ -4,7 +4,6 @@ import { DeleteButton } from "./parts/DeleteButton";
 import { EditButton } from "./parts/EditButton";
 import { BACKEND_ROUTES } from "../../../../shared/backendRoutes";
 import apiClient from "../../../../configs/axios.config";
-import TopNavigation from "../../../../components/TopNavigation";
 import { IBaseBackendResponse } from "../../../../shared/interfaces/base-backend-response.interface";
 import { AxiosResponse } from "axios";
 import { jalaliDateToText } from "../../../../shared/functions/jalali-date-to-text-converted";
@@ -102,7 +101,6 @@ const categoryListPage: React.FC = () => {
 
   return (
     <>
-      <TopNavigation />
       <Table
         columns={columns}
         dataSource={categoryListData.filter(

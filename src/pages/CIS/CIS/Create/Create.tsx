@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, Card, Form, Input, message, Flex } from "antd";
-import TopNavigation from "../../../../components/TopNavigation";
 import { createCIS } from "./functions/create.function";
 
 const CISCreationPage: React.FC = () => {
@@ -8,7 +7,6 @@ const CISCreationPage: React.FC = () => {
 
   return (
     <>
-      <TopNavigation />
       <Flex justify="center" align="center" style={{ marginTop: "10rem" }}>
         <Card
           title={

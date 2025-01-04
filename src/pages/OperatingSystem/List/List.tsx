@@ -7,7 +7,6 @@ import moment from "jalali-moment";
 import { IBaseBackendResponse } from "../../../shared/interfaces/base-backend-response.interface";
 import { BACKEND_ROUTES } from "../../../shared/backendRoutes";
 import apiClient from "../../../configs/axios.config";
-import TopNavigation from "../../../components/TopNavigation";
 
 interface DataType {
   id: React.Key;
@@ -140,7 +139,6 @@ const OSListPage: React.FC = () => {
 
   return (
     <>
-      <TopNavigation />
       <Table
         columns={columns}
         dataSource={operatingSystemListData.filter(

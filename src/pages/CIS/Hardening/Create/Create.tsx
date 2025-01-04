@@ -9,7 +9,6 @@ import {
   Cascader,
   CascaderProps,
 } from "antd";
-import TopNavigation from "../../../../components/TopNavigation";
 import { createHardening } from "./functions/create.function";
 import apiClient from "../../../../configs/axios.config";
 import { AxiosResponse } from "axios";
@@ -64,7 +63,6 @@ const CreateHardeningPage: React.FC = () => {
   }, []);
   return (
     <>
-      <TopNavigation />
       <Flex justify="center" align="center" style={{ marginTop: "10rem" }}>
         <Card
           title={

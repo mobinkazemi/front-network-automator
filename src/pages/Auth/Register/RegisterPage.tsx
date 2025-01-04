@@ -1,7 +1,6 @@
 import React from "react";
 import type { FormProps } from "antd";
 import { Button, Card, Form, Input, message, Flex } from "antd";
-import TopNavigation from "../../../components/TopNavigation";
 import { registerUser } from "./functions/register-user.function";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_ENUM } from "../../../shared/enums/routes.enum";
@@ -39,7 +38,6 @@ const RegisterPage: React.FC = () => {
 
   return (
     <>
-      <TopNavigation />
       <Flex justify="center" align="center" style={{ marginTop: "10rem" }}>
         <Card
           title={

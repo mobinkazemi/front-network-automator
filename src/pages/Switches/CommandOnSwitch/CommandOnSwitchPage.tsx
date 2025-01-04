@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, Input, message, Typography } from "antd";
-import TopNavigation from "../../../components/TopNavigation";
 import SwitchInfoComponent from "./parts/switchInfoComponent";
 import { useParams } from "react-router-dom";
 import apiClient from "../../../configs/axios.config";
@@ -43,7 +42,6 @@ const CommandOnSwitchPage: React.FC = () => {
 
     return (
       <>
-        <TopNavigation></TopNavigation>
         <SwitchInfoComponent
           name={switchInfo.name}
           ip={switchInfo.ip}
@@ -157,7 +155,6 @@ const CommandOnSwitchPage: React.FC = () => {
   } else if (switchInfo) {
     return (
       <>
-        <TopNavigation></TopNavigation>
         <SwitchInfoComponent
           name={switchInfo.name}
           ip={switchInfo.ip}
@@ -202,11 +199,7 @@ const CommandOnSwitchPage: React.FC = () => {
       </>
     );
   } else {
-    return (
-      <>
-        <TopNavigation></TopNavigation>
-      </>
-    );
+    return <></>;
   }
 };
 

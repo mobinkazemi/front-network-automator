@@ -4,7 +4,6 @@ import { DeleteButton } from "./parts/DeleteButton";
 import { EditButton } from "./parts/EditButton";
 import { BACKEND_ROUTES } from "../../../../shared/backendRoutes";
 import apiClient from "../../../../configs/axios.config";
-import TopNavigation from "../../../../components/TopNavigation";
 
 interface DataType {
   id: React.Key;
@@ -56,7 +55,6 @@ const CISListPage: React.FC = () => {
 
   return (
     <>
-      <TopNavigation />
       <Table
         columns={columns}
         dataSource={cisListData.filter(

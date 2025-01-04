@@ -5,7 +5,6 @@ import { BACKEND_ROUTES, setId } from "../..//../../shared/backendRoutes";
 import { IBaseBackendResponse } from "../../../../shared/interfaces/base-backend-response.interface";
 import apiClient from "../../../../configs/axios.config";
 import { AxiosResponse } from "axios";
-import TopNavigation from "../../../../components/TopNavigation";
 import { updateCIS } from "./functions/updateCIS.function";
 
 interface ICIS {
@@ -33,7 +32,6 @@ const UpdateCISPage: React.FC = () => {
 
   return (
     <>
-      <TopNavigation />
       <Flex justify="center" align="center" style={{ marginTop: "9rem" }}>
         <Card
           title={

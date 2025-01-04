@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { message, Table } from "antd";
-import TopNavigation from "../../../components/TopNavigation";
 import {
   CheckCircleOutlined,
   CloseCircleOutlined,
@@ -96,7 +95,6 @@ const HardeningPage: React.FC = () => {
 
   return (
     <>
-      <TopNavigation />
       <Table
         columns={columns}
         dataSource={switchesListData.sort(

@@ -9,7 +9,6 @@ import {
   Select,
   Cascader,
 } from "antd";
-import TopNavigation from "../../../../components/TopNavigation";
 import { createCategory } from "./functions/create.function";
 import apiClient from "../../../../configs/axios.config";
 import { BACKEND_ROUTES } from "../../../../shared/backendRoutes";
@@ -93,7 +92,6 @@ const CategoryCreationPage: React.FC = () => {
 
   return (
     <>
-      <TopNavigation />
       <Flex justify="center" align="center" style={{ marginTop: "10rem" }}>
         <Card
           title={

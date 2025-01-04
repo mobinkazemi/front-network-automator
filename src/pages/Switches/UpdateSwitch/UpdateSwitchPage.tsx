@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, Form, Input, InputNumber, message, Flex } from "antd";
-import TopNavigation from "../../../components/TopNavigation";
 import { useParams } from "react-router-dom";
 import apiClient from "../../../configs/axios.config";
 import { ISwitch } from "../interface";
@@ -27,7 +26,6 @@ const UpdateSwitchPage: React.FC = () => {
 
   return (
     <>
-      <TopNavigation />
       <Flex justify="center" align="center" style={{ marginTop: "3rem" }}>
         <Card
           title={
