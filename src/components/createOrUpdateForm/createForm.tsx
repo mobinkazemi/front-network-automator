@@ -65,10 +65,10 @@ const CreateForm: React.FC<IProps> = (data: IProps) => {
           >
             {data.items.map((item, index) => (
               <Row key={index} gutter={[16, 16]}>
-                <Col span={5} style={{ textAlign: "right" }}>
+                <Col span={4} style={{ textAlign: "right" }}>
                   <label>{item.label}:</label>
                 </Col>
-                <Col span={19}>
+                <Col span={20}>
                   <Form.Item name={item.name} rules={item.rules}>
                     <Input
                       size="large"
