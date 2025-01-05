@@ -4,14 +4,25 @@
 }
 
 @font-face {
-  font-family: "iranSans-ultraLight";
-  src: url("/src/assets/fonts/iransans/IRANSansWeb-UltraLight.ttf")
+  font-family: "iranSans-medium";
+  src: url("/src/assets/fonts/iransans/IRANSansWeb-Medium.ttf")
     format("truetype");
 }
 
 @font-face {
-  font-family: "test1";
-  src: url("/src/assets/fonts/fontawesome-webfont.ttf") format("truetype");
+  font-family: "iranSans-bold";
+  src: url("/src/assets/fonts/iransans/IRANSansWeb_Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "iranSans-light";
+  src: url("/src/assets/fonts/iransans/IRANSansWeb-Light.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "iranSans-ultraLight";
+  src: url("/src/assets/fonts/iransans/IRANSansWeb-UltraLight.ttf")
+    format("truetype");
 }
 
 h1 {
@@ -25,11 +36,11 @@ label {
 }
 
 th {
-  font-family: "iranSans-ultraLight";
+  font-family: "iranSans-medium";
 }
 
 td {
-  font-family: "test1" "iranSans-ultraLight";
+  font-family: "iranSans-ultraLight";
 }
 
 .ant-modal-confirm-content {
