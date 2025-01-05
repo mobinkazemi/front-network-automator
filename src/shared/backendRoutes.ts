@@ -3,7 +3,7 @@ type methods = "post" | "patch" | "get" | "delete";
 export const setId = ({ id, url }: { id: string | number; url: string }) => {
   return url.replace(":id", String(id));
 };
-interface IRoute {
+export interface IRoute {
   method: methods;
   url: string;
 }
