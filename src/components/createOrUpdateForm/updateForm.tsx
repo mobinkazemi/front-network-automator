@@ -48,17 +48,16 @@ const UpdateForm: React.FC<IProps> = (data: IProps) => {
               alt="Logo"
               style={{
                 width: "50px",
-                height: "50px",
-                marginRight: "10px",
+                height: "40px",
               }}
             />
             <span
               style={{
-                fontSize: "30px",
-                fontWeight: "bold",
+                marginRight: "15px",
+                fontSize: "25px",
               }}
             >
-              {data.title}{" "}
+              {data.title}
             </span>
           </Flex>
         }
