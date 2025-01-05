@@ -3,7 +3,7 @@ import { Layout, MenuProps } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
 import { ROUTES_ENUM } from "../shared/enums/routes.enum";
 import TopNavigation from "./TopNavigation";
-import SliderMenu from "./sliderMenu";
+import SliderMenu from "./sliderMenu/sliderMenu";
 const { Header, Sider, Content, Footer } = Layout;
 
 const BaseLayout: React.FC = () => {

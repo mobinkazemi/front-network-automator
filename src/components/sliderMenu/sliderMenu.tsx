@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Icon, { CodepenCircleFilled } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
-import { ROUTES_ENUM } from "../shared/enums/routes.enum";
+import { ROUTES_ENUM } from "../../shared/enums/routes.enum";
 import "./sliderMenuStyle.css";
 import { v4 } from "uuid";
 type MenuItem = Required<MenuProps>["items"][number];

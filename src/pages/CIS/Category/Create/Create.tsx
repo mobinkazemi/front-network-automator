@@ -92,7 +92,7 @@ const CategoryCreationPage: React.FC = () => {
 
   return (
     <>
-      <Flex justify="center" align="center" style={{ marginTop: "10rem" }}>
+      <Flex justify="center" align="center" style={{ marginTop: "100px" }}>
         <Card
           title={
             <Flex align="center" justify="center">
