@@ -35,3 +35,10 @@ td {
 .ant-modal-confirm-content {
   font-family: "iranSans-ultraLight";
 }
+
+.ant-form-item-explain-error {
+  font-family: "iranSans-ultraLight";
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
