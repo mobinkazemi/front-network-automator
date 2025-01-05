@@ -4,6 +4,7 @@ import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import { ROUTES_ENUM } from "../shared/enums/routes.enum";
 import "./sliderMenuStyle.css";
+import { v4 } from "uuid";
 type MenuItem = Required<MenuProps>["items"][number];
 enum NavKeys {
   HOME_PAGE = "HOME PAGE",
@@ -30,11 +31,21 @@ const items: MenuItem[] = [
     icon: <CodepenCircleFilled />,
     children: [
       {
-        type: "group",
+        type: "submenu",
+        className: "slider-submenu-title",
+        key: v4(),
         label: "سوییچ ها",
         children: [
-          { label: "لیست", key: ROUTES_ENUM.SWITCHES_LIST },
-          { label: "ایجاد", key: ROUTES_ENUM.SWITCHES_CREATE },
+          {
+            className: "slider-submenu-item",
+            label: "لیست",
+            key: ROUTES_ENUM.SWITCHES_LIST,
+          },
+          {
+            className: "slider-submenu-item",
+            label: "ایجاد",
+            key: ROUTES_ENUM.SWITCHES_CREATE,
+          },
         ],
       },
       {
@@ -51,27 +62,61 @@ const items: MenuItem[] = [
     icon: <CodepenCircleFilled />,
     children: [
       {
-        type: "group",
+        type: "submenu",
+        className: "slider-submenu-title",
+        key: v4(),
         label: "سی‌ آی‌ اس",
         children: [
-          { label: "لیست", key: ROUTES_ENUM.CIS_LIST, disabled: false },
-          { label: "ایجاد", key: ROUTES_ENUM.CIS_CREATE, disabled: false },
+          {
+            className: "slider-submenu-item",
+            label: "لیست",
+            key: ROUTES_ENUM.CIS_LIST,
+            disabled: false,
+          },
+          {
+            className: "slider-submenu-item",
+            label: "ایجاد",
+            key: ROUTES_ENUM.CIS_CREATE,
+            disabled: false,
+          },
         ],
       },
       {
-        type: "group",
+        type: "submenu",
+        className: "slider-submenu-title",
+
+        key: v4(),
         label: "دسته بندی",
         children: [
-          { label: "لیست", key: ROUTES_ENUM.CATEGORY_LIST, disabled: false },
-          { label: "ایجاد", key: ROUTES_ENUM.CATEGORY_CREATE, disabled: false },
+          {
+            className: "slider-submenu-item",
+            label: "لیست",
+            key: ROUTES_ENUM.CATEGORY_LIST,
+            disabled: false,
+          },
+          {
+            className: "slider-submenu-item",
+            label: "ایجاد",
+            key: ROUTES_ENUM.CATEGORY_CREATE,
+            disabled: false,
+          },
         ],
       },
       {
-        type: "group",
+        type: "submenu",
+        className: "slider-submenu-title",
+
+        key: v4(),
         label: "هاردنینگ",
         children: [
-          { label: "لیست", key: ROUTES_ENUM.HARDENING_LIST, disabled: false },
           {
+            className: "slider-submenu-item",
+            label: "لیست",
+            key: ROUTES_ENUM.HARDENING_LIST,
+            disabled: false,
+          },
+          {
+            className: "slider-submenu-item",
             label: "ایجاد",
             key: ROUTES_ENUM.HARDENING_CREATE,
             disabled: false,

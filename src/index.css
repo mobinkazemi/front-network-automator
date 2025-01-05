@@ -1,4 +1,33 @@
 @font-face {
   font-family: "iranSans";
-  src: url("/assets/fonts/irsans.ttf") format("truetype");
+  src: url("/src/assets/fonts/iransans/IRANSansWeb.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "iranSans-ultraLight";
+  src: url("/src/assets/fonts/iransans/IRANSansWeb-UltraLight.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "test1";
+  src: url("/src/assets/fonts/fontawesome-webfont.ttf") format("truetype");
+}
+
+h1 {
+  font-family: "iranSans";
+}
+span {
+  font-family: "iranSans";
+}
+label {
+  font-family: "iranSans";
+}
+
+th {
+  font-family: "iranSans-ultraLight";
+}
+
+td {
+  font-family: "test1" "iranSans-ultraLight";
 }

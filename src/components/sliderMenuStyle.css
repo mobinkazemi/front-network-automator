@@ -14,3 +14,13 @@
 .ant-menu-item-selected {
   color: #ff7f00 !important;
 }
+
+.slider-submenu-title {
+  font-size: 14px;
+}
+
+.slider-submenu-item {
+  font-size: 13px;
+  font-family: "iranSans";
+  font-weight: 10;
+}
