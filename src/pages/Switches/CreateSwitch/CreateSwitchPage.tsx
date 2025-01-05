@@ -19,7 +19,13 @@ const SwitchCreationPage: React.FC = () => {
                 marginRight: "10px",
               }}
             />
-            <span style={{ fontSize: "30px", fontWeight: "bold" }}>
+            <span
+              style={{
+                fontSize: "30px",
+                fontWeight: "bold",
+                marginRight: "20px",
+              }}
+            >
               تعریف سوییچ جدید
             </span>
           </Flex>
