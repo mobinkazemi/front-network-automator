@@ -24,15 +24,15 @@ const UpdateCISPage: React.FC = () => {
         {
           name: "name",
           label: "نام",
-          rules: [{ required: true, message: "نام سی آی اس را وارد کنید" }],
+          rules: [{ required: true, message: "نام CIS را وارد کنید" }],
         },
         {
           name: "version",
           label: "ورژن",
-          rules: [{ required: true, message: "ورژن سی آی اس را وارد کنید" }],
+          rules: [{ required: true, message: "ورژن CIS را وارد کنید" }],
         },
       ]}
-      title={"ویرایش سی آی اس"}
+      title={"ویرایش CIS"}
       buttonTitle={"ویرایش"}
       id={id as string}
       infoAPI={BACKEND_ROUTES.cis.info}
