@@ -24,12 +24,12 @@ const CISCreationPage: React.FC = () => {
         {
           name: "name",
           label: "نام",
-          rules: [{ required: true, message: "نام سی آی اس را وارد کنید" }],
+          rules: [{ required: true, message: "نام CIS را وارد کنید" }],
         },
         {
           name: "version",
           label: "ورژن",
-          rules: [{ required: true, message: "ورژن سی آی اس وارد کنید" }],
+          rules: [{ required: true, message: "ورژن CIS وارد کنید" }],
         },
       ]}
     />
