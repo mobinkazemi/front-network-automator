@@ -13,7 +13,7 @@ interface IItem {
 interface IProps {
   title: string;
   items: IItem[];
-  buttonTitle: string;
+  buttonTitle?: string;
   onFinish: (values: any) => void;
 }
 const CreateForm: React.FC<IProps> = (data: IProps) => {
@@ -88,7 +88,7 @@ const CreateForm: React.FC<IProps> = (data: IProps) => {
                     htmlType="submit"
                     style={{ width: "30%", backgroundColor: "#FE7E03" }}
                   >
-                    {data.buttonTitle}
+                    {data.buttonTitle || "ایجاد"}
                   </Button>
                 </Form.Item>
               </Col>
