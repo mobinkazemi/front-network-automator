@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, Form, Input, InputNumber, Flex, Row, Col } from "antd";
-import { useParams } from "react-router-dom";
 import { BACKEND_ROUTES, IRoute, setId } from "../../shared/backendRoutes";
 import apiClient from "../../configs/axios.config";
 
