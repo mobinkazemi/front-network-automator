@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, Form, Input, InputNumber, Flex, Row, Col } from "antd";
-import { BACKEND_ROUTES, IRoute, setId } from "../../shared/backendRoutes";
+import { IRoute, setId } from "../../shared/backendRoutes";
 import apiClient from "../../configs/axios.config";
 
-const { method, url } = BACKEND_ROUTES.switch.info;
 interface IItem {
   type?: "number" | "text";
   name: string;
@@ -16,7 +15,7 @@ interface IItem {
 
 interface IProps {
   id: string;
-  infoAPI?: IRoute;
+  infoAPI: IRoute;
   title: string;
   items: IItem[];
   buttonTitle: string;
@@ -27,11 +26,11 @@ const UpdateForm: React.FC<IProps> = (data: IProps) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    apiClient[method](setId({ id: data.id as string, url })).then(
-      (response) => {
-        setInitialData(response.data.data);
-      }
-    );
+    apiClient[data.infoAPI.method](
+      setId({ id: data.id as string, url: data.infoAPI.url })
+    ).then((response) => {
+      setInitialData(response.data.data);
+    });
   }, [data.id]);
 
   useEffect(() => {
