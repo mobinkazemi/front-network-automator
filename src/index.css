@@ -31,3 +31,7 @@ th {
 td {
   font-family: "test1" "iranSans-ultraLight";
 }
+
+.ant-modal-confirm-content {
+  font-family: "iranSans-ultraLight";
+}
