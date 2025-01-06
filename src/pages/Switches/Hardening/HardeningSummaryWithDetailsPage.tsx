@@ -93,9 +93,7 @@ const HardeningSummaryDetailPage: React.FC = () => {
             <div>
               <img className="logo" src="/douranLogo.png" />
             </div>
-            <div className="title">
-              <p>CIS Cisco IOS Benchmark Assessment Report</p>
-            </div>
+
             <div className="bar"></div>
           </div>
           <div className="summary-container">

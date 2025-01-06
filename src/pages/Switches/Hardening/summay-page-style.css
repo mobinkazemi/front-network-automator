@@ -21,7 +21,7 @@ body {
 
 .title {
   font-family: Arial, Helvetica, sans-serif;
-  color: #555555;
+  color: whitesmoke;
   font-size: larger;
   text-align: left;
   flex-grow: 1;
@@ -354,4 +354,8 @@ div {
 
 th {
   font-family: "iranSans";
+}
+
+body {
+  background-image: none;
 }
