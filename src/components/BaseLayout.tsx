@@ -86,7 +86,7 @@ const BaseLayout: React.FC = () => {
   return (
     <Layout style={{ minHeight: "100vh", direction: "rtl" }}>
       {/* Top Navigation */}
-      <Header style={{ background: "#FE7E03", color: "white", padding: "0" }}>
+      <Header>
         <TopNavigation />
       </Header>
 
