@@ -22,10 +22,14 @@ const TopNavigation: React.FC = () => {
           />
         </div>
         <div className="top-navigation-exit-button">
-          <LogoutOutlined
-            className="top-navigation-exit-section-icon"
-            onClick={logout}
-          />
+          {localStorage.getItem(TOKEN_KEY_ENUM.ACCESS) ? (
+            <LogoutOutlined
+              className="top-navigation-exit-section-icon"
+              onClick={logout}
+            />
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </div>
