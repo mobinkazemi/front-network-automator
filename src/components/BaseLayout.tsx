@@ -2,7 +2,7 @@ import React from "react";
 import { Layout, MenuProps } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
 import { ROUTES_ENUM } from "../shared/enums/routes.enum";
-import TopNavigation from "./TopNavigation";
+import TopNavigation from "./topNavigation/TopNavigation";
 import SliderMenu from "./sliderMenu/sliderMenu";
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -86,7 +86,7 @@ const BaseLayout: React.FC = () => {
   return (
     <Layout style={{ minHeight: "100vh", direction: "rtl" }}>
       {/* Top Navigation */}
-      <Header style={{ background: "#FE7E03", color: "white" }}>
+      <Header style={{ background: "#FE7E03", color: "white", padding: "0" }}>
         <TopNavigation />
       </Header>
 

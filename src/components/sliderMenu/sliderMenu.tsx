@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import Icon, { CodepenCircleFilled } from "@ant-design/icons";
+import {
+  CodepenOutlined,
+  SecurityScanOutlined,
+  LinuxOutlined,
+} from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import { ROUTES_ENUM } from "../../shared/enums/routes.enum";
@@ -14,21 +18,21 @@ enum NavKeys {
   ROUTERS = "ROUTERS",
 }
 const items: MenuItem[] = [
-  {
-    label: "صفحه اصلی",
-    key: ROUTES_ENUM.HOME,
-    icon: (
-      <Icon
-        component={() => (
-          <img style={{ width: "60px" }} src="/douranLogo.png" />
-        )}
-      />
-    ),
-  },
+  // {
+  //   label: "صفحه اصلی",
+  //   key: ROUTES_ENUM.HOME,
+  //   icon: (
+  //     <Icon
+  //       component={() => (
+  //         <img style={{ width: "60px" }} src="/douranLogo.png" />
+  //       )}
+  //     />
+  //   ),
+  // },
   {
     label: "تجهیزات",
     key: ROUTES_ENUM.__SWITCHES__,
-    icon: <CodepenCircleFilled />,
+    icon: <CodepenOutlined style={{ fontSize: "1.5rem" }} />,
     children: [
       {
         type: "submenu",
@@ -51,7 +55,7 @@ const items: MenuItem[] = [
       {
         label: "روتر ها",
         key: NavKeys.ROUTERS,
-        icon: <CodepenCircleFilled />,
+        icon: <CodepenOutlined />,
         disabled: true,
       },
     ],
@@ -59,7 +63,7 @@ const items: MenuItem[] = [
   {
     label: "مدیریت هاردنینگ",
     key: ROUTES_ENUM.__CIS__,
-    icon: <CodepenCircleFilled />,
+    icon: <SecurityScanOutlined style={{ fontSize: "1.5rem" }} />,
     children: [
       {
         type: "submenu",
@@ -128,7 +132,7 @@ const items: MenuItem[] = [
   {
     label: "سیستم عامل",
     key: ROUTES_ENUM.__OS__,
-    icon: <CodepenCircleFilled />,
+    icon: <LinuxOutlined style={{ fontSize: "1.5rem" }} />,
     children: [
       {
         label: "لیست",
