@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES_ENUM } from "../../shared/enums/routes.enum";
 import { LogoutOutlined } from "@ant-design/icons";
 import { TOKEN_KEY_ENUM } from "../../shared/enums/token.enum";
+import { Tooltip } from "antd";
 
 const TopNavigation: React.FC = () => {
   const navigator = useNavigate();
@@ -23,10 +24,12 @@ const TopNavigation: React.FC = () => {
         </div>
         <div className="top-navigation-exit-button">
           {localStorage.getItem(TOKEN_KEY_ENUM.ACCESS) ? (
-            <LogoutOutlined
-              className="top-navigation-exit-section-icon"
-              onClick={logout}
-            />
+            <Tooltip title="خروج">
+              <LogoutOutlined
+                className="top-navigation-exit-section-icon"
+                onClick={logout}
+              />
+            </Tooltip>
           ) : (
             <></>
           )}
