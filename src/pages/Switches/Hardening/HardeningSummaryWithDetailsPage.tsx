@@ -9,14 +9,14 @@ import { useParams } from "react-router-dom";
 const getCompliant = (compliant: number) => {
   switch (compliant) {
     case 0:
-      return "False";
+      return "انجام نشده";
     case 1:
-      return "True";
+      return "انجام شده";
     case 2:
-      return "Not Applicable";
+      return "غیر قابل اجرا";
 
     default:
-      return "Not Defined";
+      return "نامشخص";
   }
 };
 interface IAPIResponseEachCheckRow {
@@ -100,108 +100,103 @@ const HardeningSummaryDetailPage: React.FC = () => {
           </div>
           <div className="summary-container">
             <div className="summary-title">
-              <div className="summary-font">Report Summary</div>
-              <div className="date">
-                <p>Report Generated: {new Date().toLocaleString()}</p>
-              </div>
+              <div className="summary-font">خلاصه گزارش</div>
             </div>
             <div className="summary-body">
               <div className="target">
-                <p id="target-font">Target Details</p>
-                <p>HostName: {response?.summary.targetDetails.hostName}</p>
-                <p>IOS Version: {response?.summary.targetDetails.iosVersion}</p>
-                <p>Check: {response?.summary.targetDetails.check}</p>
+                <p id="target-font">جزییات دستگاه</p>
+                <p>نام دستگاه: {response?.summary.targetDetails.hostName}</p>
+                <p>نسخه دستگاه: {response?.summary.targetDetails.iosVersion}</p>
+                <p>سند: {response?.summary.targetDetails.check}</p>
               </div>
               <div className="passed">
-                <p id="score-font">Passed Checks</p>
+                <p id="score-font">تست های موفق</p>
                 <div className="summary-bar"></div>
                 <p>
                   <span id="score-value">
                     {response?.summary.checks.passed}
                   </span>{" "}
-                  out of {response?.summary.checks.total} total assessment
-                  checks
+                  مورد از {response?.summary.checks.total} تست
                 </p>
               </div>
               <div className="failed">
-                <p id="score-font">Failed Checks</p>
+                <p id="score-font">تست های ناموفق</p>
                 <div className="summary-bar"></div>
                 <p>
                   <span id="score-value">
                     {response?.summary.checks.failed}
                   </span>{" "}
-                  out of {response?.summary.checks.total} total assessment
-                  checks
+                  مورد از {response?.summary.checks.total} تست
                 </p>
               </div>
               <div className="na">
-                <p id="score-font">Not Applicable</p>
+                <p id="score-font">غیر قابل اجرا</p>
                 <div className="summary-bar"></div>
                 <p>
                   <span id="score-value">
                     {response?.summary.checks.notApplicable}
                   </span>{" "}
-                  checks were not applicable
+                  مورد غیر قابل اجرا
                 </p>
               </div>
             </div>
             <div className="plane">
               <div className="management">
-                <p id="plane-font">Management Plane</p>
+                <p id="plane-font">سطح مدیریت</p>
                 <p>
                   <span id="plane-value-passed">
                     {response?.summary.plane.management.passed}
                   </span>{" "}
-                  checks passed;{" "}
+                  مورد موفق{" "}
                   <span id="plane-value-failed">
                     {response?.summary.plane.management.failed}
                   </span>{" "}
-                  checks failed;{" "}
+                  مورد ناموفق
                   <span id="plane-value-na">
                     {response?.summary.plane.management.notApplicable}
                   </span>{" "}
-                  not applicable checks
+                  مورد غیر قابل اجرا
                 </p>
               </div>
               <div className="control">
-                <p id="plane-font">Control Plane</p>
+                <p id="plane-font">سطح کنترل</p>
                 <p>
                   <span id="plane-value-passed">
                     {response?.summary.plane.control.passed}
                   </span>{" "}
-                  checks passed;{" "}
+                  مورد موفق{" "}
                   <span id="plane-value-failed">
                     {response?.summary.plane.control.failed}
                   </span>{" "}
-                  checks failed;{" "}
+                  مورد ناموفق{" "}
                   <span id="plane-value-na">
                     {response?.summary.plane.control.notApplicable}
                   </span>{" "}
-                  not applicable checks
+                  مورد غیر قابل اجرا
                 </p>
               </div>
               <div className="data">
-                <p id="plane-font">Data Plane</p>
+                <p id="plane-font">سطح داده</p>
                 <p>
                   <span id="plane-value-passed">
                     {response?.summary.plane.data.passed}
                   </span>{" "}
-                  checks passed;{" "}
+                  مورد موفق{" "}
                   <span id="plane-value-failed">
                     {response?.summary.plane.data.failed}
                   </span>{" "}
-                  checks failed;{" "}
+                  مورد ناموفق{" "}
                   <span id="plane-value-na">
                     {response?.summary.plane.data.notApplicable}
                   </span>{" "}
-                  not applicable checks
+                  مورد غیر قابل اجرا
                 </p>
               </div>
             </div>
           </div>
           <div className="table-container">
             <div className="table-header">
-              <p className="table-header-font">Assessment Breakdown</p>
+              <p className="table-header-font">جزییات ارزیابی</p>
               <div className="table-bar"></div>
             </div>
             {/*
@@ -214,13 +209,13 @@ const HardeningSummaryDetailPage: React.FC = () => {
              * *
              *  */}{" "}
             <div className="table-section">
-              <p id="section-font">Management Plane</p>
+              <p id="section-font">سطح مدیریت</p>
             </div>
             <table className="expandable-table">
               <thead className="table-top-font">
-                <th>CIS CHECK</th>
-                <th>LEVEL</th>
-                <th>COMPLIANT</th>
+                <th>مورد امنیتی</th>
+                <th>سطح</th>
+                <th>وضعیت</th>
               </thead>
               {/* from hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */}
               {response?.details.managementPlane.map((item) => {
@@ -294,13 +289,13 @@ const HardeningSummaryDetailPage: React.FC = () => {
              * *
              *  */}
             <div className="table-section">
-              <p id="section-font">Control Plane</p>
+              <p id="section-font">سطح کنترل</p>
             </div>
             <table className="expandable-table">
               <thead className="table-top-font">
-                <th>CIS CHECK</th>
-                <th>LEVEL</th>
-                <th>COMPLIANT</th>
+                <th>مورد امنیتی</th>
+                <th>سطح</th>
+                <th>وضعیت</th>
               </thead>
               {/* from hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */}
               {response?.details.controlPlane.map((item) => {
@@ -374,13 +369,13 @@ const HardeningSummaryDetailPage: React.FC = () => {
              * *
              *  */}
             <div className="table-section">
-              <p id="section-font">Data Plane</p>
+              <p id="section-font">سطح داده</p>
             </div>
             <table className="expandable-table">
               <thead className="table-top-font">
-                <th>CIS CHECK</th>
-                <th>LEVEL</th>
-                <th>COMPLIANT</th>
+                <th>مورد امنیتی</th>
+                <th>سطح</th>
+                <th>وضعیت</th>
               </thead>
               {/* from hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */}
               {response?.details.dataPlane.map((item) => {

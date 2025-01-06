@@ -1,10 +1,12 @@
 body {
   background-color: #fdfff7;
+  font-family: "iranSans";
 }
 
 .header {
   display: flex;
   align-items: center;
+  font-family: "iranSans";
 }
 .logo {
   padding: 10px;
@@ -24,6 +26,7 @@ body {
   text-align: left;
   flex-grow: 1;
   margin-left: -20px;
+  font-family: "iranSans";
 }
 
 .bar {
@@ -343,4 +346,12 @@ body {
   margin-top: 20px;
   margin-bottom: 20px;
   background-color: #555555;
+}
+
+div {
+  font-family: "iranSans";
+}
+
+th {
+  font-family: "iranSans";
 }
