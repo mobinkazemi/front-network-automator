@@ -99,15 +99,6 @@ const BaseLayout: React.FC = () => {
           }}
           width={256}
         >
-          {/* <Menu
-            onClick={onClick}
-            theme="light"
-            mode="vertical"
-            items={[
-              { label: "صفحه اصلی", key: "home" },
-              { label: "تعریف سوییچ جدید", key: ROUTES_ENUM.SWITCHES_CREATE },
-            ]}
-          /> */}
           <SliderMenu onClick={onClick as any} />
         </Sider>
 
@@ -119,6 +110,8 @@ const BaseLayout: React.FC = () => {
             background: "#fff",
             borderRadius: "10px",
             border: "2px solid #EFF2F5",
+            overflow: "auto",
+            maxHeight: "100vh",
           }}
         >
           <Outlet />
