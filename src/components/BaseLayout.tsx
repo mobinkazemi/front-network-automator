@@ -119,7 +119,7 @@ const BaseLayout: React.FC = () => {
       </Layout>
 
       {/* Footer */}
-      <Footer style={{ textAlign: "center" }}>My App ©2024</Footer>
+      <Footer style={{ textAlign: "center" }}>Netoran ©2025</Footer>
     </Layout>
   );
 };
