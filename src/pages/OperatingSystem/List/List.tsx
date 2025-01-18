@@ -141,10 +141,10 @@ const OSListPage: React.FC = () => {
       (data: AxiosResponse<IListResponse>) => {
         const setMe = (data.data.data || []).map((el) => {
           console.log("hereeeeeeeeeeeee");
-          console.log(el.operating_system?.match(/windows/));
-          const osIcon = el.operating_system?.match(/windows/)
+          console.log(el.operating_system?.match(/windows/i));
+          const osIcon = el.operating_system?.match(/windows/i)
             ? 1
-            : el.operating_system?.match(/linux/)
+            : el.operating_system?.match(/linux/i)
             ? 2
             : 0;
           return {
