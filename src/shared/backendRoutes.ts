@@ -194,23 +194,23 @@ export const BACKEND_ROUTES: IBackendRoutes = {
   operatingSystem: {
     create: {
       method: "post",
-      url: "/operatingSystem/create",
+      url: "/os/create",
     },
     delete: {
       method: "delete",
-      url: "/operatingSystem/delete/:id",
+      url: "/os/delete/:id",
     },
     info: {
       method: "get",
-      url: "/operatingSystem/info/:id",
+      url: "/os/info/:id",
     },
     list: {
       method: "get",
-      url: "/operatingSystem/list",
+      url: "/os/list",
     },
     update: {
       method: "patch",
-      url: "/operatingSystem/update",
+      url: "/os/update",
     },
   },
 };

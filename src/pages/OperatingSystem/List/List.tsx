@@ -7,14 +7,18 @@ import moment from "jalali-moment";
 import { IBaseBackendResponse } from "../../../shared/interfaces/base-backend-response.interface";
 import { BACKEND_ROUTES } from "../../../shared/backendRoutes";
 import apiClient from "../../../configs/axios.config";
-
+import {
+  WindowsOutlined,
+  LinuxOutlined,
+  QuestionOutlined,
+} from "@ant-design/icons";
 interface DataType {
   id: React.Key;
   name: string;
   ip: string;
   groups: string;
   os: string;
-  clusterNodes: string;
+  osIcon: number;
   version: string;
   registerDate: string;
   lastkeepAlive: string;
@@ -27,8 +31,7 @@ interface IEachBackendRecord {
   name: string;
   ip: string;
   groups: string;
-  os: string;
-  clusterNodes: string;
+  operating_system: string;
   version: string;
   registerDate: string;
   lastkeepAlive: string;
@@ -55,6 +58,35 @@ const OSListPage: React.FC = () => {
       dataIndex: "id",
     },
     {
+      title: "",
+      dataIndex: "osIcon",
+      render: (os: number | null) => {
+        // 0 => unknown
+        // 1 => windows
+        // 2 => linux
+
+        switch (os) {
+          case 1:
+            return (
+              <WindowsOutlined style={{ color: "blue", fontSize: "25px" }} />
+            );
+            break;
+          case 2:
+            return (
+              <LinuxOutlined style={{ color: "orange", fontSize: "25px" }} />
+            );
+            break;
+          default:
+            return (
+              <QuestionOutlined
+                style={{ color: "darkgrey", fontSize: "25px" }}
+              />
+            );
+            break;
+        }
+      },
+    },
+    {
       title: "نام",
       dataIndex: "name",
     },
@@ -69,10 +101,6 @@ const OSListPage: React.FC = () => {
     {
       title: "سیستم عامل",
       dataIndex: "os",
-    },
-    {
-      title: "نود‌های کلاستر ",
-      dataIndex: "clusterNodes",
     },
     {
       title: "ورژن",
@@ -90,10 +118,7 @@ const OSListPage: React.FC = () => {
       title: "وضعیت",
       dataIndex: "status",
     },
-    {
-      title: "همگام سازی",
-      dataIndex: "synced",
-    },
+
     {
       title: "اقدامات",
       key: "action",
@@ -115,13 +140,20 @@ const OSListPage: React.FC = () => {
     apiClient[listMethod](listUrl).then(
       (data: AxiosResponse<IListResponse>) => {
         const setMe = (data.data.data || []).map((el) => {
+          console.log("hereeeeeeeeeeeee");
+          console.log(el.operating_system?.match(/windows/));
+          const osIcon = el.operating_system?.match(/windows/)
+            ? 1
+            : el.operating_system?.match(/linux/)
+            ? 2
+            : 0;
           return {
             id: el.id,
+            osIcon,
             name: el.name,
             ip: el.ip,
             groups: el.groups,
-            os: el.os,
-            clusterNodes: el.clusterNodes,
+            os: el.operating_system,
             version: el.version,
             registerDate: moment(el.registerDate).format("jYYYY/jMM/jDD HH:mm"),
             lastkeepAlive: moment(el.lastkeepAlive).format(
@@ -141,9 +173,11 @@ const OSListPage: React.FC = () => {
     <>
       <Table
         columns={columns}
-        dataSource={operatingSystemListData.filter(
-          (item) => deletedOperatingSystem.indexOf(item.id as number) === -1
-        )}
+        dataSource={
+          operatingSystemListData.filter(
+            (item) => deletedOperatingSystem.indexOf(item.id as number) === -1
+          ) as any
+        }
         rowKey="id"
       />
     </>
