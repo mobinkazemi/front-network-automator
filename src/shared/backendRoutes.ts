@@ -94,7 +94,7 @@ export const BACKEND_ROUTES: IBackendRoutes = {
     execCommand: { method: "post", url: "/switches/execCommand" },
     checkHardening: {
       method: "get",
-      url: "/switches/checkHardening/:id",
+      url: "/switches/hardeningCheckNew/:id",
     },
     checkConnectionStatus: {
       method: "get",
