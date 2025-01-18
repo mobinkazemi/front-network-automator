@@ -140,8 +140,6 @@ const OSListPage: React.FC = () => {
     apiClient[listMethod](listUrl).then(
       (data: AxiosResponse<IListResponse>) => {
         const setMe = (data.data.data || []).map((el) => {
-          console.log("hereeeeeeeeeeeee");
-          console.log(el.operating_system?.match(/windows/i));
           const osIcon = el.operating_system?.match(/windows/i)
             ? 1
             : el.operating_system?.match(/linux/i)
