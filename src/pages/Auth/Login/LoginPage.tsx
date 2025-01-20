@@ -5,6 +5,7 @@ import { loginUser } from "./functions/login-user.function";
 import { TOKEN_KEY_ENUM } from "../../../shared/enums/token.enum";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_ENUM } from "../../../shared/enums/routes.enum";
+import { ColorPalletEnum } from "../../../shared/enums/colorPallet.enum";
 
 type FieldType = {
   username?: string;
@@ -99,7 +100,7 @@ const LoginPage: React.FC = () => {
                 size="large"
                 type="primary"
                 htmlType="submit"
-                style={{ width: "30%", backgroundColor: "#FE7E03" }}
+                style={{ width: "30%", backgroundColor: ColorPalletEnum.Primary }}
               >
                 ورود
               </Button>

@@ -4,6 +4,7 @@ import { Button, Card, Form, Input, message, Flex } from "antd";
 import { registerUser } from "./functions/register-user.function";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_ENUM } from "../../../shared/enums/routes.enum";
+import { ColorPalletEnum } from "../../../shared/enums/colorPallet.enum";
 
 type FieldType = {
   name: string;
@@ -130,7 +131,10 @@ const RegisterPage: React.FC = () => {
                 size="large"
                 type="primary"
                 htmlType="submit"
-                style={{ width: "30%", backgroundColor: "#FE7E03" }}
+                style={{
+                  width: "30%",
+                  backgroundColor: ColorPalletEnum.Primary,
+                }}
               >
                 ثبت‌ نام
               </Button>

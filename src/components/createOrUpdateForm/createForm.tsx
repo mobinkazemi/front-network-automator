@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Card, Form, Input, Flex, Row, Col } from "antd";
+import { ColorPalletEnum } from "../../shared/enums/colorPallet.enum";
 
 interface IItem {
   name: string;
@@ -86,7 +87,10 @@ const CreateForm: React.FC<IProps> = (data: IProps) => {
                     size="large"
                     type="primary"
                     htmlType="submit"
-                    style={{ width: "30%", backgroundColor: "#FE7E03" }}
+                    style={{
+                      width: "30%",
+                      backgroundColor: ColorPalletEnum.Primary,
+                    }}
                   >
                     {data.buttonTitle || "ایجاد"}
                   </Button>

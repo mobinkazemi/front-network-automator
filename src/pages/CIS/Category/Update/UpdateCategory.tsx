@@ -16,6 +16,7 @@ import { IBaseBackendResponse } from "../../../../shared/interfaces/base-backend
 import apiClient from "../../../../configs/axios.config";
 import { AxiosResponse } from "axios";
 import { updateCategory } from "./functions/updateCategory.function";
+import { ColorPalletEnum } from "../../../../shared/enums/colorPallet.enum";
 
 interface ICategory {
   id: number;
@@ -217,7 +218,7 @@ const UpdateCategoryPage: React.FC = () => {
                 size="large"
                 type="primary"
                 htmlType="submit"
-                style={{ width: "30%", backgroundColor: "#FE7E03" }}
+                style={{ width: "30%", backgroundColor: ColorPalletEnum.Primary }}
               >
                 ویرایش دسته بندی
               </Button>

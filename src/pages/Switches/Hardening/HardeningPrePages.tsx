@@ -6,6 +6,7 @@ import apiClient from "../../../configs/axios.config";
 import { AxiosResponse } from "axios";
 import { IBaseBackendResponse } from "../../../shared/interfaces/base-backend-response.interface";
 import { BACKEND_ROUTES, setId } from "../../../shared/backendRoutes";
+import { ColorPalletEnum } from "../../../shared/enums/colorPallet.enum";
 
 interface IResponseData {
   result: boolean;
@@ -100,7 +101,7 @@ const HardeningPrePage = () => {
             marginTop: "250px",
             width: "20%",
             height: "50px",
-            backgroundColor: "#FE7E03",
+            backgroundColor: ColorPalletEnum.Primary,
           }}
           onClick={() =>
             navigator(
@@ -122,7 +123,7 @@ const HardeningPrePage = () => {
             marginTop: "20px",
             width: "20%",
             height: "50px",
-            backgroundColor: "#FE7E03",
+            backgroundColor: ColorPalletEnum.Primary,
           }}
           onClick={() =>
             navigator(
@@ -144,7 +145,7 @@ const HardeningPrePage = () => {
             marginTop: "20px",
             width: "20%",
             height: "50px",
-            backgroundColor: "#FE7E03",
+            backgroundColor: ColorPalletEnum.Primary,
           }}
           onClick={
             reportData.length
@@ -163,7 +164,7 @@ const HardeningPrePage = () => {
             marginTop: "20px",
             width: "20%",
             height: "50px",
-            backgroundColor: "#FE7E03",
+            backgroundColor: ColorPalletEnum.Primary,
           }}
           onClick={checkAgainHardening}
           loading={loading}

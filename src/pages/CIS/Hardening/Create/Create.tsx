@@ -14,6 +14,7 @@ import apiClient from "../../../../configs/axios.config";
 import { AxiosResponse } from "axios";
 import { BACKEND_ROUTES } from "../../../../shared/backendRoutes";
 import { IBaseBackendResponse } from "../../../../shared/interfaces/base-backend-response.interface";
+import { ColorPalletEnum } from "../../../../shared/enums/colorPallet.enum";
 const { method: categoryMethod, url: categoryUrl } =
   BACKEND_ROUTES.category.categorizedlist;
 interface ICategorizedList {
@@ -174,7 +175,7 @@ const CreateHardeningPage: React.FC = () => {
                 size="large"
                 type="primary"
                 htmlType="submit"
-                style={{ width: "30%", backgroundColor: "#FE7E03" }}
+                style={{ width: "30%", backgroundColor: ColorPalletEnum.Primary }}
               >
                 ثبت هاردنینگ{" "}
               </Button>

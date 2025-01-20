@@ -15,6 +15,7 @@ import { BACKEND_ROUTES } from "../../../../shared/backendRoutes";
 import { IBaseBackendResponse } from "../../../../shared/interfaces/base-backend-response.interface";
 import { AxiosResponse } from "axios";
 import type { CascaderProps } from "antd";
+import { ColorPalletEnum } from "../../../../shared/enums/colorPallet.enum";
 
 interface ICIS {
   id: number;
@@ -189,7 +190,7 @@ const CategoryCreationPage: React.FC = () => {
                 size="large"
                 type="primary"
                 htmlType="submit"
-                style={{ width: "30%", backgroundColor: "#FE7E03" }}
+                style={{ width: "30%", backgroundColor: ColorPalletEnum.Primary }}
               >
                 ثبت دسته بندی{" "}
               </Button>

@@ -7,6 +7,7 @@ import apiClient from "../../../../configs/axios.config";
 import { AxiosResponse } from "axios";
 import { updateHardening } from "./functions/updateHardening.function";
 import { Row, Col } from "antd";
+import { ColorPalletEnum } from "../../../../shared/enums/colorPallet.enum";
 
 interface IHardening {
   id: number;
@@ -133,7 +134,10 @@ const UpdateHardeningPage: React.FC = () => {
                       size="large"
                       type="primary"
                       htmlType="submit"
-                      style={{ width: "30%", backgroundColor: "#FE7E03" }}
+                      style={{
+                        width: "30%",
+                        backgroundColor: ColorPalletEnum.Primary,
+                      }}
                     >
                       ویرایش هاردنینگ
                     </Button>

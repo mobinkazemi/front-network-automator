@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Form, Input, InputNumber, Flex, Row, Col } from "antd";
 import { IRoute, setId } from "../../shared/backendRoutes";
 import apiClient from "../../configs/axios.config";
+import { ColorPalletEnum } from "../../shared/enums/colorPallet.enum";
 
 interface IItem {
   type?: "number" | "text";
@@ -112,7 +113,7 @@ const UpdateForm: React.FC<IProps> = (data: IProps) => {
                     size="large"
                     type="primary"
                     htmlType="submit"
-                    style={{ width: "30%", backgroundColor: "#FE7E03" }}
+                    style={{ width: "30%", backgroundColor: ColorPalletEnum.Primary }}
                   >
                     {data.buttonTitle}
                   </Button>
