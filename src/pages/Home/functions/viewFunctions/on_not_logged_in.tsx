@@ -1,6 +1,7 @@
 import { Button, Flex } from "antd";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_ENUM } from "../../../../shared/enums/routes.enum";
+import { ColorPalletEnum } from "../../../../shared/enums/colorPallet.enum";
 
 export const contentOfNotLoggedIn = () => {
   const navigator = useNavigate();
@@ -21,7 +22,13 @@ export const contentOfNotLoggedIn = () => {
         <Button
           onClick={onClickRegister}
           type="primary"
-          style={{ width: "6rem", fontSize: "1.1rem", marginBottom: "1rem" }}
+          style={{
+            width: "6.8rem",
+            height: "3rem",
+            fontSize: "1.1rem",
+            marginBottom: "1rem",
+            backgroundColor: ColorPalletEnum.Primary,
+          }}
         >
           ثبت نام
         </Button>
@@ -30,7 +37,12 @@ export const contentOfNotLoggedIn = () => {
         <Button
           onClick={onClickLogin}
           type="primary"
-          style={{ width: "6rem", fontSize: "1rem" }}
+          style={{
+            width: "6.8rem",
+            height: "3rem",
+            fontSize: "1rem",
+            backgroundColor: ColorPalletEnum.Primary,
+          }}
         >
           ورود به سامانه
         </Button>

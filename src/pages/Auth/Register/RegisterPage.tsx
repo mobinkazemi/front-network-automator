@@ -39,7 +39,7 @@ const RegisterPage: React.FC = () => {
 
   return (
     <>
-      <Flex justify="center" align="center" style={{ marginTop: "10rem" }}>
+      <Flex justify="center" align="center" style={{ marginTop: "5rem" }}>
         <Card
           title={
             <Flex align="center" justify="center">
