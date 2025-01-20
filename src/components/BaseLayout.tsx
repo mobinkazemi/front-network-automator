@@ -4,6 +4,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { ROUTES_ENUM } from "../shared/enums/routes.enum";
 import TopNavigation from "./topNavigation/TopNavigation";
 import SliderMenu from "./sliderMenu/sliderMenu";
+import { ColorPalletEnum } from "../shared/enums/colorPallet.enum";
 const { Header, Sider, Content, Footer } = Layout;
 
 const BaseLayout: React.FC = () => {
@@ -94,7 +95,7 @@ const BaseLayout: React.FC = () => {
         {/* Right Sidebar */}
         <Sider
           style={{
-            background: "#F5F5F5",
+            background: ColorPalletEnum.WhiteBackground,
             textAlign: "right",
           }}
           width={256}
@@ -107,9 +108,9 @@ const BaseLayout: React.FC = () => {
           style={{
             margin: "16px",
             padding: "16px",
-            background: "#fff",
+            background: ColorPalletEnum.WhiteContentBackground,
             borderRadius: "10px",
-            border: "2px solid #EFF2F5",
+            borderBottom: `2px solid ${ColorPalletEnum.Border}`,
             overflow: "auto",
             maxHeight: "100vh",
           }}
