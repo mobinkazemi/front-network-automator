@@ -6,7 +6,7 @@ import packageJson from '../package.json';
 
 export const CONFIG = {
   site: {
-    name: 'Douran',
+    name: 'Minimals',
     serverUrl: import.meta.env.VITE_SERVER_URL ?? '',
     assetURL: import.meta.env.VITE_ASSET_URL ?? '',
     basePath: import.meta.env.VITE_BASE_PATH ?? '',
@@ -18,7 +18,7 @@ export const CONFIG = {
    */
   auth: {
     method: 'jwt',
-    skip: true,
+    skip: false,
     redirectPath: paths.dashboard.root,
   },
   /**

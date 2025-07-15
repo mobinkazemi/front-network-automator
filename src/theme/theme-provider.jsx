@@ -1,6 +1,8 @@
 import CssBaseline from '@mui/material/CssBaseline';
 import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles';
 
+import { useTranslate } from 'src/locales';
+
 import { useSettingsContext } from 'src/components/settings';
 
 import { createTheme } from './create-theme';
@@ -10,9 +12,11 @@ import { schemeConfig } from './color-scheme-script';
 // ----------------------------------------------------------------------
 
 export function ThemeProvider({ children }) {
+  const { currentLang } = useTranslate();
+
   const settings = useSettingsContext();
 
-  const theme = createTheme(settings);
+  const theme = createTheme(currentLang?.systemValue, settings);
 
   return (
     <CssVarsProvider
