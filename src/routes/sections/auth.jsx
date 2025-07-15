@@ -26,9 +26,9 @@ export const authRoutes = [
         path: 'sign-in',
         element: (
           // <GuestGuard>
-          // <AuthLayout>
+          <AuthLayout>
             <SignInPage />
-          // </AuthLayout>
+          </AuthLayout>
           // </GuestGuard>
         ),
       },
