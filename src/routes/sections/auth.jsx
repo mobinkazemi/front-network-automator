@@ -1,15 +1,47 @@
 import { lazy, Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { AuthLayout } from 'src/layouts/auth';
+import { AuthSplitLayout } from 'src/layouts/auth-split';
 
 import { SplashScreen } from 'src/components/loading-screen';
 
-// import { GuestGuard } from 'src/auth/guard';
+import { GuestGuard } from 'src/auth/guard';
 
 // ----------------------------------------------------------------------
 
-const SignInPage = lazy(() => import('src/pages/auth/sign-in'));
+/** **************************************
+ * Jwt
+ *************************************** */
+const Jwt = {
+  SignInPage: lazy(() => import('src/pages/auth/jwt/sign-in')),
+  SignUpPage: lazy(() => import('src/pages/auth/jwt/sign-up')),
+};
+
+const authJwt = {
+  path: 'jwt',
+  children: [
+    {
+      path: 'sign-in',
+      element: (
+        <GuestGuard>
+          <AuthSplitLayout section={{ title: 'Hi, Welcome back' }}>
+            <Jwt.SignInPage />
+          </AuthSplitLayout>
+        </GuestGuard>
+      ),
+    },
+    {
+      path: 'sign-up',
+      element: (
+        <GuestGuard>
+          <AuthSplitLayout>
+            <Jwt.SignUpPage />
+          </AuthSplitLayout>
+        </GuestGuard>
+      ),
+    },
+  ],
+};
 
 // ----------------------------------------------------------------------
 
@@ -21,17 +53,6 @@ export const authRoutes = [
         <Outlet />
       </Suspense>
     ),
-    children: [
-      {
-        path: 'sign-in',
-        element: (
-          // <GuestGuard>
-          <AuthLayout>
-            <SignInPage />
-          </AuthLayout>
-          // </GuestGuard>
-        ),
-      },
-    ],
+    children: [authJwt],
   },
 ];

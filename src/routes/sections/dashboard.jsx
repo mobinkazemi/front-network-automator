@@ -20,11 +20,11 @@ const PageSix = lazy(() => import('src/pages/dashboard/six'));
 // ----------------------------------------------------------------------
 
 const layoutContent = (
-  // <DashboardLayout>
+  <DashboardLayout>
     <Suspense fallback={<LoadingScreen />}>
       <Outlet />
     </Suspense>
-  // </DashboardLayout>
+  </DashboardLayout>
 );
 
 export const dashboardRoutes = [

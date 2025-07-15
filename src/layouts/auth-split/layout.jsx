@@ -2,24 +2,26 @@ import Alert from '@mui/material/Alert';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
-import { Main, CompactContent } from './main';
+import { Section } from './section';
+import { Main, Content } from './main';
 import { HeaderBase } from '../core/header-base';
 import { LayoutSection } from '../core/layout-section';
 
 // ----------------------------------------------------------------------
 
-export function SimpleLayout({ sx, children, content }) {
+export function AuthSplitLayout({ sx, section, children }) {
   const mobileNavOpen = useBoolean();
 
   const layoutQuery = 'md';
 
   return (
     <LayoutSection
-      /** **************************************
-       * Header
-       *************************************** */
       headerSection={
+        /** **************************************
+         * Header
+         *************************************** */
         <HeaderBase
+          disableElevation
           layoutQuery={layoutQuery}
           onOpenNav={mobileNavOpen.onTrue}
           slotsDisplay={{
@@ -41,6 +43,7 @@ export function SimpleLayout({ sx, children, content }) {
             ),
           }}
           slotProps={{ container: { maxWidth: false } }}
+          sx={{ position: { [layoutQuery]: 'fixed' } }}
         />
       }
       /** **************************************
@@ -50,12 +53,20 @@ export function SimpleLayout({ sx, children, content }) {
       /** **************************************
        * Style
        *************************************** */
-      cssVars={{
-        '--layout-simple-content-compact-width': '448px',
-      }}
       sx={sx}
+      cssVars={{
+        '--layout-auth-content-width': '420px',
+      }}
     >
-      <Main>{content?.compact ? <CompactContent>{children}</CompactContent> : children}</Main>
+      <Main layoutQuery={layoutQuery}>
+        <Section
+          title={section?.title}
+          layoutQuery={layoutQuery}
+          imgUrl={section?.imgUrl}
+          subtitle={section?.subtitle}
+        />
+        <Content layoutQuery={layoutQuery}>{children}</Content>
+      </Main>
     </LayoutSection>
   );
 }
