@@ -9,7 +9,6 @@ yarn-error.log*
 # dependencies
 node_modules
 .pnp
-src/app.jsx
 .pnp.js
 
 # testing
@@ -26,7 +25,6 @@ build
 # environment variables
 .env
 .env.local
-src/layouts
 .env.development.local
 .env.test.local
 .env.production.local
