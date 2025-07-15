@@ -1,8 +1,0 @@
-@font-face {
-  font-family: "iranSans";
-  src: url("./assets/fonts/irsans.ttf") format("truetype");
-}
-
-body {
-  font-family: "iranSans", Arial, Helvetica, sans-serif;
-}
