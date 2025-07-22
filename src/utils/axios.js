@@ -4,7 +4,12 @@ import { CONFIG } from 'src/config-global';
 
 // ----------------------------------------------------------------------
 
-const axiosInstance = axios.create({ baseURL: CONFIG.site.serverUrl });
+const axiosInstance = axios.create({
+  baseURL: CONFIG.site.serverUrl,
+  headers: {
+    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsIm11c3RDaGFuZ2VQYXNzd29yZCI6ZmFsc2UsInJvbGVJZCI6MSwiZXhwIjoxNzUzMjIzMDgyfQ.MH4K5pUd9ptWwZrKOanqgL_iC0p5L7JDruIk43o4ZbU`,
+  },
+});
 
 axiosInstance.interceptors.response.use(
   (response) => response,

@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import { useTheme } from '@mui/material/styles';
 import { iconButtonClasses } from '@mui/material/IconButton';
@@ -21,6 +22,7 @@ import { _account } from '../config-nav-account';
 import { HeaderBase } from '../core/header-base';
 import { _workspaces } from '../config-nav-workspace';
 import { LayoutSection } from '../core/layout-section';
+import { SignOutButton } from '../components/sign-out-button';
 import { navData as dashboardNavData } from '../config-nav-dashboard';
 
 // ----------------------------------------------------------------------
@@ -51,6 +53,13 @@ export function DashboardLayout({ sx, children, data }) {
         open={mobileNavOpen.value}
         onClose={mobileNavOpen.onFalse}
         cssVars={navColorVars.section}
+        slots={{
+          bottomArea: (
+            <Box sx={{ p: 2.5 }}>
+              <SignOutButton />
+            </Box>
+          ),
+        }}
       />
 
       <LayoutSection
@@ -84,8 +93,7 @@ export function DashboardLayout({ sx, children, data }) {
               searchbar: false,
               localization: false,
               contacts: false,
-              settings: false,
-              account: false
+              account: false,
             }}
             slots={{
               topArea: (
@@ -136,7 +144,7 @@ export function DashboardLayout({ sx, children, data }) {
                 },
               },
               container: {
-                maxWidth: false,
+                maxWidth: 'lg',
                 sx: {
                   ...(isNavVertical && { px: { [layoutQuery]: 5 } }),
                 },
@@ -160,6 +168,13 @@ export function DashboardLayout({ sx, children, data }) {
                   settings.navLayout === 'vertical' ? 'mini' : 'vertical'
                 )
               }
+              slots={{
+                bottomArea: (
+                  <Box sx={{ p: 2.5 }}>
+                    <SignOutButton />
+                  </Box>
+                ),
+              }}
             />
           )
         }
@@ -212,7 +227,7 @@ function useNavColorVars(theme, settings) {
       case 'integrate':
         return {
           layout: {
-            '--layout-nav-bg': palette.background.default,
+            '--layout-nav-bg': palette.common.white,
             '--layout-nav-horizontal-bg': varAlpha(palette.background.defaultChannel, 0.8),
             '--layout-nav-border-color': varAlpha(palette.grey['500Channel'], 0.12),
             '--layout-nav-text-primary-color': palette.text.primary,
@@ -262,7 +277,6 @@ function useNavColorVars(theme, settings) {
         throw new Error(`Invalid color: ${settings.navColor}`);
     }
   }, [
-    palette.background.default,
     palette.background.defaultChannel,
     palette.common.white,
     palette.grey,

@@ -90,10 +90,11 @@ const MuiButton = {
           ...(ownerState.color === 'inherit' &&
             !ownerState.disabled && {
               color: theme.vars.palette.common.white,
-              backgroundColor: theme.vars.palette.grey[800],
+              backgroundColor: theme.vars.palette.primary.main,
+              borderRadius: 12,
               '&:hover': {
                 boxShadow: theme.customShadows.z8,
-                backgroundColor: theme.vars.palette.grey[700],
+                backgroundColor: theme.vars.palette.primary.dark,
               },
               [stylesMode.dark]: {
                 color: theme.vars.palette.grey[800],
@@ -117,6 +118,7 @@ const MuiButton = {
           ...(ownerState.color === 'inherit' &&
             !ownerState.disabled && {
               borderColor: varAlpha(theme.vars.palette.grey['500Channel'], 0.32),
+              borderRadius: 12,
               '&:hover': { backgroundColor: theme.vars.palette.action.hover },
             }),
         },

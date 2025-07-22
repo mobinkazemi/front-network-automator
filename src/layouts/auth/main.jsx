@@ -11,12 +11,13 @@ export function Main({ sx, children, layoutQuery, ...other }) {
   const renderContent = (
     <Box
       sx={{
-        p: 5,
+        py: 5,
+        px: { xs: 3, md: 5 },
         width: 1,
         borderRadius: 2,
         display: 'flex',
         flexDirection: 'column',
-        bgcolor: 'background.default',
+        bgcolor: 'common.white',
         boxShadow: theme.customShadows.card,
         maxWidth: 'var(--layout-auth-content-width)',
       }}

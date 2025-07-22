@@ -7,8 +7,6 @@ import { Logo } from 'src/components/logo';
 import { Scrollbar } from 'src/components/scrollbar';
 import { NavSectionMini, NavSectionVertical } from 'src/components/nav-section';
 
-import { NavToggleButton } from '../components/nav-toggle-button';
-
 // ----------------------------------------------------------------------
 
 export function NavVertical({ sx, data, slots, isNavMini, layoutQuery, onToggleNav, ...other }) {
@@ -17,8 +15,8 @@ export function NavVertical({ sx, data, slots, isNavMini, layoutQuery, onToggleN
   const renderNavVertical = (
     <>
       {slots?.topArea ?? (
-        <Box sx={{ pl: 3.5, pt: 2.5, pb: 1 }}>
-          <Logo />
+        <Box sx={{ mx: 'auto', pt: 5, pb: 1 }}>
+          <Logo width={144} height="auto" />
         </Box>
       )}
 
@@ -71,16 +69,6 @@ export function NavVertical({ sx, data, slots, isNavMini, layoutQuery, onToggleN
         ...sx,
       }}
     >
-      <NavToggleButton
-        isNavMini={isNavMini}
-        onClick={onToggleNav}
-        sx={{
-          display: 'none',
-          [theme.breakpoints.up(layoutQuery)]: {
-            display: 'inline-flex',
-          },
-        }}
-      />
       {isNavMini ? renderNavMini : renderNavVertical}
     </Box>
   );

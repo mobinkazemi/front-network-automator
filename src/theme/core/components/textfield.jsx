@@ -52,6 +52,7 @@ const MuiOutlinedInput = {
    *************************************** */
   styleOverrides: {
     root: ({ theme }) => ({
+      borderRadius: 12,
       [`&.${outlinedInputClasses.focused}`]: {
         [`& .${outlinedInputClasses.notchedOutline}`]: {
           borderColor: theme.vars.palette.text.primary,
@@ -90,7 +91,7 @@ const MuiFilledInput = {
    *************************************** */
   styleOverrides: {
     root: ({ theme }) => ({
-      borderRadius: theme.shape.borderRadius,
+      borderRadius: 12,
       backgroundColor: varAlpha(theme.vars.palette.grey['500Channel'], 0.08),
       '&:hover': { backgroundColor: varAlpha(theme.vars.palette.grey['500Channel'], 0.16) },
       [`&.${filledInputClasses.focused}`]: {

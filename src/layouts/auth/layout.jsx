@@ -1,3 +1,5 @@
+import { useActiveLink } from 'src/routes/hooks';
+
 import { CONFIG } from 'src/config-global';
 import { stylesMode } from 'src/theme/styles';
 
@@ -7,6 +9,8 @@ import { LayoutSection } from '../core/layout-section';
 // ----------------------------------------------------------------------
 
 export function AuthLayout({ sx, children }) {
+  const isSignInPage = useActiveLink('/auth/sign-in', false);
+
   const layoutQuery = 'md';
 
   return (
@@ -23,7 +27,10 @@ export function AuthLayout({ sx, children }) {
        * Style
        *************************************** */
       cssVars={{
-        '--layout-auth-content-width': '1200px',
+        '--layout-auth-content-width': '420px',
+        ...(isSignInPage && {
+          '--layout-auth-content-width': '1200px',
+        }),
       }}
       sx={{
         '&::before': {
@@ -31,12 +38,15 @@ export function AuthLayout({ sx, children }) {
           height: 1,
           zIndex: 1,
           content: "''",
-          opacity: 0.24,
           position: 'fixed',
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center center',
-          backgroundImage: `url(${CONFIG.site.basePath}/assets/background/background-3-blur.webp)`,
+          backgroundImage: `url(${CONFIG.site.basePath}/assets/images/auth/background.jpg)`,
+          ...(isSignInPage && {
+            opacity: 0.24,
+            backgroundImage: `url(${CONFIG.site.basePath}/assets/background/background-3-blur.webp)`,
+          }),
           [stylesMode.dark]: { opacity: 0.08 },
         },
         ...sx,
