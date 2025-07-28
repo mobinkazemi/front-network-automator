@@ -1,5 +1,12 @@
+import { useState, useEffect } from 'react';
+
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Avatar from '@mui/material/Avatar';
 import { useTheme } from '@mui/material/styles';
+import ListItemText from '@mui/material/ListItemText';
+
+import axiosInstance from 'src/utils/axios';
 
 import { varAlpha, hideScrollY } from 'src/theme/styles';
 
@@ -10,6 +17,17 @@ import { NavSectionMini, NavSectionVertical } from 'src/components/nav-section';
 // ----------------------------------------------------------------------
 
 export function NavVertical({ sx, data, slots, isNavMini, layoutQuery, onToggleNav, ...other }) {
+  const [user, setUser] = useState([]);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const response = await axiosInstance.get('user/myself');
+      setUser(response.data.data);
+    };
+
+    fetchUser();
+  }, []);
+
   const theme = useTheme();
 
   const renderNavVertical = (
@@ -19,6 +37,41 @@ export function NavVertical({ sx, data, slots, isNavMini, layoutQuery, onToggleN
           <Logo width={144} height="auto" />
         </Box>
       )}
+
+      <Box sx={{ bgcolor: 'background.neutral', mx: 2, borderRadius: 2, p: 2, my: 3 }}>
+        <Stack spacing={2} direction="row" alignItems="center">
+          <Avatar
+            sx={{
+              width: 45,
+              height: 45,
+              border: `solid 2px ${theme.vars.palette.primary.main}`,
+            }}
+          />
+
+          <ListItemText
+            primary={`${user.firstName} ${user.lastName}`}
+            secondary={user.email}
+            primaryTypographyProps={{ typography: 'button' }}
+            secondaryTypographyProps={{ typography: 'caption', color: 'text.disabled' }}
+            sx={{ flex: 'none' }}
+          />
+        </Stack>
+
+        <Box
+          sx={{
+            borderRadius: 1.5,
+            bgcolor: '#FFE4CD',
+            display: 'flex',
+            justifyContent: 'center',
+            mt: 2.5,
+            color: 'primary.main',
+            py: 1,
+            fontWeight: 'bold',
+          }}
+        >
+          ادمین کل
+        </Box>
+      </Box>
 
       <Scrollbar fillContent>
         <NavSectionVertical data={data} sx={{ px: 2, flex: '1 1 auto' }} {...other} />

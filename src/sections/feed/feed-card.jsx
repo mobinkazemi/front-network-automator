@@ -5,10 +5,13 @@ import Typography from '@mui/material/Typography';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
+import axiosInstance from 'src/utils/axios';
+
 import { CONFIG } from 'src/config-global';
 
 import { Image } from 'src/components/image';
 import { Label } from 'src/components/label';
+import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 
 import { FeedDetailsDialog } from './feed-details-dialog';
@@ -17,6 +20,17 @@ import { FeedDetailsDialog } from './feed-details-dialog';
 
 export function FeedCard({ feed }) {
   const details = useBoolean();
+
+  const handleDelete = async (feedId) => {
+    console.log(feedId)
+    try {
+      await axiosInstance.delete(`/devices/firewall/feed/delete/${feedId}`);
+
+      toast.success('تغذیه با موفقیت حذف شد');
+    } catch (error) {
+      toast.error(error.response.data.detail);
+    }
+  };
 
   return (
     <>
@@ -103,9 +117,9 @@ export function FeedCard({ feed }) {
             size="small"
             variant="soft"
             sx={{ borderRadius: 1.5 }}
-            // onClick={details.onTrue}
+            onClick={() => handleDelete(feed.id)}
           >
-            <Iconify icon="heroicons:eye-20-solid" />
+            <Iconify icon="heroicons:trash-20-solid" />
           </Fab>
 
           <Fab
@@ -120,7 +134,7 @@ export function FeedCard({ feed }) {
         </Stack>
       </Box>
 
-      <FeedDetailsDialog open={details.value} onClose={details.onFalse} />
+      <FeedDetailsDialog feed={feed} open={details.value} onClose={details.onFalse} />
     </>
   );
 }

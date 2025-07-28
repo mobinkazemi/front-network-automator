@@ -9,7 +9,7 @@ import DialogActions from '@mui/material/DialogActions';
 
 // ----------------------------------------------------------------------
 
-export function FeedDetailsDialog({ open, onClose }) {
+export function FeedDetailsDialog({ feed, open, onClose }) {
   return (
     <Dialog fullWidth maxWidth="xs" open={open} onClose={onClose}>
       <DialogTitle color="primary">نمایش تغذیه</DialogTitle>
@@ -21,7 +21,7 @@ export function FeedDetailsDialog({ open, onClose }) {
               وضعیت
             </Typography>
 
-            <Typography variant="button">فعال</Typography>
+            <Typography variant="button">{feed.active ? 'فعال' : 'غیرفعال'}</Typography>
           </Stack>
 
           <Stack direction="row" alignItems="center">
@@ -29,7 +29,7 @@ export function FeedDetailsDialog({ open, onClose }) {
               نوع عملکرد
             </Typography>
 
-            <Typography variant="button">مسدود شده</Typography>
+            <Typography variant="button">{feed.type === 'block' ? 'مسدود شده' : 'مجاز'}</Typography>
           </Stack>
 
           <Stack direction="row" alignItems="center">
@@ -37,7 +37,7 @@ export function FeedDetailsDialog({ open, onClose }) {
               نام فایل
             </Typography>
 
-            <Typography variant="button">Gozar.txt</Typography>
+            <Typography variant="button">{feed.fileName}</Typography>
           </Stack>
 
           <Stack direction="row" alignItems="center">
@@ -45,7 +45,7 @@ export function FeedDetailsDialog({ open, onClose }) {
               IP
             </Typography>
 
-            <Typography variant="button">154.17.170.20</Typography>
+            <Typography variant="button">{feed.item}</Typography>
           </Stack>
 
           <Stack direction="row" alignItems="center">
@@ -53,7 +53,7 @@ export function FeedDetailsDialog({ open, onClose }) {
               مرجع
             </Typography>
 
-            <Typography variant="button">سازمان افتا</Typography>
+            <Typography variant="button">{feed.source}</Typography>
           </Stack>
 
           <Stack direction="row" alignItems="center">
@@ -61,7 +61,7 @@ export function FeedDetailsDialog({ open, onClose }) {
               تاریخ حذف
             </Typography>
 
-            <Typography variant="button">25 اردیبهشت 1404</Typography>
+            <Typography variant="button">{feed.removeDate ?? '-'}</Typography>
           </Stack>
         </Stack>
       </DialogContent>

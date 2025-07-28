@@ -1,5 +1,6 @@
 import { z as zod } from 'zod';
 import { useForm } from 'react-hook-form';
+import { useState, useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import Box from '@mui/material/Box';
@@ -22,12 +23,23 @@ export const UserQuickEditSchema = zod.object({
   fileName: zod.string().min(1),
   item: zod.string().min(1),
   source: zod.string().min(1),
-  removeDate: zod.string().min(1),
+  // removeDate: zod.string().min(1),
 });
 
 // ----------------------------------------------------------------------
 
 export function FeedNewEditDialog({ open, onClose }) {
+  const [fileNames, setFileNames] = useState([]);
+
+  useEffect(() => {
+    const fetchFileNames = async () => {
+      const response = await axiosInstance.get('devices/firewall/feed/file-names');
+      setFileNames(response.data.data);
+    };
+
+    fetchFileNames();
+  }, []);
+
   const methods = useForm({
     mode: 'all',
     resolver: zodResolver(UserQuickEditSchema),
@@ -66,13 +78,21 @@ export function FeedNewEditDialog({ open, onClose }) {
               <MenuItem value="allowed">مجاز</MenuItem>
             </Field.Select>
 
-            <Field.Text variant="filled" name="fileName" label="نام فایل" />
+            {/* <Field.Select variant="filled" name="fileName" label="لیست فایل">
+              {fileNames.map((fileName, index) => (
+                <MenuItem key={index} value={fileName}>
+                  {fileName}
+                </MenuItem>
+              ))}
+            </Field.Select> */}
+
+            <Field.Text variant="filled" name="fileName" label="لیست فایل" />
 
             <Field.Text variant="filled" name="item" label="IP" />
 
             <Field.Text variant="filled" name="source" label="مرجع" />
 
-            <Field.Text variant="filled" name="removeDate" label="تاریخ حذف" />
+            {/* <Field.Text variant="filled" name="removeDate" label="تاریخ حذف" /> */}
           </Box>
         </DialogContent>
 

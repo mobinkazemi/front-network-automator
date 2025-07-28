@@ -4,10 +4,19 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import Select from '@mui/material/Select';
 import Divider from '@mui/material/Divider';
+import MenuItem from '@mui/material/MenuItem';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import InputLabel from '@mui/material/InputLabel';
 import Fab, { fabClasses } from '@mui/material/Fab';
+import FormControl from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputAdornment from '@mui/material/InputAdornment';
 import CardHeader, { cardHeaderClasses } from '@mui/material/CardHeader';
+import Pagination, { paginationClasses } from '@mui/material/Pagination';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
@@ -25,16 +34,12 @@ export function PermissionListView() {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    fetch('http://172.17.17.70:8000/permissionCategory/list', {
-      method: 'GET',
-      headers: {
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsIm11c3RDaGFuZ2VQYXNzd29yZCI6ZmFsc2UsInJvbGVJZCI6MSwiZXhwIjoxNzUzMTk3OTEyfQ.1p22mzJ2FxKSdvpLIkDZ1bHLt24Dj_lltHqBuE5l26o',
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => setCategories(data.data));
+    const fetchCategories = async () => {
+      const response = await axiosInstance.get('permissionCategory/list');
+      setCategories(response.data.data);
+    };
+
+    fetchCategories();
   }, []);
 
   const handleDelete = async (roleId) => {
@@ -73,6 +78,53 @@ export function PermissionListView() {
         />
 
         <Divider sx={{ mx: 3 }} />
+
+        <Stack sx={{ p: 3, pb: 0, flexDirection: { xs: 'column', md: 'row' }, gap: 2 }}>
+          <Box sx={{ flexGrow: 1 }}>
+            <TextField
+              fullWidth
+              placeholder="نام نقش را جستجو کنید..."
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Iconify icon="heroicons:magnifying-glass-20-solid" width={24} />
+                  </InputAdornment>
+                ),
+              }}
+              sx={{ maxWidth: { md: 360 } }}
+            />
+          </Box>
+
+          <TextField
+            placeholder="تاریخ ایجاد"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => {}} edge="end">
+                    <Iconify icon="heroicons:calendar-20-solid" width={24} />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            sx={{ maxWidth: { md: 180 } }}
+          />
+
+          <FormControl sx={{ flexShrink: 0, width: { xs: 1, md: 180 } }}>
+            <InputLabel htmlFor="role-filter-sort-select-label">مرتب سازی</InputLabel>
+
+            <Select
+              //   value={filters.state.service}
+              //   onChange={handleFilterService}
+              input={<OutlinedInput label="مرتب سازی" />}
+              renderValue={(selected) => selected.map((value) => value).join(', ')}
+              inputProps={{ id: 'role-filter-sort-select-label' }}
+              sx={{ maxWidth: { md: 180 } }}
+            >
+              <MenuItem value="asc">جدیدترین</MenuItem>
+              <MenuItem value="desc">قدیمی ترین</MenuItem>
+            </Select>
+          </FormControl>
+        </Stack>
 
         <Box
           gap={2}
@@ -149,6 +201,16 @@ export function PermissionListView() {
             </Box>
           ))}
         </Box>
+
+        <Pagination
+          color="primary"
+          count={8}
+          sx={{
+            mb: 3,
+            [`& .${paginationClasses.ul}`]: { justifyContent: 'center' },
+            [`& .${paginationClasses.ul} li button`]: { borderRadius: '12px' },
+          }}
+        />
       </Card>
     </DashboardContent>
   );

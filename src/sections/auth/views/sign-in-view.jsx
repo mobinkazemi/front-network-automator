@@ -12,40 +12,38 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
 
 import { paths } from 'src/routes/paths';
+import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
 
 import { useBoolean } from 'src/hooks/use-boolean';
+
+import axiosInstance from 'src/utils/axios';
 
 import { CONFIG } from 'src/config-global';
 
 import { Logo } from 'src/components/logo';
 import { Image } from 'src/components/image';
+import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 import { Form, Field } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 
-export const SignInSchema = zod.object({
-  email: zod
-    .string()
-    .min(1, { message: 'Email is required!' })
-    .email({ message: 'Email must be a valid email address!' }),
-  password: zod
-    .string()
-    .min(1, { message: 'Password is required!' })
-    .min(6, { message: 'Password must be at least 6 characters!' }),
+const SignInSchema = zod.object({
+  username: zod.string().min(1),
+  password: zod.string().min(1),
 });
 
 // ----------------------------------------------------------------------
 
 export function SignInView() {
-  const password = useBoolean();
+  const router = useRouter();
 
-  const defaultValues = { email: '', password: '' };
+  const password = useBoolean();
 
   const methods = useForm({
     resolver: zodResolver(SignInSchema),
-    defaultValues,
+    defaultValues: { username: '', password: '' },
   });
 
   const {
@@ -55,10 +53,14 @@ export function SignInView() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      console.info('DATA', data);
+      const response = await axiosInstance.post('auth/login', data);
+
+      localStorage.setItem('accessToken', response.data.data.token);
+
+      router.replace(paths.dashboard.user.root);
     } catch (error) {
-      console.error(error);
+      console.log(error);
+      toast.error(error.response.data.detail);
     }
   });
 
@@ -88,7 +90,7 @@ export function SignInView() {
             نام کاربری
           </Typography>
 
-          <Field.Text variant="filled" name="email" label="نام کاربری" />
+          <Field.Text variant="filled" name="username" label="نام کاربری" />
         </Stack>
 
         <Stack direction="row">

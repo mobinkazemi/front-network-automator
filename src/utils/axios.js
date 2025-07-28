@@ -6,15 +6,24 @@ import { CONFIG } from 'src/config-global';
 
 const axiosInstance = axios.create({
   baseURL: CONFIG.site.serverUrl,
-  headers: {
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsIm11c3RDaGFuZ2VQYXNzd29yZCI6ZmFsc2UsInJvbGVJZCI6MSwiZXhwIjoxNzUzMjIzMDgyfQ.MH4K5pUd9ptWwZrKOanqgL_iC0p5L7JDruIk43o4ZbU`,
-  },
+  // headers: {
+  //   Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsIm11c3RDaGFuZ2VQYXNzd29yZCI6ZmFsc2UsInJvbGVJZCI6MSwiZXhwIjoxNzUzNzM3ODMzfQ.yJAh6SyHCPHZRiujLx8Szz0FN82zOCOLZX6F3FDTwHE`,
+  // },
 });
 
-axiosInstance.interceptors.response.use(
-  (response) => response,
-  (error) => Promise.reject((error.response && error.response.data) || 'Something went wrong!')
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('accessToken');
+    if (token) config.headers.Authorization = `Bearer ${token}`;
+    return config
+  },
+  (error) => Promise.reject(error)
 );
+
+// axiosInstance.interceptors.response.use(
+//   (response) => response,
+//   (error) => Promise.reject((error.response && error.response.data) || 'Something went wrong!')
+// );
 
 export default axiosInstance;
 

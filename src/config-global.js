@@ -19,7 +19,7 @@ export const CONFIG = {
   auth: {
     method: 'jwt',
     skip: true,
-    redirectPath: paths.dashboard.root,
+    redirectPath: paths.auth.signIn,
   },
   /**
    * Mapbox

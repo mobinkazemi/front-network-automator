@@ -22,17 +22,11 @@ export function UserTableRow({ user }) {
 
   const handleDelete = async (userId) => {
     try {
-      await axiosInstance.delete('user/admin/delete', {
-        data: { userId },
-        headers: {
-          Authorization:
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsIm11c3RDaGFuZ2VQYXNzd29yZCI6ZmFsc2UsInJvbGVJZCI6MSwiZXhwIjoxNzUzMTk3OTEyfQ.1p22mzJ2FxKSdvpLIkDZ1bHLt24Dj_lltHqBuE5l26o',
-        },
-      });
+      await axiosInstance.delete('user/admin/delete', { data: { userId } });
 
       toast.success('کاربر با موفقیت حذف شد');
     } catch (error) {
-      toast.error(error.detail);
+      toast.error(error.response.data.detail);
     }
   };
 
@@ -97,7 +91,7 @@ export function UserTableRow({ user }) {
               variant="softExtended"
               sx={{ [`&.${fabClasses.sizeSmall}`]: { borderRadius: 1.5, height: 40 } }}
             >
-              <Iconify icon="ic:round-access-alarm" width={24} />
+              <Iconify icon="heroicons:pencil-square-20-solid" />
               ویرایش کاربر
             </Fab>
 
