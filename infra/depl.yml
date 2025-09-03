@@ -36,3 +36,18 @@ spec:
       port: 5173
       targetPort: 5173
       nodePort: 30445
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fnetoran-clusterip-srv
+  namespace: auth
+spec:
+  type: ClusterIP
+  selector:
+    app: fnetoran
+  ports:
+    - protocol: TCP
+      port: 5173
+      targetPort: 5173
+
