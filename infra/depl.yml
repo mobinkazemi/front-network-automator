@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fnetoran-depl
+  namespace: auth
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: fnetoran
+  template:
+    metadata:
+      labels:
+        app: fnetoran
+    spec:
+      imagePullSecrets:
+        - name: nexus-registry-secret
+      containers:
+        - name: fnetoran
+          image: nexus.local/fnetoran:latest
+          ports:
+            - containerPort: 5173
