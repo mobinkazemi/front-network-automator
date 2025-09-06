@@ -10,7 +10,7 @@ const PORT = 5173;
 const env = loadEnv('all', process.cwd());
 
 export default defineConfig({
-  base: '/ui',
+  // base: '/ui',
   plugins: [
     react(),
     checker({
