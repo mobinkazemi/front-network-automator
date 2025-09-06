@@ -65,7 +65,7 @@ spec:
     - host: douran.dev
       http:
         paths:
-          - path: /ui/?(.*)
+          - path: /?(.*)
             pathType: ImplementationSpecific
             backend:
               service:
