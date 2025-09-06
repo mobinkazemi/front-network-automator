@@ -35,6 +35,10 @@ export default defineConfig({
       },
     ],
   },
-  server: { port: PORT, host: true },
+  server: { port: PORT, host: true, 
+  preview: {
+      allowedHosts: ['douran.dev', 'localhost', '127.0.0.1']
+    }
+   },
   preview: { port: PORT, host: true },
 });
