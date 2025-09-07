@@ -87,7 +87,7 @@ export function SignInView() {
             width="33.333333%"
             pt={2}
           >
-            username
+            نام کاربری
           </Typography>
 
           <Field.Text variant="filled" name="username" label="نام کاربری" />
