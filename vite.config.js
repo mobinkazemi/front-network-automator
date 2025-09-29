@@ -1,13 +1,14 @@
-import path from 'path';
-import checker from 'vite-plugin-checker';
-import { loadEnv, defineConfig } from 'vite';
-import react from '@vitejs/plugin-react-swc';
+import path from "path";
+// import checker from 'vite-plugin-checker';
+import { loadEnv, defineConfig } from "vite";
+// import react from '@vitejs/plugin-react-swc';
+import react from "@vitejs/plugin-react";
 
 // ----------------------------------------------------------------------
 
 const PORT = 5173;
 
-const env = loadEnv('all', process.cwd());
+// const env = loadEnv("all", process.cwd());
 
 export default defineConfig({
   // base: '/ui',
@@ -24,21 +25,14 @@ export default defineConfig({
     // }),
   ],
   resolve: {
-    alias: [
-      {
-        find: /^~(.+)/,
-        replacement: path.join(process.cwd(), 'node_modules/$1'),
-      },
-      {
-        find: /^src(.+)/,
-        replacement: path.join(process.cwd(), 'src/$1'),
-      },
-    ],
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
   },
   server: {
-    port: PORT, host: true,
+    port: PORT,
+    host: true,
     allowedHosts: true,
-
   },
   preview: { port: PORT, host: true },
 });
