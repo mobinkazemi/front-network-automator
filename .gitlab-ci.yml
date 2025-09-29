@@ -4,7 +4,8 @@ stages:
 build-image:
   stage: build-image
   script:
-    - docker build -t fnetoran:latest .
+    - docker build -t fnetoran:latest . --no-cache
+
 
     - NEW_VERSION=$CI_PIPELINE_ID
 
