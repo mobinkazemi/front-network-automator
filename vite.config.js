@@ -13,15 +13,15 @@ export default defineConfig({
   // base: '/ui',
   plugins: [
     react(),
-    checker({
-      eslint: {
-        lintCommand: 'eslint "./src/**/*.{js,jsx,ts,tsx}"',
-      },
-      overlay: {
-        position: 'tl',
-        initialIsOpen: false,
-      },
-    }),
+    // checker({
+    //   eslint: {
+    //     lintCommand: 'eslint "./src/**/*.{js,jsx,ts,tsx}"',
+    //   },
+    //   overlay: {
+    //     position: 'tl',
+    //     initialIsOpen: false,
+    //   },
+    // }),
   ],
   resolve: {
     alias: [
