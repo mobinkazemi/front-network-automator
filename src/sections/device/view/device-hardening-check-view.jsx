@@ -22,7 +22,7 @@ export function DeviceHardeningCheckView() {
 
   useEffect(() => {
     const eventSource = new EventSource(
-      `http://172.17.17.70:8000/hardening/stream/check/${deviceId}_${cisId}`
+      `${import.meta.env.VITE_SERVER_URL}/hardening/stream/check/${deviceId}_${cisId}`
     );
 
     eventSource.onmessage = (event) => {
