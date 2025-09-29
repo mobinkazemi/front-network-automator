@@ -1,7 +1,8 @@
 import { useRoutes } from "react-router";
 
+import { NotFound } from "@/pages/404";
+
 import { dashboardRoutes } from "./dashboard";
-import { NotFound } from "src/pages/404";
 
 // ----------------------------------------------------------------------
 
