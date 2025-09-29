@@ -1,18 +1,14 @@
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from "react-helmet-async";
 
-import { CONFIG } from 'src/config-global';
-
-import { UserListView } from 'src/sections/user/view';
+import { UserListView } from "@/sections/user/view";
 
 // ----------------------------------------------------------------------
-
-const metadata = { title: `User list | ${CONFIG.site.name}` };
 
 export default function Page() {
   return (
     <>
       <Helmet>
-        <title> {metadata.title}</title>
+        <title>{`User list - ${import.meta.env.VITE_APP_NAME}`}</title>
       </Helmet>
 
       <UserListView />

@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 
-import { DeviceListView } from "@/sections/device/view";
+import { DeviceHardeningCheckView } from "@/sections/device/view";
 
 // ----------------------------------------------------------------------
 
@@ -8,10 +8,12 @@ export default function Page() {
   return (
     <>
       <Helmet>
-        <title>{`Device list - ${import.meta.env.VITE_APP_NAME}`}</title>
+        <title>{`Device hardening check - ${
+          import.meta.env.VITE_APP_NAME
+        }`}</title>
       </Helmet>
 
-      <DeviceListView />
+      <DeviceHardeningCheckView />
     </>
   );
 }

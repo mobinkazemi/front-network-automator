@@ -1,46 +1,42 @@
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import CardHeader, { cardHeaderClasses } from '@mui/material/CardHeader';
+import { useUsersQuery } from "@/actions/user";
 
-import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
+import {
+  Table,
+  TableBody,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/table";
 
-import { DashboardContent } from 'src/layouts/dashboard';
-
-import { Iconify } from 'src/components/iconify';
-
-import { UserTable } from '../user-table';
+import { UserTableRow } from "../user-table-row";
 
 // ----------------------------------------------------------------------
 
-export function UserListView() {
+export const UserListView = () => {
+  const { users, usersLoading } = useUsersQuery();
+
+  if (usersLoading) return "Loading...";
+
   return (
-    <DashboardContent>
-      <Card>
-        <CardHeader
-          title="لیست کاربران"
-          titleTypographyProps={{ color: 'primary' }}
-          action={
-            <Button
-              component={RouterLink}
-              href={paths.dashboard.user.new}
-              variant="contained"
-              startIcon={<Iconify icon="heroicons:plus-small-solid" />}
-            >
-              کاربر جدید
-            </Button>
-          }
-          sx={{ mb: 3, [`& .${cardHeaderClasses.action}`]: { m: 0 } }}
-        />
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableHeader>ID</TableHeader>
+          <TableHeader>نام</TableHeader>
+          <TableHeader>نام خانوادگی</TableHeader>
+          <TableHeader>ایمیل</TableHeader>
+          <TableHeader>نقش</TableHeader>
+          <TableHeader>تاریخ ثبت نام</TableHeader>
+          <TableHeader>وضعیت</TableHeader>
+          <TableHeader>عملیات</TableHeader>
+        </TableRow>
+      </TableHead>
 
-        <Divider sx={{ mx: 3 }} />
-
-        <Box sx={{ p: 3 }}>
-          <UserTable />
-        </Box>
-      </Card>
-    </DashboardContent>
+      <TableBody>
+        {users.data.map((user) => (
+          <UserTableRow key={user.id} user={user} />
+        ))}
+      </TableBody>
+    </Table>
   );
-}
+};
