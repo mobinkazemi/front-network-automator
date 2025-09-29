@@ -1,22 +1,19 @@
- stages:
-   - build-image
+stages:
+  - build-image
 
+build-image:
+  stage: build-image
+  script:
+    - docker build -t fnetoran:latest .
 
+    - NEW_VERSION=$CI_PIPELINE_ID
 
- build-image:
-   stage: build-image
-   script:
-     - docker build -t fnetoran:latest .
+    - docker tag fnetoran:latest $DOCKER_REGISTRY/fnetoran:$NEW_VERSION
+    - docker tag fnetoran:latest $DOCKER_REGISTRY/fnetoran:latest
 
-     - NEW_VERSION=$CI_PIPELINE_ID
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin $DOCKER_REGISTRY
+    - docker push $DOCKER_REGISTRY/fnetoran:$NEW_VERSION
+    - docker push $DOCKER_REGISTRY/fnetoran:latest
 
-     - docker tag fnetoran:latest $DOCKER_REGISTRY/fnetoran:$NEW_VERSION
-     - docker tag fnetoran:latest $DOCKER_REGISTRY/fnetoran:latest
-
-     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin $DOCKER_REGISTRY
-     - docker push $DOCKER_REGISTRY/fnetoran:$NEW_VERSION
-     - docker push $DOCKER_REGISTRY/fnetoran:latest
-     - ping -c 2 172.17.17.70
-
-   rules:
-     - if: '$CI_COMMIT_BRANCH == "main"' # Only run on main branch
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"' # Only run on main branch
