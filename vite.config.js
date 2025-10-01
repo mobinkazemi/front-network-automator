@@ -6,12 +6,12 @@ import tailwindcss from "@tailwindcss/vite";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  // server: {
-  //   port: 5173,
-  //   host: true,
-  //   allowedHosts: true,
-  // },
-  // preview: { port: 5173, host: true },
+  server: {
+    port: 5173,
+    host: true,
+    allowedHosts: true,
+  },
+  preview: { port: 5173, host: true },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
