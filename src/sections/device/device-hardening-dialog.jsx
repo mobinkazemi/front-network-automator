@@ -80,7 +80,7 @@ export const DeviceHardeningDialog = ({ open, onClose }) => {
 
         <div className="mt-6 max-h-96 overflow-y-auto">
           <ul className="mt-2 space-y-4">
-            {history.map((cis) => (
+            {history?.map((cis) => (
               <li key={cis.id}>
                 <span className="text-sm font-bold text-gray-800">
                   {cis.name}

@@ -27,7 +27,7 @@ const fileTypeOptions = [
 
 // ----------------------------------------------------------------------
 
-export function FeedNewForm({ open, onClose }) {
+export function FeedNewEditForm({ open, onClose }) {
   const { fileNames } = useFileNamesQuery();
 
   const { mutateAsync: createFeed, isPending: creatingFeed } =

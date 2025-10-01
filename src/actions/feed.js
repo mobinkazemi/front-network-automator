@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { paginated } from "@/services/feed";
+import { paginated, create, getFileNames } from "@/services/feed";
 
 // ----------------------------------------------------------------------
 
@@ -13,5 +13,25 @@ export const useFeedsQuery = () => {
   return {
     feeds: data,
     feedsLoading: isPending,
+  };
+};
+
+export const useCreateFeedMutation = () => {
+  return useMutation({
+    mutationFn: create,
+  });
+};
+
+// ----------------------------------------------------------------------
+
+export const useFileNamesQuery = () => {
+  const { data, isPending } = useQuery({
+    queryKey: ["file-names"],
+    queryFn: getFileNames,
+  });
+
+  return {
+    fileNames: data,
+    fileNamesLoading: isPending,
   };
 };

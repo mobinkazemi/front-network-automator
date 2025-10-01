@@ -10,6 +10,7 @@ import { Listbox, ListboxLabel, ListboxOption } from "@/components/listbox";
 import { useFeedsQuery } from "@/actions/feed";
 
 import { FeedCard } from "../feed-card";
+import { FeedNewEditForm } from "../feed-new-edit-form";
 
 // ----------------------------------------------------------------------
 
@@ -145,6 +146,8 @@ export function FeedListView() {
           </ul>
         </div>
       </div>
+
+      <FeedNewEditForm open={newFeed.value} onClose={newFeed.onFalse} />
     </>
   );
 }

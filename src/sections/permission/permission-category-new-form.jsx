@@ -1,6 +1,6 @@
 import z from "zod";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronLeftIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
@@ -13,8 +13,17 @@ import {
 } from "@/components/dialog";
 import { Input } from "@/components/input";
 import { Button } from "@/components/button";
+import { Loading } from "@/components/loading";
 import { Divider } from "@/components/divider";
 import { Field, Label, ErrorMessage } from "@/components/fieldset";
+import { Listbox, ListboxLabel, ListboxOption } from "@/components/listbox";
+
+import {
+  useCreatePermissionCategoryMutation,
+  usePermissionsQuery,
+  useAddPermissionToCategoryMutation,
+  usePermissionsOfCategoryQuery,
+} from "@/actions/permission";
 
 // ----------------------------------------------------------------------
 
@@ -25,34 +34,69 @@ const tabs = [
 
 const newPermissionCategorySchema = z.object({
   name: z.string().min(1, "نام گروه را وارد کنید"),
+  permissionId: z.number().min(1, "دسترسی موردنظر را وارد کنید"),
 });
 
 // ----------------------------------------------------------------------
 
 export function PermissionCategoryNewForm({ open, onClose }) {
   const [step, setStep] = useState(0);
+  const [permissionCategoryId, setPermissionCategoryId] = useState();
+
+  const { createPermissionCategory, createPermissionCategoryLoading } =
+    useCreatePermissionCategoryMutation();
+
+  const { permissions, permissionsLoading } = usePermissionsQuery();
+
+  const { addPermissionToCategory, addPermissionToCategoryLoading } =
+    useAddPermissionToCategoryMutation();
+
+  // const { permissionsOfCategory, permissionsOfCategoryLoading } =
+  //   usePermissionsOfCategoryQuery(permissionCategoryId);
 
   const {
     register,
-    handleSubmit,
     trigger,
+    reset,
+    control,
+    getValues,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(newPermissionCategorySchema),
     defaultValues: {
       name: "",
+      permissionId: 0,
     },
   });
 
-  const handleNext = () => {
-    if (step === 0) {
-      trigger("name");
+  const onSubmit = async () => {
+    const isValid = await trigger("name");
+
+    if (isValid) {
+      createPermissionCategory(
+        { name: getValues("name") },
+        {
+          onSuccess: ({ data }) => {
+            setPermissionCategoryId(data.id);
+            setStep(1);
+          },
+        },
+      );
     }
   };
 
-  const onSubmit = handleSubmit(async (data) => {
-    console.log(selectedIndex);
-  });
+  const handleAddPermission = async (permissionId) => {
+    const isValid = await trigger("permissionId");
+
+    if (isValid) {
+      addPermissionToCategory({
+        categoryId: permissionCategoryId,
+        permissionIds: [permissionId],
+      });
+    }
+  };
+
+  if (permissionsLoading) return "Loading...";
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -100,18 +144,82 @@ export function PermissionCategoryNewForm({ open, onClose }) {
               </Field>
             </TabPanel>
 
-            <TabPanel></TabPanel>
+            <TabPanel>
+              <div className="flex items-start gap-x-3">
+                <Field className="flex-1">
+                  <Controller
+                    name="permissionId"
+                    control={control}
+                    render={({ field: { value, onChange } }) => (
+                      <Listbox value={value} onChange={onChange}>
+                        {permissions.data.map((permission) => (
+                          <ListboxOption
+                            key={permission.id}
+                            value={permission.id}
+                          >
+                            <ListboxLabel>{permission.text}</ListboxLabel>
+                          </ListboxOption>
+                        ))}
+                      </Listbox>
+                    )}
+                  />
+
+                  {errors.permissionId && (
+                    <ErrorMessage>{errors.permissionId.message}</ErrorMessage>
+                  )}
+                </Field>
+
+                <button
+                  className="rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500"
+                  onClick={() => handleAddPermission(getValues("permissionId"))}
+                >
+                  افزودن
+                </button>
+              </div>
+
+              {/* <div>
+                {permissionsOfCategory?.data.map((p) => (
+                  <li>{p.id}</li>
+                ))}
+              </div> */}
+            </TabPanel>
           </TabPanels>
         </TabGroup>
       </DialogBody>
 
       <DialogActions>
-        <Button plain>انصراف</Button>
+        {step === 0 && (
+          <>
+            <Button
+              plain
+              onClick={() => {
+                onClose();
+                reset();
+              }}
+            >
+              انصراف
+            </Button>
 
-        <Button color="orange">
-          تایید و ادامه
-          <ChevronLeftIcon />
-        </Button>
+            <button
+              disabled={createPermissionCategoryLoading}
+              type="button"
+              className="inline-flex items-center gap-x-2 rounded-md bg-orange-500 px-3 py-2 text-sm font-semibold text-white shadow-xs not-disabled:hover:bg-orange-400 disabled:opacity-50"
+              onClick={onSubmit}
+            >
+              {createPermissionCategoryLoading ? (
+                <Loading />
+              ) : (
+                <>
+                  تایید و ادامه
+                  <ChevronLeftIcon
+                    aria-hidden="true"
+                    className="-ml-0.5 size-5"
+                  />
+                </>
+              )}
+            </button>
+          </>
+        )}
       </DialogActions>
     </Dialog>
   );

@@ -45,13 +45,14 @@ export const useDeviceQuery = () => {
 // ----------------------------------------------------------------------
 
 export const useLoadAssetsQuery = (deviceId) => {
-  const { isFetching } = useQuery({
+  const { isSuccess, isFetching } = useQuery({
     queryKey: ["load-assets", deviceId],
     queryFn: () => loadAssets(deviceId),
     enabled: !!deviceId,
   });
 
   return {
+    assetsSuccess: isSuccess,
     assetsFetching: isFetching,
   };
 };

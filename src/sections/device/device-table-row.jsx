@@ -1,11 +1,12 @@
-import { useState } from "react";
 import { Link } from "react-router";
+import { useEffect, useState } from "react";
 import {
   PencilSquareIcon,
   TrashIcon,
   EyeIcon,
   ArrowPathIcon,
 } from "@heroicons/react/16/solid";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { Loading } from "@/components/loading";
 
@@ -14,9 +15,17 @@ import { useLoadAssetsQuery } from "@/actions/device";
 // ----------------------------------------------------------------------
 
 export function DeviceTableRow({ device }) {
+  const queryClient = useQueryClient();
+
   const [deviceId, setDeviceId] = useState();
 
-  const { assetsFetching } = useLoadAssetsQuery(deviceId);
+  const { assetsSuccess, assetsFetching } = useLoadAssetsQuery(deviceId);
+
+  useEffect(() => {
+    if (assetsSuccess) {
+      queryClient.invalidateQueries({ queryKey: ["devices"] });
+    }
+  }, [assetsSuccess, queryClient]);
 
   return (
     <>

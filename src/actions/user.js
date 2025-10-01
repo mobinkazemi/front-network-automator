@@ -4,8 +4,6 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { paginated, login, register, me, logout } from "@/services/user";
 
-import { setCookie, removeCookies } from "@/utils/helper";
-
 // ----------------------------------------------------------------------
 
 export const useUsersQuery = () => {
@@ -28,7 +26,8 @@ export const useLogin = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: login,
     onSuccess: ({ data }) => {
-      setCookie(data);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("refreshToken", data.refreshToken);
 
       navigate("/dashboard/device");
     },
@@ -80,7 +79,8 @@ export const useLogout = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      removeCookies();
+      localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
 
       navigate("/auth/sign-in");
     },

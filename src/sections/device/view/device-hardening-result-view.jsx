@@ -28,7 +28,7 @@ export const DeviceHardeningResultView = () => {
   if (statisticsLoading || deviceLoading || hardeningResultLoading)
     return "Loading...";
 
-  console.log(hardeningResult);
+  // console.log(hardeningResult);
 
   return (
     <div className="divide-y divide-gray-200 overflow-hidden rounded-2xl bg-white shadow-sm">
