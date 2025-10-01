@@ -2,6 +2,10 @@ import { Outlet } from "react-router";
 
 import { DashboardLayout } from "@/layouts/dashboard";
 
+import PermissionListPage from "@/pages/dashboard/permission/list";
+
+import FeedListPage from "@/pages/dashboard/feed/list";
+
 import UserListPage from "@/pages/dashboard/user/list";
 import UserCreatePage from "@/pages/dashboard/user/new";
 
@@ -27,6 +31,14 @@ export const dashboardRoutes = [
           { index: true, element: <UserListPage /> },
           { path: "new", element: <UserCreatePage /> },
         ],
+      },
+      {
+        path: "permission",
+        children: [{ index: true, element: <PermissionListPage /> }],
+      },
+      {
+        path: "feed",
+        children: [{ index: true, element: <FeedListPage /> }],
       },
       {
         path: "device",

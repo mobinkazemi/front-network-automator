@@ -1,38 +1,18 @@
 import path from "path";
-// import checker from 'vite-plugin-checker';
-import { loadEnv, defineConfig } from "vite";
-// import react from '@vitejs/plugin-react-swc';
+import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 
-// ----------------------------------------------------------------------
-
-const PORT = 5173;
-
-// const env = loadEnv("all", process.cwd());
-
+// https://vite.dev/config/
 export default defineConfig({
-  // base: '/ui',
-  plugins: [
-    react(),
-    // checker({
-    //   eslint: {
-    //     lintCommand: 'eslint "./src/**/*.{js,jsx,ts,tsx}"',
-    //   },
-    //   overlay: {
-    //     position: 'tl',
-    //     initialIsOpen: false,
-    //   },
-    // }),
-  ],
+  plugins: [react(), tailwindcss()],
+  server: {
+    host: true,
+    allowedHosts: true,
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  server: {
-    port: PORT,
-    host: true,
-    allowedHosts: true,
-  },
-  preview: { port: PORT, host: true },
 });

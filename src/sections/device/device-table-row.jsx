@@ -1,36 +1,89 @@
+import { useState } from "react";
 import { Link } from "react-router";
+import {
+  PencilSquareIcon,
+  TrashIcon,
+  EyeIcon,
+  ArrowPathIcon,
+} from "@heroicons/react/16/solid";
 
-import { Button } from "@/components/button";
-import { TableCell, TableRow } from "@/components/table";
-import axiosInstance from "@/utils/axios";
+import { Loading } from "@/components/loading";
+
+import { useLoadAssetsQuery } from "@/actions/device";
 
 // ----------------------------------------------------------------------
 
 export function DeviceTableRow({ device }) {
-  const onFetchAssets = async (deviceId) => {
-    const response = await axiosInstance.get(
-      `/devices/fetchAssets/${deviceId}`
-    );
+  const [deviceId, setDeviceId] = useState();
 
-    console.log(response);
-  };
+  const { assetsFetching } = useLoadAssetsQuery(deviceId);
 
   return (
-    <TableRow>
-      <TableCell>{device.id}</TableCell>
-      <TableCell>{device.type}</TableCell>
-      <TableCell>{device.model ?? "-"}</TableCell>
-      <TableCell>{device.ip}</TableCell>
-      <TableCell>{device.portCount ?? "-"}</TableCell>
-      <TableCell>{device.hostname ?? "-"}</TableCell>
-      <TableCell>{device.series ?? "-"}</TableCell>
-      <TableCell className="space-x-3">
-        {device.fetchedAsset && <Link to={`${device.id}`}>امکانات</Link>}
+    <>
+      <tr>
+        <td className="rounded-r-2xl bg-gray-100 py-4 pr-4 pl-3 text-center text-lg font-bold whitespace-nowrap text-gray-500">
+          {device.id}
+        </td>
 
-        {!device.fetchedAsset && (
-          <Button onClick={() => onFetchAssets(device.id)}>fetch assets</Button>
-        )}
-      </TableCell>
-    </TableRow>
+        <td className="bg-gray-100 px-3 py-4 text-center text-sm whitespace-nowrap text-gray-800">
+          {device.type}
+        </td>
+
+        <td className="bg-gray-100 px-3 py-4 text-center text-sm whitespace-nowrap text-gray-800">
+          {device.model ?? "-"}
+        </td>
+
+        <td className="bg-gray-100 px-3 py-4 text-center text-sm whitespace-nowrap text-gray-800">
+          {device.ip}
+        </td>
+
+        <td className="bg-gray-100 px-3 py-4 text-center text-sm whitespace-nowrap text-gray-800">
+          {device.portCount ?? "-"}
+        </td>
+
+        <td className="bg-gray-100 px-3 py-4 text-center text-sm whitespace-nowrap text-gray-800">
+          {device.hostname ?? "-"}
+        </td>
+
+        <td className="bg-gray-100 px-3 py-4 text-center text-sm whitespace-nowrap text-gray-800">
+          {device.series ?? "-"}
+        </td>
+
+        <td className="rounded-l-2xl bg-gray-100 py-4 pr-3 pl-4 whitespace-nowrap">
+          <div className="flex justify-center gap-x-1.5">
+            <button className="rounded-xl bg-blue-100 p-2 text-blue-600 hover:bg-blue-200">
+              <PencilSquareIcon aria-hidden="true" className="size-4" />
+            </button>
+
+            <button className="rounded-xl bg-red-100 p-2 text-red-600 hover:bg-red-200">
+              <TrashIcon aria-hidden="true" className="size-4" />
+            </button>
+
+            {!device.fetchedAsset && (
+              <button
+                disabled={assetsFetching}
+                className="rounded-xl bg-gray-200 p-2 text-gray-600 not-disabled:hover:bg-gray-300 disabled:opacity-50"
+                onClick={() => setDeviceId(device.id)}
+              >
+                {assetsFetching && <Loading />}
+
+                {!assetsFetching && (
+                  <ArrowPathIcon aria-hidden="true" className="size-4" />
+                )}
+              </button>
+            )}
+
+            {device.fetchedAsset && (
+              <Link
+                to={`${device.id}`}
+                className="rounded-xl bg-orange-100 p-2 text-orange-600 hover:bg-orange-200"
+              >
+                <EyeIcon aria-hidden="true" className="size-4" />
+              </Link>
+            )}
+          </div>
+        </td>
+      </tr>
+    </>
   );
 }

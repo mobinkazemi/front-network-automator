@@ -3,10 +3,13 @@ import { useQuery } from "@tanstack/react-query";
 
 import {
   paginated,
+  get,
+  loadAssets,
   fetchAssets,
   fetchCis,
   fetchHistory,
   fetchStatistics,
+  fetchHardeningResult,
 } from "@/services/device";
 
 // ----------------------------------------------------------------------
@@ -20,6 +23,36 @@ export const useDevicesQuery = () => {
   return {
     devices: data,
     devicesLoading: isPending,
+  };
+};
+
+// ----------------------------------------------------------------------
+
+export const useDeviceQuery = () => {
+  const { deviceId } = useParams();
+
+  const { data, isPending } = useQuery({
+    queryKey: ["device", deviceId],
+    queryFn: () => get(deviceId),
+  });
+
+  return {
+    device: data,
+    deviceLoading: isPending,
+  };
+};
+
+// ----------------------------------------------------------------------
+
+export const useLoadAssetsQuery = (deviceId) => {
+  const { isFetching } = useQuery({
+    queryKey: ["load-assets", deviceId],
+    queryFn: () => loadAssets(deviceId),
+    enabled: !!deviceId,
+  });
+
+  return {
+    assetsFetching: isFetching,
   };
 };
 
@@ -61,19 +94,6 @@ export const useHistoryQuery = () => {
   const { data, isPending } = useQuery({
     queryKey: ["history", deviceId],
     queryFn: () => fetchHistory(deviceId),
-    select: ({ data }) => {
-      const versions = Object.keys(data.grouped).map((version) => ({
-        version,
-        date: data.grouped[version][0].checkedAt,
-      }));
-
-      return [
-        {
-          cis: data.cis.name,
-          versions,
-        },
-      ];
-    },
   });
 
   return {
@@ -90,7 +110,6 @@ export const useStatisticsQuery = () => {
   const { data, isPending } = useQuery({
     queryKey: ["statistics", version],
     queryFn: () => fetchStatistics(version),
-    select: ({ data }) => data,
   });
 
   return {
@@ -101,17 +120,16 @@ export const useStatisticsQuery = () => {
 
 // ----------------------------------------------------------------------
 
-export const useResultQuery = () => {
+export const useHardeningResultQuery = () => {
   const { version } = useParams();
 
   const { data, isPending } = useQuery({
-    queryKey: ["statistics", version],
-    queryFn: () => fetchStatistics(version),
-    select: ({ data }) => data,
+    queryKey: ["hardening-result", version],
+    queryFn: () => fetchHardeningResult(version),
   });
 
   return {
-    statistics: data,
-    statisticsLoading: isPending,
+    hardeningResult: data,
+    hardeningResultLoading: isPending,
   };
 };
