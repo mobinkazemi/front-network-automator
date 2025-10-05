@@ -3,16 +3,43 @@ import {
   PencilSquareIcon,
   TrashIcon,
 } from "@heroicons/react/16/solid";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { useBoolean } from "@/hooks/use-boolean";
 
 import { Badge } from "@/components/badge";
+
+import axiosInstance from "@/utils/axios";
+
 import { FeedDetailsDialog } from "./feed-details-dialog";
+import { toast } from "sonner";
+
+// ----------------------------------------------------------------------
+
+const deleteFeed = async (feedId) => {
+  await axiosInstance.delete(`/devices/firewall/feed/delete/${feedId}`);
+};
 
 // ----------------------------------------------------------------------
 
 export function FeedCard({ feed }) {
+  const queryClient = useQueryClient();
+
   const details = useBoolean();
+
+  const { mutate: removeFeed } = useMutation({
+    mutationFn: deleteFeed,
+  });
+
+  const onDelete = (feedId) => {
+    removeFeed(feedId, {
+      onSuccess: () => {
+        toast.success("فید با موفقیت حذف شد");
+
+        queryClient.invalidateQueries({ queryKey: ["feeds"] });
+      },
+    });
+  };
 
   return (
     <>
@@ -52,13 +79,16 @@ export function FeedCard({ feed }) {
             </div>
           </div>
 
-          <button className="rounded-xl bg-red-100 p-2 text-red-500 hover:bg-red-200">
+          <button
+            className="rounded-xl bg-red-100 p-2 text-red-500 hover:bg-red-200"
+            onClick={() => onDelete(feed.id)}
+          >
             <TrashIcon className="size-4" />
           </button>
 
-          <button className="rounded-xl bg-blue-100 p-2 text-blue-500 hover:bg-blue-200">
+          {/* <button className="rounded-xl bg-blue-100 p-2 text-blue-500 hover:bg-blue-200">
             <PencilSquareIcon className="size-4" />
-          </button>
+          </button> */}
 
           <button
             className="rounded-xl bg-orange-100 p-2 text-orange-500 hover:bg-orange-200"

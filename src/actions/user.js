@@ -1,15 +1,19 @@
 import { toast } from "sonner";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { paginated, login, register, me, logout } from "@/services/user";
+import queryString from "query-string";
 
 // ----------------------------------------------------------------------
 
 export const useUsersQuery = () => {
+  const [searchParams] = useSearchParams();
+  const query = queryString.parse(searchParams.toString());
+
   const { data, isPending } = useQuery({
-    queryKey: ["users"],
-    queryFn: paginated,
+    queryKey: ["users", query],
+    queryFn: () => paginated(searchParams.toString()),
   });
 
   return {
@@ -29,7 +33,7 @@ export const useLogin = () => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("refreshToken", data.refreshToken);
 
-      navigate("/dashboard/device");
+      navigate("/dashboard");
     },
     onError: (error) => {
       toast.error(error.response.data.detail, {

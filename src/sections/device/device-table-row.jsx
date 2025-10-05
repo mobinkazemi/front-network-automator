@@ -6,16 +6,30 @@ import {
   EyeIcon,
   ArrowPathIcon,
 } from "@heroicons/react/16/solid";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { Loading } from "@/components/loading";
 
 import { useLoadAssetsQuery } from "@/actions/device";
+import { DeviceEditDialog } from "./edit/device-edit-dialog";
+import { useBoolean } from "@/hooks/use-boolean";
+import axiosInstance from "@/utils/axios";
+import { toast } from "sonner";
+
+// ----------------------------------------------------------------------
+
+const deleteApi = async (id) => {
+  const response = await axiosInstance.delete(`/devices/delete/${id}`);
+
+  return response.data;
+};
 
 // ----------------------------------------------------------------------
 
 export function DeviceTableRow({ device }) {
   const queryClient = useQueryClient();
+
+  const edit = useBoolean();
 
   const [deviceId, setDeviceId] = useState();
 
@@ -26,6 +40,22 @@ export function DeviceTableRow({ device }) {
       queryClient.invalidateQueries({ queryKey: ["devices"] });
     }
   }, [assetsSuccess, queryClient]);
+
+  const { mutate: deleteDevice } = useMutation({
+    mutationFn: deleteApi,
+  });
+
+  const onDelete = (deviceId) => {
+    deleteDevice(deviceId, {
+      onSuccess: () => {
+        toast.success("دستگاه با موفقیت حذف شد");
+
+        queryClient.invalidateQueries({
+          queryKey: ["devices"],
+        });
+      },
+    });
+  };
 
   return (
     <>
@@ -58,13 +88,27 @@ export function DeviceTableRow({ device }) {
           {device.series ?? "-"}
         </td>
 
+        <td className="bg-gray-100 px-3 py-4 text-center text-sm whitespace-nowrap text-gray-800">
+          {new Date(device.createdAt).toLocaleDateString("fa-IR", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })}
+        </td>
+
         <td className="rounded-l-2xl bg-gray-100 py-4 pr-3 pl-4 whitespace-nowrap">
           <div className="flex justify-center gap-x-1.5">
-            <button className="rounded-xl bg-blue-100 p-2 text-blue-600 hover:bg-blue-200">
+            <button
+              className="rounded-xl bg-blue-100 p-2 text-blue-600 hover:bg-blue-200"
+              onClick={edit.onTrue}
+            >
               <PencilSquareIcon aria-hidden="true" className="size-4" />
             </button>
 
-            <button className="rounded-xl bg-red-100 p-2 text-red-600 hover:bg-red-200">
+            <button
+              className="rounded-xl bg-red-100 p-2 text-red-600 hover:bg-red-200"
+              onClick={() => onDelete(device.id)}
+            >
               <TrashIcon aria-hidden="true" className="size-4" />
             </button>
 
@@ -93,6 +137,12 @@ export function DeviceTableRow({ device }) {
           </div>
         </td>
       </tr>
+
+      <DeviceEditDialog
+        open={edit.value}
+        onClose={edit.onFalse}
+        device={device}
+      />
     </>
   );
 }

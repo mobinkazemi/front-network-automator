@@ -2,8 +2,8 @@ import axiosInstance from "@/utils/axios";
 
 // ----------------------------------------------------------------------
 
-export const paginated = async () => {
-  const response = await axiosInstance.get("/user/admin/list");
+export const paginated = async (qs) => {
+  const response = await axiosInstance.get(`/user/admin/list?${qs}`);
 
   return response.data;
 };

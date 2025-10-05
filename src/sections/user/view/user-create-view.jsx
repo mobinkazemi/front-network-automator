@@ -65,7 +65,7 @@ export const UserCreateView = () => {
             render={({ field: { value, onChange } }) => (
               <Listbox value={value} onChange={onChange}>
                 {roles.map((role) => (
-                  <ListboxOption value={role.id}>
+                  <ListboxOption key={role.id} value={role.id}>
                     <ListboxLabel>{role.name}</ListboxLabel>
                   </ListboxOption>
                 ))}
@@ -166,15 +166,6 @@ export const UserCreateView = () => {
         </Field>
 
         <Button>ثبت</Button>
-
-        <Field>
-          <Label>Project status</Label>
-          <Listbox name="status" defaultValue="active">
-            <ListboxOption value="active">
-              <ListboxLabel>Active</ListboxLabel>
-            </ListboxOption>
-          </Listbox>
-        </Field>
       </FieldGroup>
     </form>
   );

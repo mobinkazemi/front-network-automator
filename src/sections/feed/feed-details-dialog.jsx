@@ -60,7 +60,13 @@ export function FeedDetailsDialog({ open, onClose, feed }) {
             <span className="text-sm text-gray-500">تاریخ حذف</span>
 
             <span className="text-sm font-bold text-gray-800">
-              {feed.removeDate ?? '-'}
+              {feed.removeDate
+                ? new Date(feed.removeDate).toLocaleDateString("fa-IR", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })
+                : "-"}
             </span>
           </div>
         </div>

@@ -1,3 +1,4 @@
+import { lazy } from "react";
 import { Outlet } from "react-router";
 
 import { DashboardLayout } from "@/layouts/dashboard";
@@ -7,12 +8,28 @@ import PermissionListPage from "@/pages/dashboard/permission/list";
 import FeedListPage from "@/pages/dashboard/feed/list";
 
 import UserListPage from "@/pages/dashboard/user/list";
-import UserCreatePage from "@/pages/dashboard/user/new";
 
 import DeviceListPage from "@/pages/dashboard/device/list";
 import DeviceDetailsPage from "@/pages/dashboard/device/details";
 import DeviceHardeningCheckPage from "@/pages/dashboard/device/hardening-check";
 import DeviceHardeningResultPage from "@/pages/dashboard/device/hardening-result";
+
+// ----------------------------------------------------------------------
+
+// Overview
+const IndexPage = lazy(() => import("@/pages/dashboard"));
+
+// User
+const UserCreatePage = lazy(() => import("@/pages/dashboard/user/new"));
+
+// Role
+const RoleListPage = lazy(() => import("@/pages/dashboard/role/list"));
+const RoleDetailsPage = lazy(() => import("@/pages/dashboard/role/details"));
+
+// Permission
+const PermissionDetailsPage = lazy(
+  () => import("@/pages/dashboard/permission/details"),
+);
 
 // ----------------------------------------------------------------------
 
@@ -25,6 +42,7 @@ export const dashboardRoutes = [
       </DashboardLayout>
     ),
     children: [
+      { index: true, element: <IndexPage /> },
       {
         path: "user",
         children: [
@@ -33,8 +51,18 @@ export const dashboardRoutes = [
         ],
       },
       {
+        path: "role",
+        children: [
+          { index: true, element: <RoleListPage /> },
+          { path: ":id", element: <RoleDetailsPage /> },
+        ],
+      },
+      {
         path: "permission",
-        children: [{ index: true, element: <PermissionListPage /> }],
+        children: [
+          { index: true, element: <PermissionListPage /> },
+          { path: ":id", element: <PermissionDetailsPage /> },
+        ],
       },
       {
         path: "feed",

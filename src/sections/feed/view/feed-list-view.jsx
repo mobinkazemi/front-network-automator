@@ -1,16 +1,32 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router";
-import { MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/16/solid";
+import { useQuery } from "@tanstack/react-query";
+import {
+  ArrowLongLeftIcon,
+  ArrowLongRightIcon,
+  MagnifyingGlassIcon,
+  PlusIcon,
+} from "@heroicons/react/16/solid";
 
 import { useBoolean } from "@/hooks/use-boolean";
 
 import { Input, InputGroup } from "@/components/input";
 import { Listbox, ListboxLabel, ListboxOption } from "@/components/listbox";
 
-import { useFeedsQuery } from "@/actions/feed";
+import axiosInstance from "@/utils/axios";
 
 import { FeedCard } from "../feed-card";
 import { FeedNewEditForm } from "../feed-new-edit-form";
+
+// ----------------------------------------------------------------------
+
+const get = async (params) => {
+  const response = await axiosInstance.get("/devices/firewall/feed/list", {
+    params: Object.fromEntries(params.entries()),
+  });
+
+  return response.data;
+};
 
 // ----------------------------------------------------------------------
 
@@ -18,15 +34,19 @@ export function FeedListView() {
   const [searchParams, setSearchParams] = useSearchParams();
   const newFeed = useBoolean();
 
-  const { feeds, feedsLoading } = useFeedsQuery();
-
-  const [filters, setFilters] = useState({
-    feed: "",
-    active: "",
-    type: "",
+  const { data: feeds, isPending: feedsLoading } = useQuery({
+    queryKey: ["feeds", searchParams.toString()],
+    queryFn: () => get(searchParams),
   });
 
-  const page = searchParams.get("page") || 1;
+  const [filters, setFilters] = useState({
+    list_sort: searchParams.get("list_sort") || "desc",
+    feed: searchParams.get("feed") || "",
+    active: searchParams.get("active") || "",
+    type: searchParams.get("type") || "",
+  });
+
+  const list_page = searchParams.get("list_page") || 1;
 
   const updateQuery = (updates) => {
     const newParams = new URLSearchParams(searchParams.toString());
@@ -43,7 +63,7 @@ export function FeedListView() {
   };
 
   const handleSearch = () => {
-    updateQuery({ ...filters });
+    updateQuery({ list_page: 1, ...filters });
   };
 
   if (feedsLoading) return "Loading...";
@@ -111,19 +131,26 @@ export function FeedListView() {
                 setFilters((f) => ({ ...f, type: value }));
               }}
             >
-              <ListboxOption value="active">
+              <ListboxOption value="block">
                 <ListboxLabel>مسدود</ListboxLabel>
               </ListboxOption>
-              <ListboxOption value="paused">
+              <ListboxOption value="allow">
                 <ListboxLabel>مجاز</ListboxLabel>
               </ListboxOption>
             </Listbox>
 
-            <Listbox name="status" placeholder="مرتب سازی" className="w-44!">
-              <ListboxOption value="active">
+            <Listbox
+              placeholder="مرتب سازی"
+              className="w-44!"
+              value={filters.list_sort}
+              onChange={(value) => {
+                setFilters((f) => ({ ...f, list_sort: value }));
+              }}
+            >
+              <ListboxOption value="desc">
                 <ListboxLabel>جدیدترین</ListboxLabel>
               </ListboxOption>
-              <ListboxOption value="paused">
+              <ListboxOption value="asc">
                 <ListboxLabel>قدیمی ترین</ListboxLabel>
               </ListboxOption>
             </Listbox>
@@ -140,10 +167,46 @@ export function FeedListView() {
             role="list"
             className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2"
           >
+            {feeds.data.length === 0 && (
+              <div className="col-span-full flex h-28 items-center justify-center rounded-lg bg-gray-100 text-lg font-bold text-gray-500">
+                هیچ داده ای یافت نشد
+              </div>
+            )}
+
             {feeds.data.map((feed) => (
               <FeedCard key={feed.id} feed={feed} />
             ))}
           </ul>
+
+          <nav className="mt-8 flex items-center justify-between border-t border-gray-200 px-4 sm:px-0">
+            <div className="-mt-px flex w-0 flex-1">
+              <button
+                disabled={list_page === 1}
+                className="inline-flex items-center border-t-2 border-transparent pt-4 pr-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                onClick={() => updateQuery({ list_page: list_page - 1 })}
+              >
+                <ArrowLongRightIcon
+                  aria-hidden="true"
+                  className="ml-3 size-5 text-gray-400"
+                />
+                قبلی
+              </button>
+            </div>
+
+            <div className="-mt-px flex w-0 flex-1 justify-end">
+              <button
+                disabled={list_page === Math.ceil(feeds.count / 8)}
+                className="inline-flex items-center border-t-2 border-transparent pt-4 pl-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                onClick={() => updateQuery({ list_page: list_page + 1 })}
+              >
+                بعدی
+                <ArrowLongLeftIcon
+                  aria-hidden="true"
+                  className="mr-3 size-5 text-gray-400"
+                />
+              </button>
+            </div>
+          </nav>
         </div>
       </div>
 

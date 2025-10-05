@@ -3,17 +3,45 @@ import {
   PencilSquareIcon,
   TrashIcon,
 } from "@heroicons/react/16/solid";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { useBoolean } from "@/hooks/use-boolean";
+import axiosInstance from "@/utils/axios";
+import { toast } from "sonner";
+import { Link } from "react-router";
 
-import { Badge } from "@/components/badge";
+// ----------------------------------------------------------------------
 
-// import { FeedDetailsDialog } from "./feed-details-dialog";
+const deleteApi = async (data) => {
+  const response = await axiosInstance.delete("/permissionCategory/delete", {
+    data,
+  });
+
+  return response.data;
+};
 
 // ----------------------------------------------------------------------
 
 export function PermissionCategoryCard({ permissionCategory }) {
-  const details = useBoolean();
+  const queryClient = useQueryClient();
+
+  const { mutate: deleteRole } = useMutation({
+    mutationFn: deleteApi,
+  });
+
+  const onDelete = (permissionCategoryId) => {
+    deleteRole(
+      { id: permissionCategoryId },
+      {
+        onSuccess: () => {
+          toast.success("گروه با موفقیت حذف شد");
+
+          queryClient.invalidateQueries({
+            queryKey: ["permission-categories"],
+          });
+        },
+      },
+    );
+  };
 
   return (
     <>
@@ -33,7 +61,10 @@ export function PermissionCategoryCard({ permissionCategory }) {
           </div>
 
           {!permissionCategory.isDefault && (
-            <button className="rounded-xl bg-red-100 p-2 text-red-500 hover:bg-red-200">
+            <button
+              className="rounded-xl bg-red-100 p-2 text-red-500 hover:bg-red-200"
+              onClick={() => onDelete(permissionCategory.id)}
+            >
               <TrashIcon className="size-4" />
             </button>
           )}
@@ -46,63 +77,31 @@ export function PermissionCategoryCard({ permissionCategory }) {
             </span>
 
             <span className="text-sm text-gray-500">
-              {permissionCategory.createdAt}
+              {new Date(permissionCategory.createdAt).toLocaleDateString(
+                "fa-IR",
+                {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                },
+              )}
             </span>
           </div>
 
-          <div className="space-x-3">
+          <div className="flex space-x-3">
             <button className="rounded-xl bg-blue-100 p-2 text-blue-500 hover:bg-blue-200">
               <PencilSquareIcon className="size-4" />
             </button>
 
-            <button
+            <Link
+              to={`${permissionCategory.id}`}
               className="rounded-xl bg-orange-100 p-2 text-orange-500 hover:bg-orange-200"
-              onClick={details.onTrue}
             >
               <EyeIcon className="size-4" />
-            </button>
+            </Link>
           </div>
         </div>
-
-        {/* <div className="mt-3 flex gap-3">
-          <div className="flex grow justify-between rounded-xl bg-white px-3 py-1">
-            <div>
-              <span className="text-xs text-gray-500">اسم فایل:</span>
-              <span className="mr-3 text-sm font-bold text-orange-500">
-                {feed.fileName}
-              </span>
-            </div>
-
-            <div>
-              <span className="text-xs text-gray-500">نوع عملکرد:</span>
-              <span className="mr-3 text-sm font-bold text-gray-900">
-                {feed.type === "block" ? "مسدود" : "مجاز"}
-              </span>
-            </div>
-          </div>
-
-          <button className="rounded-xl bg-red-100 p-2 text-red-500 hover:bg-red-200">
-            <TrashIcon className="size-4" />
-          </button>
-
-          <button className="rounded-xl bg-blue-100 p-2 text-blue-500 hover:bg-blue-200">
-            <PencilSquareIcon className="size-4" />
-          </button>
-
-          <button
-            className="rounded-xl bg-orange-100 p-2 text-orange-500 hover:bg-orange-200"
-            onClick={details.onTrue}
-          >
-            <EyeIcon className="size-4" />
-          </button>
-        </div> */}
       </li>
-
-      {/* <FeedDetailsDialog
-        feed={feed}
-        open={details.value}
-        onClose={details.onFalse}
-      /> */}
     </>
   );
 }

@@ -77,3 +77,55 @@
 @theme {
   --font-sans: "Vazirmatn UI FD";
 }
+
+.calendar-container .rmdp-wrapper {
+  width: 100%;
+  border: 0;
+}
+
+.calendar-container .rmdp-calendar {
+  width: 100%;
+}
+
+.calendar-container .rmdp-day-picker > div:first-of-type {
+  width: 100%;
+}
+
+.calendar-container .rmdp-day.rmdp-today span {
+  background-color: #f58220;
+}
+
+.calendar-container .rmdp-day.rmdp-today span:hover {
+  background-color: #f58220;
+}
+
+.calendar-container .rmdp-day span:hover {
+  background-color: #f58220 !important;
+}
+
+.calendar-container .rmdp-week-day {
+  color: #333333;
+  font-weight: bold;
+}
+
+.calendar-container .rmdp-day.rmdp-selected span:not(.highlight) {
+  background-color: #f58220;
+}
+
+.calendar-container .rmdp-arrow {
+  border: solid #f58220;
+  border-top-width: medium;
+  border-right-width: medium;
+  border-bottom-width: medium;
+  border-left-width: medium;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  height: 3px;
+  margin-top: 5px;
+  padding: 2px;
+  width: 3px;
+}
+
+.calendar-container .rmdp-arrow-container:hover {
+  background-color: #f58220;
+}

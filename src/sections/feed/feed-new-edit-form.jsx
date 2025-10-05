@@ -3,35 +3,67 @@ import {
   Field as HeadlessField,
   Label as HeadlessLabel,
 } from "@headlessui/react";
-import { Button } from "@/components/button";
+import { Controller, useForm } from "react-hook-form";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
 import {
   Dialog,
   DialogActions,
   DialogBody,
   DialogTitle,
 } from "@/components/dialog";
-import { ErrorMessage, Field, FieldGroup, Label } from "@/components/fieldset";
 import { Input } from "@/components/input";
-import { Listbox, ListboxLabel, ListboxOption } from "@/components/listbox";
-// import { DatePicker } from "@/components/date-picker";
-import { Controller, useForm } from "react-hook-form";
-import { useCreateFeedMutation, useFileNamesQuery } from "@/actions/feed";
 import { Radio } from "@/components/radio";
+import { Button } from "@/components/button";
+import { Listbox, ListboxLabel, ListboxOption } from "@/components/listbox";
+import { ErrorMessage, Field, FieldGroup, Label } from "@/components/fieldset";
+
+import axiosInstance from "@/utils/axios";
+import { useState } from "react";
+import DatePicker from "react-multi-date-picker";
+import { toast } from "sonner";
+
+// ----------------------------------------------------------------------
+
+const get = async () => {
+  const response = await axiosInstance.get("/devices/firewall/feed/file-names");
+
+  return response.data;
+};
+
+const create = async (data) => {
+  const response = await axiosInstance.post(
+    "/devices/firewall/feed/create",
+    data,
+  );
+
+  return response.data;
+};
 
 // ----------------------------------------------------------------------
 
 const fileTypeOptions = [
-  { name: "فایل های موجود", value: "available_files" },
-  { name: "فایل جدید", value: "new_file" },
+  { name: "فیدهای موجود", value: "available_files" },
+  { name: "فید جدید", value: "new_file" },
 ];
 
 // ----------------------------------------------------------------------
 
 export function FeedNewEditForm({ open, onClose }) {
-  const { fileNames } = useFileNamesQuery();
+  const [removeDate, setRemoveDate] = useState("");
 
-  const { mutateAsync: createFeed, isPending: creatingFeed } =
-    useCreateFeedMutation();
+  const queryClient = useQueryClient();
+
+  const { data: fileNames, isPending: fileNamesLoading } = useQuery({
+    queryKey: ["file-names"],
+    queryFn: get,
+  });
+
+  const { mutate: createFeed } = useMutation({
+    mutationFn: create,
+  });
 
   const {
     register,
@@ -47,29 +79,33 @@ export function FeedNewEditForm({ open, onClose }) {
       fileName: "",
       item: "",
       source: "",
-      removeDate: "",
     },
   });
 
   const fileType = watch("fileType");
 
-  const onSubmit = handleSubmit(async (data) => {
-    try {
-      createFeed({
-        type: data.type,
-        fileName: data.fileName,
-        item: data.item,
-        source: data.source,
-        removeDate: data.removeDate,
-      });
+  const onSubmit = handleSubmit((data) => {
+    createFeed(
+      {
+        ...data,
+        removeDate: new Date(removeDate).toISOString(),
+      },
+      {
+        onSuccess: () => {
+          reset();
+          setRemoveDate('')
 
-      reset();
+          queryClient.invalidateQueries({ queryKey: ["feeds"] });
+          queryClient.invalidateQueries({ queryKey: ["file-names"] });
 
-      onClose();
-    } catch (error) {
-      console.log(error);
-    }
+          onClose();
+        },
+        onError: (error) => toast.error(error.response.data.detail)
+      },
+    );
   });
+
+  if (fileNamesLoading) return "Loading...";
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -112,7 +148,7 @@ export function FeedNewEditForm({ open, onClose }) {
 
             <Field>
               <div className="flex justify-between">
-                <Label className="font-medium">نام feed</Label>
+                <Label className="font-medium">نام فید</Label>
 
                 <Controller
                   name="fileType"
@@ -215,45 +251,22 @@ export function FeedNewEditForm({ open, onClose }) {
             <Field>
               <Label>تاریخ حذف</Label>
 
-              <div className="mt-3">
-                <Controller
-                  name="removeDate"
-                  control={control}
-                  rules={{ required: "تاریخ حذف را انتخاب کنید" }}
-                  render={({
-                    field: { value, onChange },
-                    fieldState: { error },
-                  }) => (
-                    <>
-                      {/* <DatePicker
-                        calendarPosition="top-left"
-                        invalid={!!error}
-                        value={value || ""}
-                        onChange={(date) => {
-                          onChange(date?.isValid ? date.format() : "");
-                        }}
-                      /> */}
-
-                      {!!error && (
-                        <ErrorMessage className="mt-3">
-                          {error.message}
-                        </ErrorMessage>
-                      )}
-                    </>
-                  )}
-                />
-              </div>
+              <DatePicker
+                render={<Input />}
+                calendar={persian}
+                locale={persian_fa}
+                containerClassName="w-full mt-3"
+                calendarPosition="top-right"
+                value={removeDate}
+                onChange={(value) => setRemoveDate(value)}
+              />
             </Field>
           </FieldGroup>
         </DialogBody>
 
         <DialogActions>
-          <Button plain onClick={onClose}>
-            انصراف
-          </Button>
-
-          <Button type="submit" color="orange" disabled={creatingFeed}>
-            ذخیره
+          <Button type="submit" color="orange">
+            ثبت فید
           </Button>
         </DialogActions>
       </form>
