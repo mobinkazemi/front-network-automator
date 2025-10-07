@@ -412,7 +412,7 @@ export function UserCreateView() {
                 locale={persian_fa}
                 containerClassName="w-full mt-3"
                 calendarPosition="top-right"
-                value={birthday}
+                value={deactivedAt}
                 onChange={(value) => setDeactivedAt(value)}
               />
             </Field>
