@@ -2,6 +2,8 @@ import axios from "axios";
 
 // ----------------------------------------------------------------------
 
+// TODO change base url process.env.NODE_ENV===
+
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_SERVER_URL,
 });
