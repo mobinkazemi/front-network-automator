@@ -23,14 +23,14 @@ const get = async () => {
   return response.data;
 };
 
-const read = async () => {
-  await axiosInstance.patch("/changelog/update_user_changelog");
-};
+// const read = async () => {
+//   await axiosInstance.patch("/changelog/update_user_changelog");
+// };
 
 // ----------------------------------------------------------------------
 
 export function OverviewView() {
-  // const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
   // const [loading, setLoading] = useState(true);
 
   const { me, meLoading, isSuccess } = useMeQuery();
@@ -164,14 +164,12 @@ export function OverviewView() {
         </div>
       </div>
 
-      {/* {console.log(JSON.parse(me?.data?.changeLog?.[0]?.changes))} */}
-
-      {/* <Dialog open={showModal} onClose={() => setShowModal(false)}>
+      <Dialog open={showModal} onClose={() => setShowModal(false)}>
         <DialogTitle className="text-orange-500!">تغییرات اخیر</DialogTitle>
 
         <DialogBody className="max-h-96 overflow-y-auto">
           <ul role="list" className="space-y-4">
-            {Object.entries(JSON.parse(me?.data?.changeLog?.[0]?.changes)).map(
+            {Object.entries(JSON.parse(me.data.changeLog[0].changes)).map(
               ([key, value], idx) => (
                 <>
                   <li key={idx} className="relative flex gap-x-4">
@@ -211,12 +209,12 @@ export function OverviewView() {
           </ul>
         </DialogBody>
 
-        <DialogActions>
+        {/* <DialogActions>
           <Button color="orange" onClick={onRead}>
             متوجه شدم
           </Button>
-        </DialogActions>
-      </Dialog> */}
+        </DialogActions> */}
+      </Dialog>
     </>
   );
 }

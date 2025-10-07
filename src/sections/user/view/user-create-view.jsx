@@ -125,6 +125,8 @@ export function UserCreateView() {
     mutate(
       {
         ...cleanedData,
+        cellphone: String(data.cellphone),
+        nationalId: String(data.nationalId),
         mustChangePassword,
         ...(birthday && {
           birthday: new Date(birthday).toLocaleDateString("en-CA", {
@@ -251,11 +253,11 @@ export function UserCreateView() {
                 control={control}
                 render={({ field: { value, onChange } }) => (
                   <Listbox value={value} onChange={onChange}>
-                    <ListboxOption value={1}>
+                    <ListboxOption value="1">
                       <ListboxLabel>مرد</ListboxLabel>
                     </ListboxOption>
 
-                    <ListboxOption value={2}>
+                    <ListboxOption value="2">
                       <ListboxLabel>زن</ListboxLabel>
                     </ListboxOption>
                   </Listbox>
