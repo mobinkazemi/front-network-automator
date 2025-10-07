@@ -64,13 +64,14 @@ export const useRegisterMutation = () => {
 // ----------------------------------------------------------------------
 
 export const useMeQuery = () => {
-  const { data, isPending } = useQuery({
+  const { data, isPending, isSuccess } = useQuery({
     queryKey: ["user"],
     queryFn: me,
   });
 
   return {
     me: data,
+    isSuccess,
     meLoading: isPending,
   };
 };

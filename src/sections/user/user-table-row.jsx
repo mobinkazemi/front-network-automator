@@ -58,7 +58,7 @@ export function UserTableRow({ user }) {
         </td>
 
         <td className="bg-gray-100 px-3 py-4 text-sm whitespace-nowrap text-gray-800">
-          <div className="flex items-center justify-center gap-x-3">
+          <div className="flex items-center gap-x-3">
             <span className="inline-block size-11 shrink-0 overflow-hidden rounded-full border-2 border-orange-500 bg-gray-100">
               <svg
                 fill="currentColor"

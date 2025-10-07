@@ -17,6 +17,7 @@
     "@tanstack/react-query": "^5.90.2",
     "axios": "^1.12.2",
     "clsx": "^2.1.1",
+    "generate-password": "^1.7.1",
     "input-otp": "^1.4.2",
     "motion": "^12.23.22",
     "query-string": "^9.3.1",

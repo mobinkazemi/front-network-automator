@@ -28,8 +28,6 @@ export const DeviceHardeningResultView = () => {
   if (statisticsLoading || deviceLoading || hardeningResultLoading)
     return "Loading...";
 
-  // console.log(hardeningResult);
-
   return (
     <div className="divide-y divide-gray-200 overflow-hidden rounded-2xl bg-white shadow-sm">
       <div className="px-6 py-5">
@@ -109,7 +107,7 @@ export const DeviceHardeningResultView = () => {
                 </div>
 
                 <span className="mr-auto text-2xl font-bold">
-                  {statistics.true_results_count}
+                  {statistics.false_results_count}
                 </span>
               </div>
 

@@ -125,10 +125,10 @@ export function UserListView() {
                 setFilters((f) => ({ ...f, active: value }));
               }}
             >
-              <ListboxOption value="active">
+              <ListboxOption value="true">
                 <ListboxLabel>فعال</ListboxLabel>
               </ListboxOption>
-              <ListboxOption value="deactive">
+              <ListboxOption value="false">
                 <ListboxLabel>غیرفعال</ListboxLabel>
               </ListboxOption>
             </Listbox>
@@ -136,9 +136,9 @@ export function UserListView() {
             <Listbox
               placeholder="نقش کاربری"
               className="w-44!"
-              value={filters.role}
+              value={filters.roleId}
               onChange={(value) => {
-                setFilters((f) => ({ ...f, role: value }));
+                setFilters((f) => ({ ...f, roleId: value }));
               }}
             >
               {roles.data.map((role) => (
