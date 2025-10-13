@@ -19,9 +19,7 @@ import { toast } from "sonner";
 
 const newRoleSchema = z.object({
   name: z.string().nonempty("نام نقش را وارد کنید"),
-  maxRequestPerMinute: z
-    .string()
-    .nonempty("حداکثر درخواست مجاز نقش را وارد کنید"),
+  maxRequestPerMinute: z.string(),
   workingDayLimit: z.array(z.string()),
 });
 

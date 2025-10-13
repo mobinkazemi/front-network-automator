@@ -4,14 +4,13 @@ import {
   PencilSquareIcon,
   TrashIcon,
 } from "@heroicons/react/16/solid";
+import { Link } from "react-router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { useBoolean } from "@/hooks/use-boolean";
 
 import axiosInstance from "@/utils/axios";
-
-import { RoleEditDialog } from "./edit/role-edit-dialog";
-import { Link } from "react-router";
+import { RoleEditDialog } from "./role-edit-dialog";
 
 // ----------------------------------------------------------------------
 
@@ -97,7 +96,7 @@ export function RoleCard({ role }) {
         </div>
       </li>
 
-      <RoleEditDialog open={edit.value} onClose={edit.onFalse} role={role} />
+      <RoleEditDialog role={role} open={edit.value} onClose={edit.onFalse} />
     </>
   );
 }

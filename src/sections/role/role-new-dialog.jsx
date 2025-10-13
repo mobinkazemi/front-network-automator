@@ -17,7 +17,9 @@ export function RoleNewDialog({ open, onClose }) {
 
       {step === 1 && <RoleNewStepOne setStep={setStep} setRoleId={setRoleId} />}
 
-      {step === 2 && <RoleNewStepTwo roleId={roleId} onClose={onClose} setStep={setStep} />}
+      {step === 2 && (
+        <RoleNewStepTwo roleId={roleId} onClose={onClose} setStep={setStep} />
+      )}
     </Dialog>
   );
 }

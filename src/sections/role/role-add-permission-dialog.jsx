@@ -11,6 +11,9 @@ import { Button } from "@/components/button";
 import { DialogBody, DialogActions } from "@/components/dialog";
 
 import axiosInstance from "@/utils/axios";
+import { Input } from "@/components/input";
+import { Dialog, DialogTitle } from "@/components/dialog";
+import { useParams } from "react-router";
 
 // ----------------------------------------------------------------------
 
@@ -30,14 +33,9 @@ const create = async (data) => {
 
 // ----------------------------------------------------------------------
 
-export function RoleEditStepTwo({ roleId, setStep, onClose }) {
-  return (
-    <CategoryAccordion roleId={roleId} setStep={setStep} onClose={onClose} />
-  );
-}
-
-function CategoryAccordion({ roleId, setStep, onClose }) {
+export function RoleAddPermissionDialog({ open, onClose }) {
   const queryClient = useQueryClient();
+  const { id } = useParams();
 
   const [selectedSubIds, setSelectedSubIds] = useState(new Set());
   const [search, setSearch] = useState("");
@@ -88,12 +86,12 @@ function CategoryAccordion({ roleId, setStep, onClose }) {
 
   const onSave = () => {
     mutate(
-      { role_ids: [roleId], permission_ids: [...selectedSubIds] },
+      { role_ids: [id], permission_ids: [...selectedSubIds] },
       {
         onSuccess: () => {
           onClose();
-          setStep(1);
-          queryClient.invalidateQueries({ queryKey: ["roles"] });
+          setSelectedSubIds(new Set());
+          queryClient.invalidateQueries({ queryKey: ["permissions"] });
         },
       },
     );
@@ -114,15 +112,17 @@ function CategoryAccordion({ roleId, setStep, onClose }) {
   if (isPending) return "Loading...";
 
   return (
-    <>
+    <Dialog open={open} onClose={onClose}>
+      <DialogTitle className="text-orange-500!">
+        افزودن دسترسی به نقش
+      </DialogTitle>
+
       <DialogBody>
         <div className="space-y-4">
-          <input
-            type="text"
-            placeholder="جستجو در زیردسته‌ها..."
+          <Input
+            placeholder="نام دسترسی را جستجو کنید..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded border p-2"
           />
 
           <div className="max-h-96 space-y-2 overflow-y-auto">
@@ -204,9 +204,9 @@ function CategoryAccordion({ roleId, setStep, onClose }) {
 
       <DialogActions>
         <Button color="orange" onClick={onSave}>
-          ثبت دسترسی ها
+          افزودن دسترسی ها
         </Button>
       </DialogActions>
-    </>
+    </Dialog>
   );
 }
