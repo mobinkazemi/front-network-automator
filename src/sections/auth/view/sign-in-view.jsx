@@ -7,7 +7,7 @@ import { Loading } from "@/components/loading";
 import { Field, FieldGroup, Label, ErrorMessage } from "@/components/fieldset";
 
 import { useLogin } from "@/actions/user";
-import { getCookie } from "@/utils/helper";
+import { Link } from "react-router";
 
 // ----------------------------------------------------------------------
 
@@ -71,12 +71,12 @@ export function SignInView() {
 
               <div className="flex items-center justify-between">
                 <div className="text-sm/6">
-                  <a
-                    href="#"
+                  <Link
+                    to="/auth/reset-password"
                     className="font-semibold text-orange-500 hover:text-orange-400"
                   >
                     فراموشی رمزعبور؟
-                  </a>
+                  </Link>
                 </div>
               </div>
 

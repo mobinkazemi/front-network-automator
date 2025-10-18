@@ -1,3 +1,8 @@
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+// ----------------------------------------------------------------------
+
 export const setCookie = (tokens) => {
   document.cookie = `token=${tokens.token}; max-age=${1 * 24 * 60 * 60}`;
 
@@ -17,6 +22,12 @@ export const getCookie = (cookieName) => {
 
 // export const removeCookies = () => {
 //   document.cookie = `token=; expires=Thu, 01 Jan 1970 00:00:00 UTC`;
-  
+
 //   document.cookie = `refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC`;
 // };
+
+// ----------------------------------------------------------------------
+
+export const cn = (...inputs) => {
+  return twMerge(clsx(inputs));
+};

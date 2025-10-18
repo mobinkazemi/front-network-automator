@@ -19,6 +19,7 @@
     "clsx": "^2.1.1",
     "generate-password": "^1.7.1",
     "input-otp": "^1.4.2",
+    "jotai": "^2.15.0",
     "motion": "^12.23.22",
     "query-string": "^9.3.1",
     "react": "^19.1.1",
@@ -29,6 +30,7 @@
     "react-router": "^7.9.3",
     "recharts": "^3.2.1",
     "sonner": "^2.0.7",
+    "tailwind-merge": "^3.3.1",
     "zod": "^4.1.11"
   },
   "devDependencies": {
