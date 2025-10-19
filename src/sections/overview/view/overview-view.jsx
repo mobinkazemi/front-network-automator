@@ -23,14 +23,17 @@ const get = async () => {
   return response.data;
 };
 
-// const read = async () => {
-//   await axiosInstance.patch("/changelog/update_user_changelog");
-// };
+const read = async () => {
+  const response = await axiosInstance.patch(
+    "/changelog/update_user_changelog",
+  );
+  return response.data;
+};
 
 // ----------------------------------------------------------------------
 
 export function OverviewView() {
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   // const [loading, setLoading] = useState(true);
 
   const { me, meLoading, isSuccess } = useMeQuery();
@@ -40,23 +43,23 @@ export function OverviewView() {
     queryFn: get,
   });
 
-  // const { mutate } = useMutation({
-  //   mutationFn: read,
-  // });
+  const { mutate } = useMutation({
+    mutationFn: read,
+  });
 
-  // const onRead = () => {
-  //   mutate();
+  const onRead = () => {
+    mutate();
 
-  //   setShowModal(false);
-  // };
+    setShowModal(false);
+  };
 
-  // useEffect(() => {
-  //   setShowModal(true);
-  //   // if (isSuccess && me.data.changeLog.length != 0) {
-  //   //   // console.log(me.data.changeLog.length != 0)
-  //   //   setShowModal(true);
-  //   // }
-  // }, []);
+  const hasChangelog = isSuccess && me.data.changeLog;
+
+  useEffect(() => {
+    if (hasChangelog) {
+      setShowModal(true);
+    }
+  }, []);
 
   if (meLoading | isPending) return "Loading...";
 
@@ -164,57 +167,59 @@ export function OverviewView() {
         </div>
       </div>
 
-      <Dialog open={showModal} onClose={() => setShowModal(false)}>
-        <DialogTitle className="text-orange-500!">تغییرات اخیر</DialogTitle>
+      {hasChangelog && (
+        <Dialog open={showModal} onClose={() => setShowModal(false)}>
+          <DialogTitle className="text-orange-500!">تغییرات اخیر</DialogTitle>
 
-        <DialogBody className="max-h-96 overflow-y-auto">
-          <ul role="list" className="space-y-4">
-            {Object.entries(JSON.parse(me.data.changeLog[0].changes)).map(
-              ([key, value], idx) => (
-                <>
-                  <li key={idx} className="relative flex gap-x-4">
-                    <div className="absolute top-0 right-0 flex h-6 w-6 justify-center">
-                      <div className="w-px bg-gray-200" />
-                    </div>
+          <DialogBody className="max-h-96 overflow-y-auto">
+            <ul role="list" className="space-y-4">
+              {Object.entries(JSON.parse(me?.data?.changeLog[0]?.changes)).map(
+                ([key, value], idx) => (
+                  <>
+                    <li key={idx} className="relative flex gap-x-4">
+                      <div className="absolute top-0 right-0 flex h-6 w-6 justify-center">
+                        <div className="w-px bg-gray-200" />
+                      </div>
 
-                    <div className="relative flex size-6 flex-none items-center justify-center bg-white">
-                      <div className="size-1.5 rounded-full bg-orange-500" />
-                    </div>
+                      <div className="relative flex size-6 flex-none items-center justify-center bg-white">
+                        <div className="size-1.5 rounded-full bg-orange-500" />
+                      </div>
 
-                    <p className="flex-auto text-sm/6 text-gray-500">
-                      <span className="font-medium text-gray-900">{key}</span>
-                    </p>
-                  </li>
+                      <p className="flex-auto text-sm/6 text-gray-500">
+                        <span className="font-medium text-gray-900">{key}</span>
+                      </p>
+                    </li>
 
-                  <ul className="space-y-4">
-                    {value.map((item, idx) => (
-                      <li key={idx} className="relative flex gap-x-4">
-                        <div className="absolute top-0 right-0 flex h-6 w-6 justify-center">
-                          <div className="w-px bg-gray-200" />
-                        </div>
+                    <ul className="space-y-4">
+                      {value.map((item, idx) => (
+                        <li key={idx} className="relative flex gap-x-4">
+                          <div className="absolute top-0 right-0 flex h-6 w-6 justify-center">
+                            <div className="w-px bg-gray-200" />
+                          </div>
 
-                        <div className="relative flex size-6 flex-none items-center justify-center bg-white">
-                          <div className="size-1.5 rounded-full bg-gray-100 ring-1 ring-gray-300" />
-                        </div>
+                          <div className="relative flex size-6 flex-none items-center justify-center bg-white">
+                            <div className="size-1.5 rounded-full bg-gray-100 ring-1 ring-gray-300" />
+                          </div>
 
-                        <p className="flex-auto text-xs/5 text-gray-500">
-                          <span className="text-gray-900">{item}</span>
-                        </p>
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              ),
-            )}
-          </ul>
-        </DialogBody>
+                          <p className="flex-auto text-xs/5 text-gray-500">
+                            <span className="text-gray-900">{item}</span>
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ),
+              )}
+            </ul>
+          </DialogBody>
 
-        {/* <DialogActions>
-          <Button color="orange" onClick={onRead}>
-            متوجه شدم
-          </Button>
-        </DialogActions> */}
-      </Dialog>
+          <DialogActions>
+            <Button color="orange" onClick={onRead}>
+              متوجه شدم
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
     </>
   );
 }
