@@ -6,21 +6,21 @@ import mkcert from "vite-plugin-mkcert";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(), mkcert()],
+  plugins: [react(), tailwindcss()],
   server: {
-    port: 8000,
+    port: 5173,
     host: true,
     allowedHosts: true,
-    https: true,
-    proxy: {
-      "/": {
-        target: "https://192.168.11.64:8000",
-        changeOrigin: true,
-        secure: false, // برای self-signed
-      },
-    },
+    // https: true,
+    // proxy: {
+    //   "/": {
+    //     target: "https://192.168.11.64:8000",
+    //     changeOrigin: true,
+    //     secure: false, // برای self-signed
+    //   },
+    // },
   },
-  preview: { port: 8000, host: true, https: true },
+  preview: { port: 5173, host: true, https: true },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
