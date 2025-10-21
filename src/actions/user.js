@@ -30,8 +30,8 @@ export const useLogin = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: login,
     onSuccess: ({ data }) => {
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("refreshToken", data.refreshToken);
+      // localStorage.setItem("token", data.token);
+      // localStorage.setItem("refreshToken", data.refreshToken);
 
       navigate("/dashboard");
     },
