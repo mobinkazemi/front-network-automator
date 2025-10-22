@@ -11,6 +11,14 @@ export default defineConfig({
     port: 5173,
     host: true,
     allowedHosts: true,
+    https: true,
+    proxy: {
+      "/": {
+        target: "https://192.168.11.64:8000",
+        changeOrigin: true,
+        secure: false, // برای self-signed
+      },
+    },
   },
   preview: { port: 5173, host: true, https: true },
   resolve: {
