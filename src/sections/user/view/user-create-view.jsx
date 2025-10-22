@@ -94,7 +94,7 @@ export function UserCreateView() {
     formState: { errors },
     handleSubmit,
   } = useForm({
-    resolver: zodResolver(newUserSchema),
+    // resolver: zodResolver(newUserSchema),
     defaultValues: {
       roleId: 0,
       username: "",
@@ -113,20 +113,20 @@ export function UserCreateView() {
   });
 
   const onSubmit = handleSubmit((data) => {
-    const cleanedData = Object.fromEntries(
-      Object.entries(data)
-        .filter(([_, v]) => v !== "") // حذف مقادیر خالی
-        .map(([k, v]) => [
-          k,
-          /^\d+$/.test(v) ? Number(v) : v, // اگر فقط عدد بود، تبدیل به عدد
-        ]),
-    );
+    // const cleanedData = Object.fromEntries(
+    //   Object.entries(data)
+    //     .filter(([_, v]) => v !== "") // حذف مقادیر خالی
+    //     .map(([k, v]) => [
+    //       k,
+    //       /^\d+$/.test(v) ? Number(v) : v, // اگر فقط عدد بود، تبدیل به عدد
+    //     ]),
+    // );
 
     mutate(
       {
-        ...cleanedData,
-        cellphone: String(data.cellphone),
-        nationalId: String(data.nationalId),
+        ...data,
+        // cellphone: String(data.cellphone),
+        // nationalId: String(data.nationalId),
         mustChangePassword,
         ...(birthday && {
           birthday: new Date(birthday).toLocaleDateString("en-CA", {
@@ -141,7 +141,10 @@ export function UserCreateView() {
       },
       { onSuccess: () => navigate("/dashboard/user") },
       {
-        onError: (error) => toast.error(error.response.data.detail),
+        onError: (error) => {
+          toast.error(error.response.data.detail);
+          console.log(error);
+        },
       },
     );
   });
