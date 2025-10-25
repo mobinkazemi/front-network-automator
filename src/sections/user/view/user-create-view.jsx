@@ -93,6 +93,7 @@ export function UserCreateView() {
     control,
     formState: { errors },
     handleSubmit,
+    setError,
   } = useForm({
     // resolver: zodResolver(newUserSchema),
     defaultValues: {
@@ -127,6 +128,10 @@ export function UserCreateView() {
         ...data,
         // cellphone: String(data.cellphone),
         // nationalId: String(data.nationalId),
+        gender: Number(data.gender),
+        passwordHistoryCount: Number(data.passwordHistoryCount),
+        passwordAdvantageDays: Number(data.passwordAdvantageDays),
+        expirePasswordDays: Number(data.expirePasswordDays),
         mustChangePassword,
         ...(birthday && {
           birthday: new Date(birthday).toLocaleDateString("en-CA", {
@@ -139,11 +144,18 @@ export function UserCreateView() {
           }),
         }),
       },
-      { onSuccess: () => navigate("/dashboard/user") },
       {
+        onSuccess: () => navigate("/dashboard/user"),
         onError: (error) => {
-          toast.error(error.response.data.detail);
-          console.log(error);
+          if (error.status === 422) {
+            Object.entries(error.response.data.errors).forEach(
+              ([field, message]) => {
+                if (typeof message === "string") {
+                  setError(field, { message });
+                }
+              },
+            );
+          }
         },
       },
     );
@@ -336,6 +348,10 @@ export function UserCreateView() {
                 value={birthday}
                 onChange={(value) => setBirthday(value)}
               />
+
+              {errors.birthday && (
+                <ErrorMessage className='mt-3'>{errors.birthday.message}</ErrorMessage>
+              )}
             </Field>
           </div>
 

@@ -13,6 +13,7 @@ import DeviceListPage from "@/pages/dashboard/device/list";
 import DeviceDetailsPage from "@/pages/dashboard/device/details";
 import DeviceHardeningCheckPage from "@/pages/dashboard/device/hardening-check";
 import DeviceHardeningResultPage from "@/pages/dashboard/device/hardening-result";
+import { ValidateQueryParams } from "../components/validate-query-params";
 
 // ----------------------------------------------------------------------
 
@@ -45,6 +46,20 @@ export const dashboardRoutes = [
       { index: true, element: <IndexPage /> },
       {
         path: "user",
+        element: (
+          <ValidateQueryParams
+            allowed={[
+              "list_limit",
+              "list_page",
+              "list_sort",
+              "device",
+              "type",
+              "createdAt",
+            ]}
+          >
+            <Outlet />
+          </ValidateQueryParams>
+        ),
         children: [
           { index: true, element: <UserListPage /> },
           { path: "new", element: <UserCreatePage /> },
@@ -52,6 +67,20 @@ export const dashboardRoutes = [
       },
       {
         path: "role",
+        element: (
+          <ValidateQueryParams
+            allowed={[
+              "list_limit",
+              "list_page",
+              "list_sort",
+              "device",
+              "type",
+              "createdAt",
+            ]}
+          >
+            <Outlet />
+          </ValidateQueryParams>
+        ),
         children: [
           { index: true, element: <RoleListPage /> },
           { path: ":id", element: <RoleDetailsPage /> },
@@ -59,6 +88,20 @@ export const dashboardRoutes = [
       },
       {
         path: "permission",
+        element: (
+          <ValidateQueryParams
+            allowed={[
+              "list_limit",
+              "list_page",
+              "list_sort",
+              "device",
+              "type",
+              "createdAt",
+            ]}
+          >
+            <Outlet />
+          </ValidateQueryParams>
+        ),
         children: [
           { index: true, element: <PermissionListPage /> },
           { path: ":id", element: <PermissionDetailsPage /> },
@@ -66,10 +109,38 @@ export const dashboardRoutes = [
       },
       {
         path: "feed",
+        element: (
+          <ValidateQueryParams
+            allowed={[
+              "list_limit",
+              "list_page",
+              "list_sort",
+              "device",
+              "type",
+              "createdAt",
+            ]}
+          >
+            <Outlet />
+          </ValidateQueryParams>
+        ),
         children: [{ index: true, element: <FeedListPage /> }],
       },
       {
         path: "device",
+        element: (
+          <ValidateQueryParams
+            allowed={[
+              "list_limit",
+              "list_page",
+              "list_sort",
+              "device",
+              "type",
+              "createdAt",
+            ]}
+          >
+            <Outlet />
+          </ValidateQueryParams>
+        ),
         children: [
           { index: true, element: <DeviceListPage /> },
           { path: ":deviceId", element: <DeviceDetailsPage /> },
